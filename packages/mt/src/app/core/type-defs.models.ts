@@ -27,7 +27,7 @@ export type Qua<I, J, K> = Omit<Qnion<I, J, K>, 'ternion'>; // triple
      @ f the parameterised type
      @ func the function to apply
  *
-     First there was only T. And a function func from T to S emerged. 
+     First there was only T. And a function func from T to S emerged.
 */
 export type UnaryFunc<T, S> = (t: T) => S;
 
@@ -43,7 +43,7 @@ export interface Functor<T> {
  * interface Functor f => Applicative (f : Type -> Type) where
     pure  : a -> f a
     (<*>) : f (a -> b) -> f a -> f b
- * 
+ *
     Then there are applicatives. It could take T, take it to Functor<T>
 */
 export interface Applicative<T> extends Functor<T> {
@@ -62,7 +62,7 @@ export interface Applicative<T> extends Functor<T> {
     -- default implementations
     (>>=) x f = join (f <$> x)
     join x = x >>= id
- * 
+ *
 */
 export interface Monad<T> extends Applicative<T> {
   bind: <S>(mt: Monad<T>) => (mts: (t: T) => Monad<S>) => Monad<S>;
@@ -77,7 +77,7 @@ export interface Monad<T> extends Applicative<T> {
      forall a b c, a <+> (b <+> c) == (a <+> b) <+> c
 interface Semigroup ty where
   (<+>) : ty -> ty -> ty
- * 
+ *
 */
 export interface Semigroup<T> {
   addr: (t1: T) => (t2: T) => T;
@@ -110,7 +110,7 @@ export interface Semigroup<T> {
 
 interface Semigroup ty => Monoid ty where
   neutral : ty
- * 
+ *
 */
 export interface Monoid<T> extends Semigroup<T> {
   addi: T;
@@ -121,8 +121,16 @@ export interface Monoid<T> extends Semigroup<T> {
 interface Eq ty where
     (==) : ty -> ty -> Bool
     (/=) : ty -> ty -> Bool
- * 
+ *
 */
 export interface Eq<T> {
   eq: (t1: T) => (t2: T) => boolean;
 }
+
+// These are different. Go figure.
+// const boolEq: Eq<boolean> = {
+//   eq: (t1) => (t2) => (t1 && t2) || (!t1 && !t2)
+// }
+// const boolEq = {
+//   eq: (t1) => (t2) => (t1 === true && t2 === true) || (t1 === false && t2 === false)
+// }
