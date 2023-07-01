@@ -34,9 +34,16 @@ export type UnaryFunc<T, S> = (t: T) => S;
 /**
  * T -> S jaane baato bhayo
  * Functor bhanne bhado ma bhako sabai T haru lai, S samma lagne
-*/
-export interface Functor<T> {
-  fmap: <S>(f: UnaryFunc<T, S>) => (ft: Functor<T>) => Functor<S>;
+ */
+export abstract class Func<T> {
+  static fmap: <T, S>(f: UnaryFunc<T, S>) => (ft: Func<T>) => Func<S>;
+}
+
+export interface IFunctor<T> {
+  fmap: <S>(f: UnaryFunc<T, S>) => IFunctor<S>;
+}
+export abstract class Functor<T> implements IFunctor<T> {
+  fmap: <S>(f: UnaryFunc<T, S>) => Functor<S>;
 }
 
 /**
@@ -46,9 +53,21 @@ export interface Functor<T> {
  *
     Then there are applicatives. It could take T, take it to Functor<T>
 */
-export interface Applicative<T> extends Functor<T> {
-  pure: (t: T) => Functor<T>;
-  appl: <S>(fts: Functor<(t: T) => S>) => (ft: Functor<T>) => Functor<S>;
+export abstract class Appl<T> extends Func<T> {
+  static pure: <T>(t: T) => Appl<T>;
+  static appl: <T, S>(
+    fts: Appl<(t: T) => S>
+  ) => (ft: Appl<T>) => Func<S>;
+}
+
+export interface IApplicative<T> extends IFunctor<T> {
+  pure: (t: T) => IApplicative<T>;
+  appl: <S>(fts: IApplicative<(t: T) => S>) => IApplicative<S>;
+}
+
+export abstract class Applicative<T> extends Functor<T> implements IApplicative<T> {
+  pure: (t: T) => Applicative<T>;
+  appl: <S>(fts: Applicative<(t: T) => S>) => Applicative<S>;
 }
 
 /**
@@ -64,8 +83,16 @@ export interface Applicative<T> extends Functor<T> {
     join x = x >>= id
  *
 */
-export interface Monad<T> extends Applicative<T> {
-  bind: <S>(mt: Monad<T>) => (mts: (t: T) => Monad<S>) => Monad<S>;
+export abstract class Mon<T> extends Appl<T> {
+  static bind: <T, S>(mt: Mon<T>) => (mts: (t: T) => Mon<S>) => Mon<S>;
+  static flat: <T>(mmt: Mon<Mon<T>>) => Mon<T>;
+}
+export interface IMonad<T> extends IApplicative<T> {
+  bind: <S>(mts: (t: T) => IMonad<S>) => IMonad<S>;
+  flat: (mmt: IMonad<IMonad<T>>) => IMonad<T>;
+}
+export abstract class Monad<T> extends Applicative<T> implements IMonad<T> {
+  bind: <S>(mts: (t: T) => Monad<S>) => Monad<S>;
   flat: (mmt: Monad<Monad<T>>) => Monad<T>;
 }
 
@@ -79,8 +106,8 @@ interface Semigroup ty where
   (<+>) : ty -> ty -> ty
  *
 */
-export interface Semigroup<T> {
-  addr: (t1: T) => (t2: T) => T;
+export abstract class Semigroup<T> {
+  static addr: <T>(t1: T) => (t2: T) => T;
 }
 // eg.
 // const sgs: Semigroup<string> = {
@@ -112,8 +139,8 @@ interface Semigroup ty => Monoid ty where
   neutral : ty
  *
 */
-export interface Monoid<T> extends Semigroup<T> {
-  addi: T;
+export abstract class Monoid<T> extends Semigroup<T> {
+  protected addi: T;
 }
 
 /**
@@ -121,16 +148,17 @@ export interface Monoid<T> extends Semigroup<T> {
 interface Eq ty where
     (==) : ty -> ty -> Bool
     (/=) : ty -> ty -> Bool
+
+  These are different. Go figure.
+  
+  const boolEq: Eq<boolean> = {
+    eq: (t1) => (t2) => (t1 && t2) || (!t1 && !t2)
+  }
+  const boolEq = {
+    eq: (t1) => (t2) => (t1 === true && t2 === true) || (t1 === false && t2 === false)
+  }
  *
 */
-export interface Eq<T> {
-  eq: (t1: T) => (t2: T) => boolean;
+export abstract class Eq<T> {
+  static eq: <T>(t1: T) => (t2: T) => boolean;
 }
-
-// These are different. Go figure.
-// const boolEq: Eq<boolean> = {
-//   eq: (t1) => (t2) => (t1 && t2) || (!t1 && !t2)
-// }
-// const boolEq = {
-//   eq: (t1) => (t2) => (t1 === true && t2 === true) || (t1 === false && t2 === false)
-// }
