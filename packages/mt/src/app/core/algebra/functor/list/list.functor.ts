@@ -1,6 +1,6 @@
 import { ListStruct } from '../../../construct/list.struct';
 import { UnaryFunc } from '../../function/function.defs';
-import { Func, IFunctor } from '../functor.defs';
+import { Func } from '../functor.defs';
 
 /**
  *  Generic list monad implementation. It uses array underneath. Arrays are also already monadic btw.
@@ -13,5 +13,8 @@ import { Func, IFunctor } from '../functor.defs';
     *
 */
 export class ListFunctor<T> extends ListStruct<T> implements Func<T> {
-  fmap: <S>(f: UnaryFunc<T, S>) => IFunctor<S>;
+  static fmap: <T, S>(
+    f: UnaryFunc<T, S>
+  ) => (ft: ListFunctor<T>) => ListFunctor<S> = (f) => (ft) =>
+    ListFunctor.from(ft.arr.map(f));
 }

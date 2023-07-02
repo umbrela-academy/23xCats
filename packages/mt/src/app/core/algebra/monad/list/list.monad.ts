@@ -17,10 +17,6 @@ import { Mon } from '../monad.defs';
  *
 */
 export class List<T> extends ListStruct<T> implements Mon<T> {
-  static pure<T>(t: T | T[]): List<T> {
-    return Array.isArray(t) ? new List(t) : new List([t]);
-  }
-
   static flat<T>(mmt: List<List<T>>): List<T> {
     return [...mmt.arr.flat()].reduce((a, b) => List.from(a.arr.concat(b.arr)));
   }
@@ -33,7 +29,13 @@ export class List<T> extends ListStruct<T> implements Mon<T> {
     (fts) => (ft) =>
       List.from(fts.arr.flatMap((unFunc) => ft.arr.map(unFunc)));
 
+  static pure<T>(t: T | T[]): List<T> {
+    return Array.isArray(t) ? new List(t) : new List([t]);
+  }
+
   static fmap: <T, S>(f: UnaryFunc<T, S>) => (ft: List<T>) => List<S> =
     (f) => (ft) =>
       List.from(ft.arr.map(f));
 }
+
+export type ListMonad<T> = List<T>;
