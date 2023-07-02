@@ -1,5 +1,6 @@
-import { UnaryFunc } from './algebra/function/function.defs';
-import { Mon } from './algebra/monad/monad.defs';
+import { ListStruct } from '../../../construct/list.struct';
+import { UnaryFunc } from '../../function/function.defs';
+import { Mon } from '../monad.defs';
 
 /**
  *  Generic list monad implementation. It uses array underneath. Arrays are also already monadic btw.
@@ -11,35 +12,9 @@ data List : (elem : Type) -> Type where
   (::) : (x : elem) -> (xs : List elem) -> List elem
  *
 */
-export class List<T> implements Mon<T> {
-  readonly arr: Array<T>;
-
-  private constructor(ta: T[]) {
-    this.arr = ta;
-  }
-
-  static from<T>(ta: T | T[] | List<T>): List<T> {
-    const isList = ta instanceof List<T>;
-    const isArray = Array.isArray(ta);
-    if (isList) {
-      return ta;
-    } else if (isArray) {
-      return new List(ta);
-    } else { 
-      return new List([ta]);
-    }
-    
-  }
-
-  static empty(): List<null> {
-    return List.pure(null);
-  }
-
-  cons: <T>(t: T) => (ts: List<T>) => List<T> = (t) => (ts) =>
-    List.from(ts.arr.concat([t]));
-
-  static pure<T>(t: T): List<T> {
-    return new List([t]);
+export class List<T> extends ListStruct<T> implements Mon<T> {
+  static pure<T>(t: T | T[]): List<T> {
+    return Array.isArray(t) ? new List(t) : new List([t]);
   }
 
   static flat<T>(mmt: List<List<T>>): List<T> {
@@ -58,5 +33,3 @@ export class List<T> implements Mon<T> {
     (f) => (ft) =>
       List.from(ft.arr.map(f));
 }
-
-
