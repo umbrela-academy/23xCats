@@ -1,5 +1,5 @@
 import { List } from '../../list.monad';
-describe('List Monad: Functor Laws (Verifications, not Proofs)', () => {
+describe('List: Functor Laws (Verifications, not Proofs)', () => {
   describe('1st Law: fmapping with identity', () => {
     const listA = List.from([1, 2, 3]);
     const additiveIdElement = 0;

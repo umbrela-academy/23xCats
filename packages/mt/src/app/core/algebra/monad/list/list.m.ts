@@ -1,4 +1,5 @@
 import { ListStruct } from '../../../construct/list.struct';
+import { zip } from '../../../utils/funcs/zip-with.func';
 import { ListA } from '../../applicative/list/list.a';
 import { UnaryFunc } from '../../function/function.defs';
 import { ListF } from '../../functor/list/list.f';
@@ -50,9 +51,26 @@ export class ListM<T> extends ListStruct<T> implements IMonad<T> {
   appl: <S>(fts: ListA<(t: T) => S>) => ListM<S>
     = (fts) => ListM.from(this.lat.appl(fts).arr);
   
+  /**
+   * This implementation takes a cartesian product of the functions with the values.
+   * [f1, f2, f3] applCart [v1, v2, v3] = [
+   *      f1(v1), f1(v2), f1(v3),
+   *      f2(v1), f2(v2), f2(v3),
+   *      f3(v1), f3(v2), f3(v3),
+   * ]
+  */
   applCart: <S>(fts: ListA<(t: T) => S>) => ListM<S>
     = (fts) => this.appl(fts);
   
+  /**
+   * This implementation zips the functions with the values.
+   * [f1, f2, f3] applZip [v1, v2, v3] = [f1(v1), f2(v2), f3(v3)]
+  */
+  applZip: <S>(fts: ListA<(t: T) => S>) => ListA<S> = <S>(fts: ListA<(t: T) => S>) => {
+    const zipped: [UnaryFunc<T, S>, T][] = zip<UnaryFunc<T, S>, T>(fts.arr)(this.mt.arr);
+    return ListA.from(zipped.flatMap(([unFunc, unVal]) => unFunc(unVal)));
+  };
+
 
   //all from Monad itself
   flat: (mmt: ListM<ListM<T>>) => ListM<T> = (mmt) => {

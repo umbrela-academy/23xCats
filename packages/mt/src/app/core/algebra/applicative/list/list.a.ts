@@ -1,5 +1,6 @@
 import { ListStruct } from '../../../construct/list.struct';
 import { List } from '../../../list.monad';
+import { zip } from '../../../utils/funcs/zip-with.func';
 import { UnaryFunc } from '../../function/function.defs';
 import { ListF } from '../../functor/list/list.f';
 import { IApplicative } from '../applicative.defs';
@@ -31,16 +32,26 @@ export class ListA<T> extends ListStruct<T> implements IApplicative<T> {
 
   appl: <S>(fts: ListA<(t: T) => S>) => ListA<S> = (fts) =>
     ListA.from(fts.arr.flatMap((unFunc) => this.mt.arr.map(unFunc)));
-
+  
+  
+  /**
+   * This implementation takes a cartesian product of the functions with the values.
+   * [f1, f2, f3] applCart [v1, v2, v3] = [
+   *      f1(v1), f1(v2), f1(v3),
+   *      f2(v1), f2(v2), f2(v3),
+   *      f3(v1), f3(v2), f3(v3),
+   * ]
+  */
   applCart: <S>(fts: ListA<(t: T) => S>) => ListA<S> = (fts) => this.appl(fts);
 
-  //TODO 
-  // Create zipWith function for creating an apply implementation with zipping the functors
-  // instead of getting a cartesian product
-  // applZipL: <S>(fts: ListA<(t: T) => S>) => ListA<S> = <S>(fts: ListA<(t: T) => S>) => {
-  //   const zipped: Functor<S>[] = fts.fmap((ft) => this.fmap(ft));
-  //   return zipped.flat();
-  // };
+  /**
+   * This implementation zips the functions with the values.
+   * [f1, f2, f3] applZip [v1, v2, v3] = [f1(v1), f2(v2), f3(v3)]
+  */
+  applZip: <S>(fts: ListA<(t: T) => S>) => ListA<S> = <S>(fts: ListA<(t: T) => S>) => {
+    const zipped: [UnaryFunc<T, S>, T][] = zip<UnaryFunc<T, S>, T>(fts.arr)(this.mt.arr);
+    return ListA.from(zipped.flatMap(([unFunc, unVal]) => unFunc(unVal)));
+  };
 
   static from<T>(ta?: T | T[]): ListA<T> {
     const isListStruct = ta instanceof ListA<T>;

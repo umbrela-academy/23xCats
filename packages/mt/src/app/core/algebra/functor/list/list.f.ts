@@ -5,8 +5,8 @@ import { IFunctor } from '../functor.defs';
 
 
 /**
- * Provides an functorial list as an object.
- * This object actually wraps on top of the actual list functorial
+ * Provides a functorial list as an object.
+ * This object actually wraps on top of the actual list functor
  * so that ListM can have List as a state in a functorial closure.
  * 
  * This way, when you need to use fmap you 
