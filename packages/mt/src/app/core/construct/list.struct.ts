@@ -22,7 +22,19 @@ export class ListStruct<T> {
 
 	static empty<T>(): ListStruct<T> {
 		return ListStruct.from<T>();
-	}
+  }
+  
+  head(): T | null {
+    return (this.arr && this.arr[0])
+      ? this.arr[0]
+      : null;
+  }
+
+  tail(): T | null {
+    return (this.arr && this.arr.length > 0) 
+      ? this.arr[this.arr.length - 1]
+      : null
+  }
 
 	cons: <T>(t: T) => (ts: ListStruct<T>) => ListStruct<T> = (t) => (ts) =>
 		ListStruct.from(ts.arr.concat([t]));

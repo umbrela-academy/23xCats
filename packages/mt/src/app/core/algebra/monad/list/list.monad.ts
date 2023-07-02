@@ -4,12 +4,16 @@ import { Mon } from '../monad.defs';
 
 /**
  *  Generic list monad implementation. It uses array underneath. Arrays are also already monadic btw.
-data List : (elem : Type) -> Type where
-   Empty list
-  Nil : List elem
-   A non-empty list, consisting of a head element and the rest of
-   the list.
-  (::) : (x : elem) -> (xs : List elem) -> List elem
+ * We just add our own syntactic sugar to define the new List structure which can later participate in
+ * our monadic/categorical ecosystem. E.g. if you 'lift' your JS/TS arrays to this List, you will be able
+ * to use it in our 'do' pipes for chaining imperative style code into a monadic bind.
+ * 
+    data List : (elem : Type) -> Type where
+      Empty list
+      Nil : List elem
+      A non-empty list, consisting of a head element and the rest of
+      the list.
+      (::) : (x : elem) -> (xs : List elem) -> List elem
  *
 */
 export class List<T> extends ListStruct<T> implements Mon<T> {
