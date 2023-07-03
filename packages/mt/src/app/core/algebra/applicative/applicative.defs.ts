@@ -9,7 +9,7 @@ import { Func, IFunctor } from '../functor/functor.defs';
 */
 export abstract class Appl<T> extends Func<T> {
   static pure: <T>(t: T) => Appl<T>;
-  static appl: <T, S>(fts: Appl<(t: T) => S>) => (ft: Appl<T>) => Func<S>;
+  static appl: <T, S>(fts: Appl<(t: T) => S>) => (ft: Appl<T>) => Appl<S>;
 }
 
 export interface IApplicative<T> extends IFunctor<T> {

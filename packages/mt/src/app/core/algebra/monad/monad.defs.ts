@@ -17,6 +17,7 @@ export abstract class Mon<T> extends Appl<T> {
   static bind: <T, S>(mt: Mon<T>) => (mts: (t: T) => Mon<S>) => Mon<S>;
   static flat: <T>(mmt: Mon<Mon<T>>) => Mon<T>;
 }
+
 export interface IMonad<T> extends IApplicative<T> {
   bind: <S>(mts: (t: T) => IMonad<S>) => IMonad<S>;
   flat: (mmt: IMonad<IMonad<T>>) => IMonad<T>;

@@ -1,14 +1,17 @@
-import { Mon, UnaryFunc } from './type-defs.models';
-import { Monad } from './type-defs.models';
+import { UnaryFunc } from './algebra/function/function.defs';
+import { Mon } from './algebra/monad/monad.defs';
 
-export type Just<T> = T;
-export type Nothing = null;
+export type Just<T> = T & { __type: 'Just' };
+export const mkJust = <T>(t: T) => t as Just<T>;
+
+export type Nothing = null & { __type: 'Nothing' };
+export const mkNothing = () => null as Nothing;
 
 export class Maybe<T> implements Mon<T> {
-  readonly opt: Just<T> | Nothing;
+  readonly opt?: Just<T> | Nothing;
 
   private constructor(t?: T) {
-    this.opt = t ? t : null;
+    this.opt = t ? mkJust(t) : mkNothing();
   }
 
   static pure<T>(t?: T): Maybe<T> {
@@ -16,18 +19,18 @@ export class Maybe<T> implements Mon<T> {
   }
 
   static flat<T>(mmt: Maybe<Maybe<T>>): Maybe<T> {
-    return mmt.opt ?? Maybe.pure();
+    return mmt.opt ? mkJust(mmt.opt) : Maybe.pure();
   }
 
   static bind: <T, S>(mt: Maybe<T>) => (mts: (t: T) => Maybe<S>) => Maybe<S> =
     (mt) => (mts) =>
-      mt.opt ? mts(mt.opt) : Maybe.pure();
+      mt.opt ? mts(mkJust(mt.opt)) : Maybe.pure();
 
   static appl: <T, S>(fts: Maybe<(t: T) => S>) => (ft: Maybe<T>) => Maybe<S> =
     (fts) => (ft) =>
-      fts.opt && ft.opt ? Maybe.fmap(fts.opt)(ft) : Maybe.pure();
+      ft.opt ? Maybe.fmap(mkJust(fts.opt))(ft) : Maybe.pure();
 
   static fmap: <T, S>(f: UnaryFunc<T, S>) => (ft: Maybe<T>) => Maybe<S> =
     (f) => (ft) =>
-      ft.opt ? Maybe.pure(f(ft.opt)) : Maybe.pure();
+      ft.opt ? Maybe.pure(f(mkJust(ft.opt))) : Maybe.pure();
 }

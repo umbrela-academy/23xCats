@@ -20,16 +20,15 @@ export class List<T> implements Mon<T> {
   }
 
   static from<T>(ta: T | T[] | List<T>): List<T> {
-    const isList = ta instanceof List<T>;
+    const isList = ta instanceof List;
     const isArray = Array.isArray(ta);
     if (isList) {
       return ta;
     } else if (isArray) {
       return new List(ta);
-    } else { 
+    } else {
       return new List([ta]);
     }
-    
   }
 
   static empty(): List<null> {
@@ -58,24 +57,25 @@ export class List<T> implements Mon<T> {
    *      f2(v1), f2(v2), f2(v3),
    *      f3(v1), f3(v2), f3(v3),
    * ]
-  */
+   */
   static appl: <T, S>(fts: List<(t: T) => S>) => (ft: List<T>) => List<S> =
     (fts) => (ft) =>
       List.from(fts.arr.flatMap((unFunc) => ft.arr.map(unFunc)));
-  
+
   /**
    * This implementation zips the functions with the values.
    * [f1, f2, f3] applZip [v1, v2, v3] = [f1(v1), f2(v2), f3(v3)]
-  */
+   */
   static applZip: <T, S>(fts: List<(t: T) => S>) => (ft: List<T>) => List<S> =
-    <T, S>(fts: List<(t: T) => S>) => (ft: List<T>) => {
-    const zipped: [UnaryFunc<T, S>, T][] = zip<UnaryFunc<T, S>, T>(fts.arr)(ft.arr);
-    return List.from(zipped.flatMap(([unFunc, unVal]) => unFunc(unVal)));
-  };
+    <T, S>(fts: List<(t: T) => S>) =>
+    (ft: List<T>) => {
+      const zipped: [UnaryFunc<T, S>, T][] = zip<UnaryFunc<T, S>, T>(fts.arr)(
+        ft.arr
+      );
+      return List.from(zipped.flatMap(([unFunc, unVal]) => unFunc(unVal)));
+    };
 
   static fmap: <T, S>(f: UnaryFunc<T, S>) => (ft: List<T>) => List<S> =
     (f) => (ft) =>
       List.from(ft.arr.map(f));
 }
-
-
