@@ -27,17 +27,10 @@ export class ListF<T> extends ListStruct<T> implements IFunctor<T> {
 
 
   static from<T>(ta?: T | T[]): ListF<T> {
-    const isListStruct = ta instanceof ListF<T>;
-    const isArray = Array.isArray(ta);
-    
-    if (isListStruct) {
-      return ta;
-    } else if (isArray) {
-      return new ListF(ta);
-    } else if (!ta) {
+   if (!ta) {
       return new ListF([]);
     } else { 
-      return new ListF([ta]);
+      return new ListF(ta);
     }
   }
 
