@@ -1,5 +1,4 @@
-import { Quarternion } from '../algebra/qnion/qnion.defs';
-import { Qnion } from '../algebra/qnion/qnion.defs';
+import { Qnion, Quarternion } from '../algebra/qnion/qnion.defs';
 
 export type Pair<T, U> = [T, U];
 export type Trpl<T, U, V> = [T, U, V];

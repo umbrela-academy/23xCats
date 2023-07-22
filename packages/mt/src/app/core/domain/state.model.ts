@@ -14,8 +14,8 @@ export type StateMatrix<X, Y, Z> = Trpl<
 >;
 
 export type Rec2Matrix = <X, Y, Z> (rec: StateRecord<X, Y, Z>) => StateMatrix<X, Y, Z>;
-export const rec2matrix: Rec2Matrix = <X, Y, Z>
-  (rec: StateRecord<X, Y, Z>) => [rec.posn, rec.ornt, rec.cnfg] as Trpl<X, Y, Z>;
+export const rec2matrix: Rec2Matrix = <X, Y, Z>(rec: StateRecord<X, Y, Z>) =>
+  [rec.posn, rec.ornt, rec.cnfg] as StateMatrix<X, Y, Z>;
 
 export type Matrix2Rec = <X, Y, Z> (matrix: StateMatrix<X, Y, Z>) => StateRecord<X, Y, Z>;
 export const matrix2rec: Matrix2Rec = <X, Y, Z>
