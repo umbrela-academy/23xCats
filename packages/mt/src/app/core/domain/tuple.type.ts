@@ -1,15 +1,16 @@
 import { Qnion, Quarternion } from '../algebra/qnion/qnion.defs';
 
 export type None = null | undefined | void; //0
-
 export type Sngl<T> = T; //1
-export type Pair<T, U> = [Sngl<T>, Sngl<U>]; //2
-export type Trpl<T, U, V> = [Sngl<T>, Pair<U, V>]; //3
-export type Quad<T, U, V, W> = [Sngl<T>, Trpl<U, V, W>]; //4
+
+export type Pair<T, U> = [T, U];
+export type Trpl<T, U, V> = [T, U, V];
+export type Quad<T, U, V, W> = [T, U, V, W];
+export type Octo<T, U, V, W, X, Y, Z, A> = [T, U, V, W, X, Y, Z, A];
+
 export type PenT<T, U, V, W, X> = [Sngl<T>, Quad<U, V, W, X>]; //5
 export type SexT<T, U, V, W, X, Y> = [Sngl<T>, PenT<U, V, W, X, Y>]; //6
-export type SepT<T, U, V, W, X, Y, Z> = [Sngl<T>, SexT<U, V, W, X, Y, Z>]; //7
-export type Octo<T, U, V, W, X, Y, Z, A> = [Sngl<T>, SepT<U, V, W, X, Y, Z, A>]; //8
+export type SepT<T, U, V, W, X, Y, Z> = [Sngl<T>, SexT<U, V, W, X, Y, Z>]; //7s
 export type NonT<T, U, V, W, X, Y, Z, A, B> = [Sngl<T>, Octo<U, V, W, X, Y, Z, A, B>]; //9
 
 export type NTpl<T, U, V, W, X, Y, Z, A, B> =
@@ -25,14 +26,19 @@ export type NTpl<T, U, V, W, X, Y, Z, A, B> =
 
 export type Ordering<NTpl> = (m: NTpl) => (n: NTpl) => -1 | 0 | 1;
 
-export type LT<NTpl> = (m: NTpl) => (n: NTpl) => -1;
-export type GT<NTpl> = (m: NTpl) => (n: NTpl) => 1;
-export type EQ<NTpl> = (m: NTpl) => (n: NTpl) => 0;
+export type LT<T, U, V, W, X, Y, Z, A, B, E extends NTpl<T, U, V, W, X, Y, Z, A, B>> = (m: E) => (n: E) => -1;
+// export const lt: LT<T, U, V, W, X, Y, Z, A, B, E extends NTpl<T, U, V, W, X, Y, Z, A, B>> = 
+
+export type EQ<T, U, V, W, X, Y, Z, A, B, E extends NTpl<T, U, V, W, X, Y, Z, A, B>> = (m: E) => (n: E) => 0;
+export type GT<T, U, V, W, X, Y, Z, A, B, E extends NTpl<T, U, V, W, X, Y, Z, A, B>> = (m: E) => (n: E) => 1;
+
+
+
 
 /* 
 *  TODO define GoodEnough and Enough 
 */
-export type GoodEnough = ();
+// export type GoodEnough = (m: NTpl) => (ref: NTpl) => ;
 
 /**
  * 2 ^ 2 = 4
