@@ -27,12 +27,30 @@ export const matrix2rec: Matrix2Rec = <X, Y, Z>
 
 export type State<X, Y, Z> = StateMatrix<X, Y, Z> | StateRecord<X, Y, Z>;
 export type QState = State<Quarternion, Quarternion, Quarternion>;
-
+const recordAttributes = ['posn', 'ornt', 'cnfg'] as const;
+const matrixKeys = [0, 1, 2];
 export function isRecord<X, Y, Z>(s: State<X, Y, Z>): s is StateRecord<X, Y, Z> {
   const keys = Object.keys(s);
-  return ['posn', 'ornt', 'cnfg'].every(i => keys.includes(i));
+  return recordAttributes.every(i => keys.includes(i));
 }
 
 export function isMatrix<X, Y, Z>(s: State<X, Y, Z>): s is StateMatrix<X, Y, Z> {
   return !isRecord(s);
+}
+
+export type RecordKey = 'posn' | 'ornt' | 'cnfg';
+export type RecordRow<X, Y, Z> = { [key in RecordKey]: [X, Y, Z] };
+export type MatrixKey = 0 | 1 | 2;
+
+export function isState<X, Y, Z>(s: any): s is State<X, Y, Z> {
+  const isOfLengthThree = <S, T extends Array<S>>(s: T) => s.length === 3;
+
+  const isRecOfLen3 = (i: RecordKey) => isOfLengthThree(s[i]);
+  const hasRecordAttributes = recordAttributes.every(i => Object.keys(s).includes(i));
+  const hasRecordTriples = hasRecordAttributes && recordAttributes.every(isRecOfLen3);
+  
+  const isMatOfLen3 = (i: MatrixKey) => isOfLengthThree(s[i]);
+  const hasMatrixTriples = matrixKeys.every(isMatOfLen3);
+
+  return hasMatrixTriples || hasRecordTriples;
 }
