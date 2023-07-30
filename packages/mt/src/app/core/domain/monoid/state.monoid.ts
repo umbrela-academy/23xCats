@@ -1,5 +1,5 @@
-import { MonoidalVal, mkMonoidalVal } from ".";
-import { StateRecord } from "../model";
+import { MonoValTrpl, MonoidalVal, emptyAppl, emptyObj, mkMonoidalVal } from ".";
+import { StateRecord, matrixKeys, recordAttributes } from "../model";
 import { StateF } from "../monad";
 import { Trpl } from "../model/tuple";
 import { Val } from "../model/val";
@@ -32,7 +32,39 @@ export const emptyStateF: <
   const sMonoidal: MonoidalVal<StateMonoRec<T>> = {
     val: s,
     mEmpty: s,
-    mApply: (t) => (u) => Math.random() > 0.5 ? t : u,
+    mAppend: (t) => (u) => Math.random() > 0.5 ? t : u,
   };
   return new StateF<T>(sMonoidal);
 };
+
+export type StateRecOp<T extends Val> = (a: StateMonoRec<T>) => (b: StateMonoRec<T>) => StateMonoRec<T>;
+export const mkMonoidal: <S extends Val, T extends MonoidalVal<S>> (
+    ta: StateMonoRec<T>,
+    mT?: StateMonoRec<T>,
+    mApply?: StateRecOp<T>
+) => MonoidalVal<StateMonoRec<T>> 
+= <S extends Val, T extends MonoidalVal<S>> (
+    ta: StateMonoRec<T>,
+    mT?: StateMonoRec<T>,
+    mApply?: StateRecOp<T>
+) => ({
+    val: ta,
+    mEmpty: mT ?? emptyObj(ta),
+    mAppend:
+        mApply ??
+        emptyAppl<StateMonoRec<T>>(
+            ta
+        ),
+}) as MonoidalVal<StateMonoRec<T>>;
+
+export const mkMAppend: <T extends Val> () => (t: StateMonoRec<T>) => (u: StateMonoRec<T>) => StateMonoRec<T>
+    = <T extends Val> () =>  {
+    return (t: StateMonoRec<T>) => (u: StateMonoRec<T>) => {
+        return recordAttributes.map((k) => ({
+            [k]: matrixKeys.map((_, index) => 
+                    mkMonoidalVal(
+                        t[k][index].mAppend(u[k][index].val)
+                    )) as MonoValTrpl<T>
+                })).reduce((acc, cur) => ({...acc, ...cur}), {}) as StateMonoRec<T>;
+    };
+}

@@ -1,9 +1,12 @@
+import { IApplicative } from '../../algebra/applicative/applicative.defs';
 import { IFunctor } from '../../algebra/functor/functor.defs';
+import { Trpl } from '../model';
 import { Val, ValObjT, ValPrim, ValT } from '../model/val';
+import { StateMonoRec } from './state.monoid';
 
 type Monoidal<S extends Val, T extends ValT<S> = ValT<S>> = {
   mEmpty: T;
-  mApply: (t: T) => (u: T) => T;
+  mAppend: (t: T) => (u: T) => T;
 };
 
 export type MonoidalVal<
@@ -32,7 +35,7 @@ export const mkMonoidalVal: MkMonoidalVal = <T extends Val>(
   return {
     val,
     mEmpty,
-    mApply,
+    mAppend: mApply,
   } as MonoidalVal<Val>;
 };
 
@@ -69,7 +72,8 @@ export const emptyVal: (v: ValPrim | ValObjT) => ValPrim | ValObjT = <
   }
 };
 
-export type MonoidalFunctor<T extends Val = Val> = Monoidal<T> & IFunctor<T>;
+export type MonoidalFunctor<T extends Val = Val> = MonoidalVal<StateMonoRec<T>> & IFunctor<StateMonoRec<T>>;
+export type MonoidalApplicative<T extends Val = Val> = MonoidalVal<StateMonoRec<T>> & IApplicative<StateMonoRec<T>>;
 
 export type BinaryOp<T extends Val> = (x: Val) => (y: Val) => ValT<T>;
 export const emptyAppl: <T extends Val>(v: ValT<T>) => BinaryOp<T> = <
@@ -91,5 +95,7 @@ export const emptyAppl: <T extends Val>(v: ValT<T>) => BinaryOp<T> = <
       return (x) => (y) => (x && y) as ValT<T>;
   }
 };
+
+export type MonoValTrpl<T extends Val> = Trpl<MonoidalVal<T>, MonoidalVal<T>, MonoidalVal<T>>;
 
 export * from './state.monoid';

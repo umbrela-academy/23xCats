@@ -43,9 +43,9 @@ export const matrix2rec: Matrix2Rec = <X, Y, Z>(
 // State is defined without defining space or time
 export type State<X, Y, Z> = StateMatrix<X, Y, Z> | StateRecord<X, Y, Z>;
 export type QState = State<Quarternion, Quarternion, Quarternion>;
-const recordAttributes = ['posn', 'ornt', 'cnfg'] as const;
-const matrixKeys = [0, 1, 2];
-
+export const recordAttributes = ['posn', 'ornt', 'cnfg'] as const;
+export const matrixKeys = [0, 1, 2];
+``
 export function isRecord<X, Y, Z>(
   s: State<X, Y, Z>
 ): s is StateRecord<X, Y, Z> {
