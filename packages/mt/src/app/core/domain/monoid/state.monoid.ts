@@ -38,12 +38,12 @@ export const emptyStateF: <
 };
 
 export type StateRecOp<T extends Val> = (a: StateMonoRec<T>) => (b: StateMonoRec<T>) => StateMonoRec<T>;
-export const mkMonoidal: <S extends Val, T extends MonoidalVal<S>> (
+export const mkMonoidal: <T extends Val> (
     ta: StateMonoRec<T>,
     mT?: StateMonoRec<T>,
     mApply?: StateRecOp<T>
 ) => MonoidalVal<StateMonoRec<T>> 
-= <S extends Val, T extends MonoidalVal<S>> (
+= <T extends Val> (
     ta: StateMonoRec<T>,
     mT?: StateMonoRec<T>,
     mApply?: StateRecOp<T>
