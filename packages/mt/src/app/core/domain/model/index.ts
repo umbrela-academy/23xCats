@@ -1,10 +1,13 @@
-import { Quarternion } from "../algebra/qnion/qnion.defs";
-import { Trpl } from "./tuple.type";
+import { Quarternion } from '../../algebra/qnion/qnion.defs';
+import { Trpl } from './tuple';
+
+export * from './val';
+export * from './tuple';
 
 export type StateRecord<X, Y, Z> = {
   posn: Trpl<X, Y, Z>;
   ornt: Trpl<X, Y, Z>;
-  cnfg: Trpl<X, Y, Z>
+  cnfg: Trpl<X, Y, Z>;
 };
 
 export type StateMatrix<X, Y, Z> = Trpl<
@@ -14,12 +17,12 @@ export type StateMatrix<X, Y, Z> = Trpl<
 >;
 
 /**
- * As a pattern, let's add this also to our contribution guidelines, 
+ * As a pattern, let's add this also to our contribution guidelines,
  * type FuncTypeName = (unary: InputType) => OutputType
  * e.g. Rec2Matrix, Matrix2Rec above
  * const funcTypeName: FuncTypeName = (i) => // Some implementation that results in an output of type OutputType
  * e.g. matrix2rec, rec2matrix
-*/
+ */
 export type Rec2Matrix = <X, Y, Z>(
   rec: StateRecord<X, Y, Z>
 ) => StateMatrix<X, Y, Z>;

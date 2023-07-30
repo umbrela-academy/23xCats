@@ -1,4 +1,4 @@
-import { QState, State } from "./state.model";
+import { QState, State } from "../model";
 
 export type Transition<X, Y, Z> = (s: State<X, Y, Z>) => State<X, Y, Z>;
 export type QTransMorph = (s: QState) => QState;

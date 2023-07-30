@@ -1,4 +1,4 @@
-import { Qnion, Quarternion } from '../algebra/qnion/qnion.defs';
+import { Qnion, Quarternion } from '../../../algebra/qnion/qnion.defs';
 
 export type None = null | undefined | void; //0
 export type Sngl<T> = T; //1

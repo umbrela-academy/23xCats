@@ -1,4 +1,4 @@
-import { Trpl } from "./tuple.type";
+import { Trpl } from "../model/tuple";
 
 type TXOr<X, Y, Z> = X | Y | Z;
 

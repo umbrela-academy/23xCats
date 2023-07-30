@@ -1,10 +1,5 @@
-import { IFunctor } from '../algebra/functor/functor.defs';
-
-export type Val = string | number | boolean | bigint | object;
-export type ValT<T extends Val = Val> = T;
-export type ValPrim = string | number | boolean | bigint;
-export type ValObjT = object;
-export type ValRecD = Record<string | number | symbol, unknown>;
+import { IFunctor } from '../../algebra/functor/functor.defs';
+import { Val, ValObjT, ValPrim, ValT } from '../model/val';
 
 type Monoidal<S extends Val, T extends ValT<S> = ValT<S>> = {
   mEmpty: T;
@@ -24,20 +19,22 @@ export type MkMonoidalVal = <T extends Val>(
   mApply?: (t: T) => (u: T) => T
 ) => MonoidalVal<Val>;
 
-export const mkMonoidalVal: MkMonoidalVal =
-  <T extends Val> (val: T, mT?: T, mApp?: (t: T) => (u: T) => T) => {
-    const mt = ['string', 'number', 'bigint', 'boolean'].includes(typeof val)
-      ? emptyVal(val as ValPrim)
-      : emptyObj(val as ValObjT);
-    const mEmpty = mT ?? mt;
-    const mApply = mApp ?? emptyAppl(val);
-    return {
-      val,
-      mEmpty,
-      mApply,
-    } as MonoidalVal<Val>;
-  };
-
+export const mkMonoidalVal: MkMonoidalVal = <T extends Val>(
+  val: T,
+  mT?: T,
+  mApp?: (t: T) => (u: T) => T
+) => {
+  const mt = ['string', 'number', 'bigint', 'boolean'].includes(typeof val)
+    ? emptyVal(val as ValPrim)
+    : emptyObj(val as ValObjT);
+  const mEmpty = mT ?? mt;
+  const mApply = mApp ?? emptyAppl(val);
+  return {
+    val,
+    mEmpty,
+    mApply,
+  } as MonoidalVal<Val>;
+};
 
 export const emptyObj: <T extends ValObjT = ValObjT>(v: T) => T = <
   T extends ValObjT = ValObjT
@@ -94,3 +91,5 @@ export const emptyAppl: <T extends Val>(v: ValT<T>) => BinaryOp<T> = <
       return (x) => (y) => (x && y) as ValT<T>;
   }
 };
+
+export * from './state.monoid';
