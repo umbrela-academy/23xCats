@@ -4,7 +4,7 @@ import { StateF } from "../monad";
 import { Trpl } from "../model/tuple";
 import { Val } from "../model/val";
 
-export type StateMonoRec<T extends Val> = StateRecord<
+export type StateMonoRec<T> = StateRecord<
   MonoidalVal<T>,
   MonoidalVal<T>,
   MonoidalVal<T>
