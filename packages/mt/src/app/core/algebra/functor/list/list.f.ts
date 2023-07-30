@@ -14,7 +14,7 @@ import { IFunctor } from '../functor.defs';
 */
 export class ListF<T> extends ListStruct<T> implements IFunctor<T> {
   readonly lt: List<T>;
-  readonly arr: T[];
+  readonly arr: Array<T>;
 
   protected constructor(tOrAt: T | Array<T>) {
     super(tOrAt);
