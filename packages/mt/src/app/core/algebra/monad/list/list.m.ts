@@ -1,4 +1,5 @@
 import { ListStruct } from '../../../construct/list.struct';
+import { Listoid } from '../../../construct/listoid.defs';
 import { zip } from '../../../utils/funcs/zip-with.func';
 import { ListA } from '../../applicative/list/list.a';
 import { UnaryFunc } from '../../function/function.defs';
@@ -14,16 +15,22 @@ import { List } from './list.monad';
  * This way, when you need to use fmap, appl, bind or flat, you
  * won't have to add provide the List Monad of type T to those functions each time.
  */
-export class ListM<T> extends ListStruct<T> implements IMonad<T> {
+export class ListM<T> extends ListStruct<T> implements IMonad<T>, Listoid<T> {
   readonly mt: List<T>; // full stateless
   readonly lft: ListF<T>; // functorial stateful
   readonly lat: ListA<T>; // applicative stateful
 
-  private constructor(tOrAt: T | Array<T>) {
+  dot: (t1: T) => (t2: T) => T = (t1) => (t2) => t1 || t2;
+  snoc: (t: T) => Listoid<T>
+    = (t) => ListM.from([t, ...this.arr]);
+
+
+  private constructor(tOrAt: T | Array<T>, memptiness?: T) {
     super(tOrAt);
     this.mt = List.from(tOrAt);
     this.lat = ListA.from(tOrAt);
     this.lft = ListF.from(tOrAt);
+    if (memptiness) this.mempty = memptiness;
   }
 
   static from<T>(ta?: T | T[]): ListM<T> {
@@ -35,13 +42,13 @@ export class ListM<T> extends ListStruct<T> implements IMonad<T> {
   }
 
   // from Functor
-  fmap: <S>(f: UnaryFunc<T, S>) => ListM<S> = <S>(f: UnaryFunc<T, S>) =>
-    ListM.from(this.lft.fmap(f).arr);
+  fmap: <S>(f: UnaryFunc<T, S>) => ListM<S> 
+    = <S>(f: UnaryFunc<T, S>) => ListM.from(this.lft.fmap(f).arr);
 
   //from Applicative
   pure: (t: T) => ListM<T> = (t) => ListM.from(this.lat.pure(t).arr);
 
-  appl: <S>(fts: ListM<(t: T) => S>) => ListM<S>
+  appl: <S> (fts: ListM<(t: T) => S>) => ListM<S>
     = (fts) => ListM.from(this.lat.appl(fts.lat).arr);
 
   /**
@@ -61,9 +68,7 @@ export class ListM<T> extends ListStruct<T> implements IMonad<T> {
   applZip: <S>(fts: ListM<(t: T) => S>) => ListM<S> = <S>(
     fts: ListM<(t: T) => S>
   ) => {
-    const zipped: [UnaryFunc<T, S>, T][] = zip<UnaryFunc<T, S>, T>(fts.arr)(
-      this.mt.arr
-    );
+    const zipped: [UnaryFunc<T, S>, T][] = zip<UnaryFunc<T, S>, T>(fts.arr)(this.mt.arr);
     const zipApply = ([unFunc, unVal]: [UnaryFunc<T, S>, T]) => unFunc(unVal);
     const z = zipped.flatMap(zipApply);
     return ListM.from(z);

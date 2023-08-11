@@ -5,7 +5,7 @@ import { Trpl } from '../model';
 import { Val, ValObjT, ValPrim, ValT } from '../model/val';
 import { StateMonoRec } from './state.monoid';
 
-type Monoidal<T> = {
+export type Monoidal<T> = {
   mEmpty: T;
   mAppend: (t: T) => (u: T) => T;
 };
@@ -14,11 +14,16 @@ export type MonoidalVal<T> = Monoidal<T> & {
   val: T;
 };
 
+export type MkMonoidal = <T>(mEmpty: T) => (mAppend: (t: T) => (u: T) => T) => Monoidal<T>
+
 export type MkMonoidalVal = <T extends Val>(
   val: T,
   mEmpty?: T,
   mApply?: (t: T) => (u: T) => T
 ) => MonoidalVal<Val>;
+
+export const mkMonoidal: MkMonoidal 
+  = <T> (mEmpty: T) => (mAppend: (t: T) => (u: T) => T) => ({ mEmpty, mAppend});
 
 export const mkMonoidalVal: MkMonoidalVal = <T extends Val>(
   val: T,

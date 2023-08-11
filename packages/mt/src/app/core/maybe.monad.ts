@@ -8,10 +8,15 @@ export type Nothing = null & { __type: 'Nothing' };
 export const mkNothing = () => null as Nothing;
 
 export class Maybe<T> implements Mon<T> {
+    
   readonly opt?: Just<T> | Nothing;
 
   private constructor(t?: T) {
     this.opt = t ? mkJust(t) : mkNothing();
+  }
+
+  static from<T>(arg?: T): Maybe<T> {
+    return arg ? new Maybe(arg) : new Maybe();
   }
 
   static pure<T>(t?: T): Maybe<T> {

@@ -16,6 +16,6 @@ interface Semigroup ty => Monoid ty where
   neutral : ty
  *
 */
-export abstract class Monoid<T> extends Semigroup {
-  protected addi: T;
+export abstract class Monoid<T> extends Semigroup<T> {
+  mempty: T;
 }

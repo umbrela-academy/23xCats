@@ -1,4 +1,6 @@
 import { ListStruct } from '../../../construct/list.struct';
+import { Listoid } from '../../../construct/listoid.defs';
+import { MonoidalVal } from '../../../domain/monoid';
 import { UnaryFunc } from '../../function/function.defs';
 import { Mon } from '../monad.defs';
 
@@ -16,7 +18,8 @@ import { Mon } from '../monad.defs';
       (::) : (x : elem) -> (xs : List elem) -> List elem
  *
 */
-export class List<T> extends ListStruct<T> implements Mon<T> {
+export class List<T> extends ListStruct<T> implements Mon<T>, Listoid<T> {
+    
   static flat<T>(mmt: List<List<T>>): List<T> {
     return [...mmt.arr.flat()].reduce((a, b) => List.from(a.arr.concat(b.arr)));
   }

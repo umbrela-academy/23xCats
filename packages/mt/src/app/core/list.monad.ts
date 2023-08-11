@@ -12,12 +12,12 @@ export class ListPrime<T> implements Mon<T> {
       this.arr = this.listStruct.arr;
   }
 
-  static from<T>(ta: T | T[]): ListPrime<T> {
+  static from<T >(ta: T | T[]): ListPrime<T> {
       return new ListPrime(ta);
   }
 
-  static empty(): ListPrime<null> {
-    return ListPrime.pure(null);
+  static empty<T>(): ListPrime<T> {
+    return ListPrime.from([]);
   }
 
   cons: <T>(t: T) => (ts: ListPrime<T>) => ListPrime<T>
