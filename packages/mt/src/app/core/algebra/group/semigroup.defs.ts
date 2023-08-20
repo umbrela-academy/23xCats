@@ -25,6 +25,5 @@
 
 */
 export abstract class Semigroup<T> {
-  static dot: <T>(t1: T) => (t2: T) => T;
-  dot: (t1: T) => (t2: T) => T;
+  abstract dot: (t1: T) => (t2: T) => T;
 }

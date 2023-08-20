@@ -17,5 +17,5 @@ interface Semigroup ty => Monoid ty where
  *
 */
 export abstract class Monoid<T> extends Semigroup<T> {
-  mempty: T;
+    protected abstract mempty: T;
 }

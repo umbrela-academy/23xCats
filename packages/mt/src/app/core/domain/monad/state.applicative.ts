@@ -3,7 +3,7 @@ import { ListA } from "../../algebra/applicative/list/list.a";
 import { UnaryFunc } from "../../algebra/function/function.defs";
 import { IFunctor } from "../../algebra/functor/functor.defs";
 import { Val } from "../model";
-import { MonoidalApplicative, MonoidalVal, StateMonoRec, StateRecOp, mkMAppend, mkMonoidal } from "../monoid";
+import { MonoidalApplicative, MonoidalVal, StateMonoRec, mkMAppend } from "../monoid";
 
 
 export class StateA<T extends Val> implements MonoidalApplicative<T> {
@@ -30,15 +30,6 @@ export class StateA<T extends Val> implements MonoidalApplicative<T> {
     appl<S>(fts: ListA<(t: StateMonoRec<T>) => S>): IApplicative<S> {
         const valAsApplicative = ListA.from(this.val);
         return valAsApplicative.appl(fts);
-    }
-
-
-    static from<S extends Val, T extends MonoidalVal<S>>(
-        ta: StateMonoRec<T>,
-        mT?: StateMonoRec<T>,
-        mApply?: StateRecOp<T>
-    ): StateA<T> {
-        return new StateA(mkMonoidal(ta, mT, mApply));
     }
 
 }

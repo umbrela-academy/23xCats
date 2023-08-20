@@ -23,7 +23,7 @@ export type MkMonoidalVal = <T extends Val>(
 ) => MonoidalVal<Val>;
 
 export const mkMonoidal: MkMonoidal 
-  = <T> (mEmpty: T) => (mAppend: (t: T) => (u: T) => T) => ({ mEmpty, mAppend});
+  = <T> (mEmpty: T) => (mAppend: (t: T) => (u: T) => T) => ({ mEmpty, mAppend}) as Monoidal<T>;
 
 export const mkMonoidalVal: MkMonoidalVal = <T extends Val>(
   val: T,

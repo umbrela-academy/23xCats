@@ -1,13 +1,11 @@
-import { stat } from "fs";
 import { IApplicative } from "../../algebra/applicative/applicative.defs";
 import { UnaryFunc } from "../../algebra/function/function.defs";
 import { IFunctor } from "../../algebra/functor/functor.defs";
+import { ListM } from "../../algebra/monad/list/list.m";
 import { IMonad } from "../../algebra/monad/monad.defs";
-import { Val, rec2matrix } from "../model";
+import { Val } from "../model";
 import { Trpl } from "../model/tuple";
 import { MonoidalMonad, MonoidalVal, StateMonoRec, mkMAppend } from "../monoid";
-import { ListM } from "../../algebra/monad/list/list.m";
-import { NotImplementedException } from "@nestjs/common";
 
 export class StateM<T extends Val> implements MonoidalMonad<T> {
     mEmpty: StateMonoRec<T>;
