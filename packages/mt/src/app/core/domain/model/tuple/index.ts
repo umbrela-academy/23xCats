@@ -1,17 +1,16 @@
 import { Qnion, Quarternion } from '../../../algebra/qnion/qnion.defs';
 
-export type None = null | undefined | void; //0
+export type None = null | undefined | void | never; //0
+
 export type Sngl<T> = T; //1
-
-export type Pair<T, U> = [T, U];
-export type Trpl<T, U, V> = [T, U, V];
-export type Quad<T, U, V, W> = [T, U, V, W];
-export type Octo<T, U, V, W, X, Y, Z, A> = [T, U, V, W, X, Y, Z, A];
-
+export type Pair<T, U> = [Sngl<T>, Sngl<U>];
+export type Trpl<T, U, V> = [Sngl<T>, Pair<U, V>];
+export type Quad<T, U, V, W> = [Sngl<T>,Trpl< U, V, W>];
 export type PenT<T, U, V, W, X> = [Sngl<T>, Quad<U, V, W, X>]; //5
 export type SexT<T, U, V, W, X, Y> = [Sngl<T>, PenT<U, V, W, X, Y>]; //6
 export type SepT<T, U, V, W, X, Y, Z> = [Sngl<T>, SexT<U, V, W, X, Y, Z>]; //7s
-export type NonT<T, U, V, W, X, Y, Z, A, B> = [Sngl<T>, Octo<U, V, W, X, Y, Z, A, B>]; //9
+export type OctT<T, U, V, W, X, Y, Z, A> = [Sngl<T>, SepT<U, V, W, X, Y, Z, A>]; //7s
+export type NonT<T, U, V, W, X, Y, Z, A, B> = [Sngl<T>, OctT<U, V, W, X, Y, Z, A, B>]; //9
 
 export type NTpl<T, U, V, W, X, Y, Z, A, B> =
   | Sngl<T>
@@ -21,7 +20,7 @@ export type NTpl<T, U, V, W, X, Y, Z, A, B> =
   | PenT<T, U, V, W, X>
   | SexT<T, U, V, W, X, Y>
   | SepT<T, U, V, W, X, Y, Z>
-  | Octo<T, U, V, W, X, Y, Z, A>
+  | OctT<T, U, V, W, X, Y, Z, A>
   | NonT<T, U, V, W, X, Y, Z, A, B>;
 
 export type Ordering<NTpl> = (m: NTpl) => (n: NTpl) => -1 | 0 | 1;
@@ -31,9 +30,6 @@ export type LT<T, U, V, W, X, Y, Z, A, B, E extends NTpl<T, U, V, W, X, Y, Z, A,
 
 export type EQ<T, U, V, W, X, Y, Z, A, B, E extends NTpl<T, U, V, W, X, Y, Z, A, B>> = (m: E) => (n: E) => 0;
 export type GT<T, U, V, W, X, Y, Z, A, B, E extends NTpl<T, U, V, W, X, Y, Z, A, B>> = (m: E) => (n: E) => 1;
-
-
-
 
 /* 
 *  TODO define GoodEnough and Enough 
@@ -48,7 +44,7 @@ export type Tuple<T, U, V, W, X, Y, Z, A> =
   | Pair<T, U> //2
   | Trpl<T, U, V> //3 
   | Quad<T, U, V, W> //4
-  | Octo<T, U, V, W, X, Y, Z, A>; //8
+  | OctT<T, U, V, W, X, Y, Z, A>; //8
 
 export type QnionTUTime<T, U, Time> = Qnion<T, U, Time>;
 export type QnionTUVTime<T, U, V, Time> = Qnion<T, [U, V], Time>;
@@ -116,8 +112,8 @@ export type QTrpl<T, U, V, Time> =
   { value: Trpl<T, U, V> } & TUVSpace<T, U, V, Time>;
 export type QQuad<T, U, V, W, Time> =
   { value: Quad<T, U, V, W> } & TUVWSpace<T, U, V, W, Time>;
-export type QOcto<T, U, V, W, X, Y, Z, A, Time> =
-  { value: Octo<T, U, V, W, X, Y, Z, A> } & TUVWASpace<T, U, V, W, X, Y, Z, A, Time>
+export type QOctT<T, U, V, W, X, Y, Z, A, Time> =
+  { value: OctT<T, U, V, W, X, Y, Z, A> } & TUVWASpace<T, U, V, W, X, Y, Z, A, Time>
 
 /**
  * A QTuple may be one slice of a matrix representing either
@@ -127,4 +123,4 @@ export type QTuple<T, U, V, W, X, Y, Z, A> =
   | QPair<T, U, Quarternion> // 2D Games
   | QTrpl<T, U, V, Quarternion> // 3D Games
   | QQuad<T, U, V, W, Quarternion> // Real life
-  | QOcto<T, U, V, W, X, Y, Z, A, Quarternion>; // Research Projects
+  | QOctT<T, U, V, W, X, Y, Z, A, Quarternion>; // Research Projects

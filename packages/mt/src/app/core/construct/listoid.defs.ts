@@ -2,7 +2,7 @@ import { Monoid } from "../algebra/monoid/monoid.defs";
 import { Maybe } from "../maybe.monad";
 
 export interface MonoidalListoid<T> extends Monoid<T> {
-    cons: (t: T) => Listoid<T>;
+    cons: (t: T) => MonoidalListoid<T>;
 }
 
 export interface ProtoListoid<T> extends MonoidalListoid<T> {
@@ -10,7 +10,7 @@ export interface ProtoListoid<T> extends MonoidalListoid<T> {
 }
 
 export interface SnocListoid<T> extends ProtoListoid<T> {
-    snoc: (t: T) => Listoid<T>;
+    snoc: (t: T) => SnocListoid<T>;
 }
 
 export interface Listoid<T> extends SnocListoid<T> {
