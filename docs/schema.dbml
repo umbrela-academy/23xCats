@@ -1,0 +1,111 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Project "UAA Core" {
+  database_type: 'PostgreSQL'
+  Note: 'UAA Core after 10 Years'
+}
+
+Table project {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  initiatorOrgId String [not null]
+  initiatorOrg Org [not null]
+  collaboratorList Org [not null]
+  iDeviceList io_device [not null]
+  oDeviceList io_device [not null]
+  iSensorList io_sensor [not null]
+  oSensorList io_sensor [not null]
+  ioGroups io_group [not null]
+}
+
+Table io_hello {
+  id String [pk]
+  hw io_device [not null]
+  type String [not null]
+  version String [not null]
+  model String [not null]
+  protocols String[] [not null]
+  credentialsUrl String [not null]
+  fOff io_fo
+}
+
+Table io_fo {
+  id String [pk]
+  helloId String [unique, not null]
+  hello io_hello [not null]
+  hwList io_device [not null]
+}
+
+Table io_device {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  type String
+  version String
+  model String
+  helloList io_hello [not null]
+  foList io_fo [not null]
+  iProjectList project [not null]
+  oProjectList project [not null]
+  ioGroupId String [unique, not null]
+  ioGroup io_group
+}
+
+Table io_sensor {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  type String
+  version String
+  model String
+  iProjectList project [not null]
+  oProjectList project [not null]
+  ioGroupId String [unique, not null]
+  ioGroup io_group
+}
+
+Table io_group {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  deviceList io_device [not null]
+  sensorList io_sensor [not null]
+  projectList project [not null]
+}
+
+Table Org {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  initiationList project [not null]
+  collaborationList project [not null]
+  leaders Person [not null]
+  members Person [not null]
+}
+
+Table Person {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  groups people_group [not null]
+  leadingOrgList Org [not null]
+  participatingOrgList Org [not null]
+}
+
+Table people_group {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  personList Person [not null]
+}
+
+Ref: project.initiatorOrgId > Org.id
+
+Ref: io_fo.helloId - io_hello.id
+
+Ref: io_device.ioGroupId > io_group.id
+
+Ref: io_sensor.ioGroupId > io_group.id

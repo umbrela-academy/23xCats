@@ -1,0 +1,156 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+  output     = "../docs"
+  projectName = "UAA Core"
+  projectDatabaseType = "PostgreSQL"
+  projectNote = "UAA Core after 10 Years"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Project {
+    id String @id @db.Uuid
+    name String @unique
+    description String?
+    
+    //Org Relations
+    initiatorOrgId String @db.Uuid @map("initiator_org_id")
+    initiatorOrg Org @relation("initiator_of", fields: [initiatorOrgId], references: [id])
+
+    collaboratorList Org[]
+
+    //IODevice Relations
+    iDeviceList IoDevice[] @relation("input_devices")
+    oDeviceList IoDevice[] @relation("output_devices")
+
+    iSensorList IoSensor[] @relation("input_sensors")
+    oSensorList IoSensor[] @relation("output_sensors")
+
+    ioGroups IoGroup[]
+
+    @@map("project")
+}
+
+model IoHello {
+    id String @id @db.Uuid
+
+    hw IoDevice[] @relation("to_hello")
+
+    type String
+    version String
+    model String
+    protocols String[]
+
+    credentialsUrl String @map("credentials_url")
+
+    fOff IoFo? @relation("fly_off_to_hello")
+
+    @@map("io_hello")
+}
+
+model IoFo {
+    id String @id @db.Uuid
+
+    helloId String @db.Uuid @unique
+    hello IoHello @relation("fly_off_to_hello", fields: [helloId], references: [id])
+
+    hwList IoDevice[] @relation("to_fo")
+
+    @@map("io_fo")
+}
+
+model IoDevice {
+    id String @id @db.Uuid
+    name String @unique
+    description String?
+
+    type String?
+    version String?
+    model String?
+
+    helloList IoHello[] @relation("to_hello")
+    foList IoFo[] @relation("to_fo")
+
+    iProjectList Project[] @relation("input_devices")
+    oProjectList Project[] @relation("output_devices")
+
+    ioGroupId String @db.Uuid @unique
+    ioGroup IoGroup? @relation("device_group", fields: [ioGroupId], references: [id])
+
+    @@map("io_device")
+}
+
+model IoSensor {
+    id String @id @db.Uuid
+    name String @unique
+    description String?
+
+    type String?
+    version String?
+    model String?
+
+    iProjectList Project[] @relation("input_sensors")
+    oProjectList Project[] @relation("output_sensors")
+
+    ioGroupId String @db.Uuid @unique
+    ioGroup IoGroup? @relation("hw_group", fields: [ioGroupId], references: [id])
+
+    @@map("io_sensor")
+}
+
+model IoGroup {
+    id String @id @db.Uuid
+    name String @unique
+    description String?
+
+    deviceList IoDevice[] @relation("device_group")
+    sensorList IoSensor[] @relation("hw_group")
+    projectList Project[]
+
+    @@map("io_group")
+}
+
+model Org {
+    id String @id @db.Uuid
+    name String @unique
+    description String?
+
+    //Project Relations
+    initiationList Project[] @relation("initiator_of")
+    collaborationList Project[]
+
+    // PR
+    leaders Person[] @relation("leading")
+    members Person[] @relation("membering")
+}
+
+model Person {
+    id String @id @db.Uuid
+    name String @unique
+    description String?
+
+    groups PeopleGroup[]
+    leadingOrgList Org[] @relation("leading")
+    participatingOrgList Org[] @relation("membering")
+}
+
+model PeopleGroup {
+    id String @id @db.Uuid
+    name String @unique
+    description String?
+
+    personList Person[]
+
+    @@map("people_group")
+}

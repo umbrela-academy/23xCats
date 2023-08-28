@@ -5,16 +5,18 @@ export type None = null | undefined | void | never; //0
 
 export type Sngl<T> = T; //1
 export type Pair<T, U> = [Sngl<T>, Sngl<U>];
+
+export type Trpl<T, U, V> = [T, U , V];
+export type Quad<T, U, V, W> = [T, U, V, W];
+export type PenT<T, U, V, W, X> = [T,U, V, W, X]; //5
+export type SexT<T, U, V, W, X, Y> = [T,U, V, W, X, Y]; //6
+export type SepT<T, U, V, W, X, Y, Z> = [T,U, V, W, X, Y, Z]; //7s
+export type OctT<T, U, V, W, X, Y, Z, A> = [T,U, V, W, X, Y, Z, A]; //7s
+export type NonT<T, U, V, W, X, Y, Z, A, B> = [T,U, V, W, X, Y, Z, A, B]; //9
+
 export type TwoNaryFunc<T, U> = UnaryFunc<Pair<T, T>, U>;
-export type Trpl<T, U, V> = Pair<Sngl<T>, Pair<U, V>>;
 export type ThreeNaryFunc<T,U> = UnaryFunc<Trpl<T,T,T>, U>;
-export type Quad<T, U, V, W> = Pair<Sngl<T>,Trpl< U, V, W>>;
 export type FourNaryFunc<T,U> = UnaryFunc<Quad<T,T,T,T>, U>;
-export type PenT<T, U, V, W, X> = Pair<Sngl<X>, Quad<T,U, V, W>>; //5
-export type SexT<T, U, V, W, X, Y> = [Sngl<T>, PenT<U, V, W, X, Y>]; //6
-export type SepT<T, U, V, W, X, Y, Z> = [Sngl<T>, SexT<U, V, W, X, Y, Z>]; //7s
-export type OctT<T, U, V, W, X, Y, Z, A> = [Sngl<T>, SepT<U, V, W, X, Y, Z, A>]; //7s
-export type NonT<T, U, V, W, X, Y, Z, A, B> = [Sngl<T>, OctT<U, V, W, X, Y, Z, A, B>]; //9
 
 export type NTpl<T, U, V, W, X, Y, Z, A, B> =
   | Sngl<T>
