@@ -14,6 +14,16 @@ import { IFindFirst, IFindMany, IFindUnique } from '../model/cqrs/query/find.arg
 import { NTTKey } from '../model/omega';
 import { NttService } from './ntt.service';
 
+/**
+ * TODO GET requests for finding unique and for paginated responses
+ * TODO Pagination: for findMany
+ * TODO Param: no-cache, no-db, no-search
+ * TODO id validators
+ * TODO custom validators
+ * TODO custom interceptors/middleware
+ * TODO custom proxy+adapter for Solr, Redis
+ * 
+*/
 @Controller('db')
 export class DbController<NTT extends NTTKey>
   implements Query<NTT>, Mutation<NTT>
