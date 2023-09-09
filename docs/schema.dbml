@@ -319,7 +319,7 @@ Table modeler {
   name String [unique, not null]
   description String
   stateList state [not null]
-  eventList casual_event [not null]
+  eventList causal_event [not null]
   viewList view [not null]
 }
 
@@ -341,11 +341,11 @@ Table state {
   configuration Decimal[] [not null]
   actionInitList action [not null]
   actionTermList action [not null]
-  eventInitList casual_event [not null]
-  eventTermList casual_event [not null]
+  eventInitList causal_event [not null]
+  eventTermList causal_event [not null]
 }
 
-Table casual_event {
+Table causal_event {
   modelerList modeler [not null]
   id String [pk]
   name String [unique, not null]

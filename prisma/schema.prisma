@@ -473,7 +473,7 @@ model Modeler {
   description String?
 
   stateList State[] @relation("state_model")
-  eventList CasualEvent[] @relation("event_model")
+  eventList CausalEvent[] @relation("event_model")
   viewList View[]  @relation("view_model")
 
   @@map("modeler")
@@ -505,13 +505,13 @@ model State {
   actionInitList Action[] @relation("initial_states")
   actionTermList Action[] @relation("final_states")
 
-  eventInitList CasualEvent[] @relation("state_init_event")
-  eventTermList CasualEvent[] @relation("state_term_event")
+  eventInitList CausalEvent[] @relation("state_init_event")
+  eventTermList CausalEvent[] @relation("state_term_event")
 
   @@map("state")
 }
 
-model CasualEvent {
+model CausalEvent {
 
   modelerList Modeler[] @relation("event_model")
 
@@ -522,7 +522,7 @@ model CasualEvent {
   stateInitList State[] @relation("state_init_event")
   stateTermList State[] @relation("state_term_event")
 
-  @@map("casual_event")
+  @@map("causal_event")
 }
 
 model View {
