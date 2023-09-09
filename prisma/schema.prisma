@@ -301,6 +301,8 @@ model Character {
   characterArchList CharacterArch[] @relation("character_arch")
   storyLineList StoryLine[] @relation("character_storyline")
 
+  characterBuilderList CharacterBuilder[] @relation("characters_build")
+
   @@map("character")
 }
 
@@ -308,6 +310,8 @@ model CharacterBuilder {
   id          String  @id @default(uuid()) @db.Uuid()
   name        String  @unique
   description String?
+
+  characterList Character[] @relation("characters_build")
 
   @@map("character_builder")
 }

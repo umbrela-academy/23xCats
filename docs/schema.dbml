@@ -201,12 +201,14 @@ Table character {
   objectiveList objective [not null]
   characterArchList character_arch [not null]
   storyLineList story_line [not null]
+  characterBuilderList character_builder [not null]
 }
 
 Table character_builder {
   id String [pk]
   name String [unique, not null]
   description String
+  characterList character [not null]
 }
 
 Table config {

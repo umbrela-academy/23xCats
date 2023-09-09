@@ -1,4 +1,3 @@
-
 import {
   IoDevice,
   IoFo,
@@ -9,6 +8,35 @@ import {
   PeopleGroup,
   Person,
   Project,
+  Syllable,
+  Spelling,
+  Meaning,
+  Usage,
+  Phrase,
+  Sentence,
+  Para,
+  Character,
+  CharacterBuilder,
+  Config,
+  ConfigTemplate,
+  Conflict,
+  ConflictResolutionPath,
+  TurningPoint,
+  Objective,
+  Mission,
+  Level,
+  LegendMap,
+  Power,
+  Tool,
+  Vehicle,
+  CharacterArch,
+  StoryLine,
+  Modeler,
+  Action,
+  State,
+  CausalEvent,
+  View,
+  Word
 } from './entities';
 
 export const Entities = {
@@ -21,7 +49,44 @@ export const Entities = {
   IoSensor,
   IoGroup,
   IoHello,
-  IoFo
+  IoFo,
+
+  Word,
+  Syllable,
+  Spelling,
+  Meaning,
+  Usage,
+
+  Phrase,
+  Sentence,
+  Para,
+
+  Character,
+  CharacterBuilder,
+
+  Config,
+  ConfigTemplate,
+
+  Conflict,
+  ConflictResolutionPath,
+  
+  TurningPoint,
+  Objective,
+  Mission,
+  Level,
+  LegendMap,
+  Power,
+  Tool,
+  Vehicle,
+
+  CharacterArch,
+  StoryLine,
+  
+  Modeler,
+  Action,
+  State,
+  CausalEvent,
+  View,
 } as const;
 
 export type EntitiesType = typeof Entities;
