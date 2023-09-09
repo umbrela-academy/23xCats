@@ -12,8 +12,8 @@ Table project {
   name String [unique, not null]
   description String
   initiatorOrgId String [not null]
-  initiatorOrg Org [not null]
-  collaboratorList Org [not null]
+  initiatorOrg org [not null]
+  collaboratorList org [not null]
   iDeviceList io_device [not null]
   oDeviceList io_device [not null]
   iSensorList io_sensor [not null]
@@ -76,36 +76,311 @@ Table io_group {
   projectList project [not null]
 }
 
-Table Org {
+Table org {
   id String [pk]
   name String [unique, not null]
   description String
   initiationList project [not null]
   collaborationList project [not null]
-  leaders Person [not null]
-  members Person [not null]
+  leaders person [not null]
+  members person [not null]
 }
 
-Table Person {
+Table person {
   id String [pk]
   name String [unique, not null]
   description String
   groups people_group [not null]
-  leadingOrgList Org [not null]
-  participatingOrgList Org [not null]
+  leadingOrgList org [not null]
+  participatingOrgList org [not null]
 }
 
 Table people_group {
   id String [pk]
   name String [unique, not null]
   description String
-  personList Person [not null]
+  personList person [not null]
 }
 
-Ref: project.initiatorOrgId > Org.id
+Table word {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  syllableList syllable [not null]
+  spellingList spelling [not null]
+  meaningList meaning [not null]
+  usageList usage [not null]
+  phraseList phrase [not null]
+  sentenceList sentence [not null]
+}
+
+Table syllable {
+  id String [pk]
+  wordId String [not null]
+  word word [not null]
+  name String [unique, not null]
+  description String
+  stress String
+  phonemeMap Json [not null]
+  metric String
+  compositionId String
+  composition syllable
+  compositionList syllable [not null]
+}
+
+Table spelling {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  wordId String [not null]
+  word word [not null]
+  tense String
+  voiceMap Json [not null]
+  case String
+  variantId String
+  variant spelling
+  variantList spelling [not null]
+}
+
+Table meaning {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  wordId String [not null]
+  word word [not null]
+  etymology String
+  domainMap Json [not null]
+  usual String
+  contextId String
+  context meaning
+  contextList meaning [not null]
+}
+
+Table usage {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  wordId String [not null]
+  word word [not null]
+  literary String
+  socialMap Json [not null]
+  journalistic String
+  encodingId String
+  encoding usage
+  encodingList usage [not null]
+}
+
+Table phrase {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  wordList word [not null]
+}
+
+Table sentence {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  wordList word [not null]
+  paraList para [not null]
+}
+
+Table para {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  sentenceList sentence [not null]
+}
+
+Table character {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  conflictList conflict [not null]
+  turningPointList turning_point [not null]
+  objectiveList objective [not null]
+  characterArchList character_arch [not null]
+  storyLineList story_line [not null]
+}
+
+Table character_builder {
+  id String [pk]
+  name String [unique, not null]
+  description String
+}
+
+Table config {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  configTemplateList config_template [not null]
+}
+
+Table config_template {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  configList config [not null]
+  missionList mission [not null]
+  legendMapList legend_map [not null]
+  levelList level [not null]
+  powerList power [not null]
+  toolList tool [not null]
+  vehicleList vehicle [not null]
+}
+
+Table conflict {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  characterList character [not null]
+  conflictResolutionPathList conflict_resolution_path [not null]
+}
+
+Table conflict_resolution_path {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  conflictList conflict [not null]
+}
+
+Table turning_point {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  characterList character [not null]
+}
+
+Table objective {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  characterList character [not null]
+}
+
+Table mission {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  configTemplateList config_template [not null]
+}
+
+Table level {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  configTemplateList config_template [not null]
+}
+
+Table legend_map {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  configTemplateList config_template [not null]
+}
+
+Table power {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  configTemplateList config_template [not null]
+}
+
+Table tool {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  configTemplateList config_template [not null]
+}
+
+Table vehicle {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  configTemplateList config_template [not null]
+}
+
+Table character_arch {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  characterList character [not null]
+}
+
+Table story_line {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  characterList character [not null]
+}
+
+Table modeler {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  stateList state [not null]
+  eventList casual_event [not null]
+  viewList view [not null]
+}
+
+Table action {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  initialStateList state [not null]
+  finalStateList state [not null]
+}
+
+Table state {
+  modelerList modeler [not null]
+  id String [pk]
+  name String [unique, not null]
+  description String
+  position Decimal[] [not null]
+  orientation Decimal[] [not null]
+  configuration Decimal[] [not null]
+  actionInitList action [not null]
+  actionTermList action [not null]
+  eventInitList casual_event [not null]
+  eventTermList casual_event [not null]
+}
+
+Table casual_event {
+  modelerList modeler [not null]
+  id String [pk]
+  name String [unique, not null]
+  description String
+  stateInitList state [not null]
+  stateTermList state [not null]
+}
+
+Table view {
+  modelerList modeler [not null]
+  id String [pk]
+  name String [unique, not null]
+  description String
+}
+
+Ref: project.initiatorOrgId > org.id
 
 Ref: io_fo.helloId - io_hello.id
 
 Ref: io_device.ioGroupId > io_group.id
 
 Ref: io_sensor.ioGroupId > io_group.id
+
+Ref: syllable.wordId > word.id
+
+Ref: syllable.compositionId - syllable.id
+
+Ref: spelling.wordId > word.id
+
+Ref: spelling.variantId - spelling.id
+
+Ref: meaning.wordId > word.id
+
+Ref: meaning.contextId - meaning.id
+
+Ref: usage.wordId > word.id
+
+Ref: usage.encodingId - usage.id

@@ -50,7 +50,7 @@ export class DbController<NTT extends NTTKey>
   findMany(
     @Param('ntt') ntt: NTT,
     @Body() args: IFindMany<NTT>
-  ): OFindMany<NTT> {
+  ) {
     return this.nttService.delegate(ntt).findMany(args);
   }
 

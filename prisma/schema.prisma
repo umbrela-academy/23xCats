@@ -6,11 +6,11 @@ generator client {
 }
 
 generator dbml {
-  provider = "prisma-dbml-generator"
-  output     = "../docs"
-  projectName = "UAA Core"
+  provider            = "prisma-dbml-generator"
+  output              = "../docs"
+  projectName         = "UAA Core"
   projectDatabaseType = "PostgreSQL"
-  projectNote = "UAA Core after 10 Years"
+  projectNote         = "UAA Core after 10 Years"
 }
 
 datasource db {
@@ -18,139 +18,522 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Project {
-    id String @id @db.Uuid
-    name String @unique
-    description String?
-    
-    //Org Relations
-    initiatorOrgId String @db.Uuid @map("initiator_org_id")
-    initiatorOrg Org @relation("initiator_of", fields: [initiatorOrgId], references: [id])
+  id          String  @id @db.Uuid
+  name        String  @unique
+  description String?
 
-    collaboratorList Org[]
+  //Org Relations
+  initiatorOrgId String @map("initiator_org_id") @db.Uuid
+  initiatorOrg   Org    @relation("initiator_of", fields: [initiatorOrgId], references: [id])
 
-    //IODevice Relations
-    iDeviceList IoDevice[] @relation("input_devices")
-    oDeviceList IoDevice[] @relation("output_devices")
+  collaboratorList Org[]
 
-    iSensorList IoSensor[] @relation("input_sensors")
-    oSensorList IoSensor[] @relation("output_sensors")
+  //IODevice Relations
+  iDeviceList IoDevice[] @relation("input_devices")
+  oDeviceList IoDevice[] @relation("output_devices")
 
-    ioGroups IoGroup[]
+  iSensorList IoSensor[] @relation("input_sensors")
+  oSensorList IoSensor[] @relation("output_sensors")
 
-    @@map("project")
+  ioGroups IoGroup[]
+
+  @@map("project")
 }
 
 model IoHello {
-    id String @id @db.Uuid
+  id String @id @db.Uuid
 
-    hw IoDevice[] @relation("to_hello")
+  hw IoDevice[] @relation("to_hello")
 
-    type String
-    version String
-    model String
-    protocols String[]
+  type      String
+  version   String
+  model     String
+  protocols String[]
 
-    credentialsUrl String @map("credentials_url")
+  credentialsUrl String @map("credentials_url")
 
-    fOff IoFo? @relation("fly_off_to_hello")
+  fOff IoFo? @relation("fly_off_to_hello")
 
-    @@map("io_hello")
+  @@map("io_hello")
 }
 
 model IoFo {
-    id String @id @db.Uuid
+  id String @id @db.Uuid
 
-    helloId String @db.Uuid @unique
-    hello IoHello @relation("fly_off_to_hello", fields: [helloId], references: [id])
+  helloId String  @unique @db.Uuid
+  hello   IoHello @relation("fly_off_to_hello", fields: [helloId], references: [id])
 
-    hwList IoDevice[] @relation("to_fo")
+  hwList IoDevice[] @relation("to_fo")
 
-    @@map("io_fo")
+  @@map("io_fo")
 }
 
 model IoDevice {
-    id String @id @db.Uuid
-    name String @unique
-    description String?
+  id          String  @id @db.Uuid
+  name        String  @unique
+  description String?
 
-    type String?
-    version String?
-    model String?
+  type    String?
+  version String?
+  model   String?
 
-    helloList IoHello[] @relation("to_hello")
-    foList IoFo[] @relation("to_fo")
+  helloList IoHello[] @relation("to_hello")
+  foList    IoFo[]    @relation("to_fo")
 
-    iProjectList Project[] @relation("input_devices")
-    oProjectList Project[] @relation("output_devices")
+  iProjectList Project[] @relation("input_devices")
+  oProjectList Project[] @relation("output_devices")
 
-    ioGroupId String @db.Uuid @unique
-    ioGroup IoGroup? @relation("device_group", fields: [ioGroupId], references: [id])
+  ioGroupId String   @unique @db.Uuid
+  ioGroup   IoGroup? @relation("device_group", fields: [ioGroupId], references: [id])
 
-    @@map("io_device")
+  @@map("io_device")
 }
 
 model IoSensor {
-    id String @id @db.Uuid
-    name String @unique
-    description String?
+  id          String  @id @db.Uuid
+  name        String  @unique
+  description String?
 
-    type String?
-    version String?
-    model String?
+  type    String?
+  version String?
+  model   String?
 
-    iProjectList Project[] @relation("input_sensors")
-    oProjectList Project[] @relation("output_sensors")
+  iProjectList Project[] @relation("input_sensors")
+  oProjectList Project[] @relation("output_sensors")
 
-    ioGroupId String @db.Uuid @unique
-    ioGroup IoGroup? @relation("hw_group", fields: [ioGroupId], references: [id])
+  ioGroupId String   @unique @db.Uuid
+  ioGroup   IoGroup? @relation("hw_group", fields: [ioGroupId], references: [id])
 
-    @@map("io_sensor")
+  @@map("io_sensor")
 }
 
 model IoGroup {
-    id String @id @db.Uuid
-    name String @unique
-    description String?
+  id          String  @id @db.Uuid
+  name        String  @unique
+  description String?
 
-    deviceList IoDevice[] @relation("device_group")
-    sensorList IoSensor[] @relation("hw_group")
-    projectList Project[]
+  deviceList  IoDevice[] @relation("device_group")
+  sensorList  IoSensor[] @relation("hw_group")
+  projectList Project[]
 
-    @@map("io_group")
+  @@map("io_group")
 }
 
 model Org {
-    id String @id @db.Uuid
-    name String @unique
-    description String?
+  id          String  @id @db.Uuid
+  name        String  @unique
+  description String?
 
-    //Project Relations
-    initiationList Project[] @relation("initiator_of")
-    collaborationList Project[]
+  //Project Relations
+  initiationList    Project[] @relation("initiator_of")
+  collaborationList Project[]
 
-    // PR
-    leaders Person[] @relation("leading")
-    members Person[] @relation("membering")
+  // PR
+  leaders Person[] @relation("leading")
+  members Person[] @relation("membering")
+
+  @@map("org")
 }
 
 model Person {
-    id String @id @db.Uuid
-    name String @unique
-    description String?
+  id          String  @id @db.Uuid
+  name        String  @unique
+  description String?
 
-    groups PeopleGroup[]
-    leadingOrgList Org[] @relation("leading")
-    participatingOrgList Org[] @relation("membering")
+  groups               PeopleGroup[]
+  leadingOrgList       Org[]         @relation("leading")
+  participatingOrgList Org[]         @relation("membering")
+
+  @@map("person")
 }
 
 model PeopleGroup {
-    id String @id @db.Uuid
-    name String @unique
-    description String?
+  id          String  @id @db.Uuid
+  name        String  @unique
+  description String?
 
-    personList Person[]
+  personList Person[]
 
-    @@map("people_group")
+  @@map("people_group")
 }
+
+// Poetry Editor
+
+model Word {
+  id          String  @id @default(uuid()) @db.Uuid
+  name        String  @unique
+  description String?
+
+  syllableList Syllable[] @relation("syllable_words")
+  spellingList Spelling[] @relation("spelling_words")
+  meaningList  Meaning[]  @relation("meaning_words")
+  usageList    Usage[]    @relation("usage_words")
+
+  phraseList   Phrase[]   @relation("phrase_words")
+  sentenceList Sentence[] @relation("sentence_words")
+
+  @@map("word")
+}
+
+model Syllable {
+  id String @id @default(uuid()) @db.Uuid
+
+  wordId String @db.Uuid()
+  word   Word   @relation(name: "syllable_words", fields: [wordId], references: [id])
+
+  name        String  @unique
+  description String?
+
+  stress     String?
+  phonemeMap Json
+  metric     String?
+
+  compositionId String?   @db.Uuid()
+  composition   Syllable? @relation(name: "syllable_composition", fields: [compositionId], references: [id])
+
+  compositionList Syllable[] @relation("syllable_composition")
+
+  @@map("syllable")
+}
+
+model Spelling {
+  id          String  @id @default(uuid()) @db.Uuid
+  name        String  @unique
+  description String?
+
+  wordId String @db.Uuid()
+  word   Word   @relation(name: "spelling_words", fields: [wordId], references: [id])
+
+  tense    String?
+  voiceMap Json
+  case     String?
+
+  variantId String?   @db.Uuid()
+  variant   Spelling? @relation(name: "spelling_variant", fields: [variantId], references: [id])
+
+  variantList Spelling[] @relation("spelling_variant")
+
+  @@map("spelling")
+}
+
+model Meaning {
+  id          String  @id @default(uuid()) @db.Uuid
+  name        String  @unique
+  description String?
+
+  wordId String @db.Uuid()
+  word   Word   @relation(name: "meaning_words", fields: [wordId], references: [id])
+
+  etymology String?
+  domainMap Json
+  usual     String?
+
+  contextId String?  @db.Uuid()
+  context   Meaning? @relation(name: "meaning_context", fields: [contextId], references: [id])
+
+  contextList Meaning[] @relation("meaning_context")
+
+  @@map("meaning")
+}
+
+model Usage {
+  id          String  @id @default(uuid()) @db.Uuid
+  name        String  @unique
+  description String?
+
+  wordId String @db.Uuid()
+  word   Word   @relation(name: "usage_words", fields: [wordId], references: [id])
+
+  literary     String?
+  socialMap    Json
+  journalistic String?
+
+  encodingId String? @db.Uuid()
+  encoding   Usage?  @relation("usage_encoding", fields: [encodingId], references: [id])
+
+  encodingList Usage[] @relation("usage_encoding")
+
+  @@map("usage")
+}
+
+model Phrase {
+  id          String  @id @default(uuid()) @db.Uuid
+  name        String  @unique
+  description String?
+
+  wordList Word[] @relation(name: "phrase_words")
+
+  @@map("phrase")
+}
+
+model Sentence {
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  wordList Word[] @relation(name: "sentence_words")
+  paraList Para[] @relation(name: "para_sentences")
+
+  @@map("sentence")
+}
+
+model Para {
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  sentenceList Sentence[] @relation(name: "para_sentences")
+
+  @@map("para")
+}
+
+// end of grammar
+
+model Character {
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  conflictList     Conflict[]     @relation("character_conflicts")
+  turningPointList TurningPoint[] @relation("character_turning_point")
+  objectiveList Objective[] @relation("character_objective")
+  characterArchList CharacterArch[] @relation("character_arch")
+  storyLineList StoryLine[] @relation("character_storyline")
+
+  @@map("character")
+}
+
+model CharacterBuilder {
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  @@map("character_builder")
+}
+
+model Config {
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  configTemplateList ConfigTemplate[] @relation("config_template")
+
+  @@map("config")
+}
+
+model ConfigTemplate {
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  configList Config[] @relation("config_template")
+  missionList Mission[] @relation("mission_template")
+  legendMapList LegendMap[] @relation("legend_map_template")
+  levelList Level[] @relation("level_template")
+  powerList Power[] @relation("power_template")
+  toolList Tool[] @relation("tool_template")
+  vehicleList Vehicle[] @relation("vehicle_template")
+
+  @@map("config_template")
+  
+}
+
+model Conflict {
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  characterList Character[] @relation("character_conflicts")
+
+  conflictResolutionPathList ConflictResolutionPath[] @relation("conflict_res_path_conflict")
+
+  @@map("conflict")
+}
+
+model ConflictResolutionPath {
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  conflictList Conflict[] @relation("conflict_res_path_conflict")
+
+  @@map("conflict_resolution_path")
+}
+
+model TurningPoint {
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  characterList Character[] @relation("character_turning_point")
+
+  @@map("turning_point")
+}
+
+
+model Objective {
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  characterList Character[] @relation("character_objective")
+
+  @@map("objective")
+}
+
+
+model Mission {
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  configTemplateList ConfigTemplate[] @relation("mission_template")
+
+  @@map("mission")
+}
+
+model Level {
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  configTemplateList ConfigTemplate[] @relation("level_template")
+
+  @@map("level")
+}
+
+model LegendMap {
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  configTemplateList ConfigTemplate[] @relation("legend_map_template")
+
+  @@map("legend_map")
+}
+
+model Power {
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  configTemplateList ConfigTemplate[] @relation("power_template")
+
+  @@map("power")
+}
+
+model Tool {
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  configTemplateList ConfigTemplate[] @relation("tool_template")
+
+  @@map("tool")
+}
+
+model Vehicle {
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  configTemplateList ConfigTemplate[] @relation("vehicle_template")
+
+  @@map("vehicle")
+}
+
+model CharacterArch {
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  characterList Character[] @relation("character_arch")
+
+  @@map("character_arch")
+}
+
+model StoryLine {
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  characterList Character[] @relation("character_storyline")
+
+  @@map("story_line")
+}
+
+// end of lit models
+
+// beginning of macer. maven
+
+model Modeler {
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  stateList State[] @relation("state_model")
+  eventList CasualEvent[] @relation("event_model")
+  viewList View[]  @relation("view_model")
+
+  @@map("modeler")
+}
+
+model Action {
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  initialStateList State[] @relation("initial_states")
+  finalStateList State[] @relation("final_states")
+
+  @@map("action")
+}
+
+model State {
+
+  modelerList Modeler[] @relation("state_model")
+
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  position Decimal[]
+  orientation Decimal[]
+  configuration Decimal[]
+
+  actionInitList Action[] @relation("initial_states")
+  actionTermList Action[] @relation("final_states")
+
+  eventInitList CasualEvent[] @relation("state_init_event")
+  eventTermList CasualEvent[] @relation("state_term_event")
+
+  @@map("state")
+}
+
+model CasualEvent {
+
+  modelerList Modeler[] @relation("event_model")
+
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  stateInitList State[] @relation("state_init_event")
+  stateTermList State[] @relation("state_term_event")
+
+  @@map("casual_event")
+}
+
+model View {
+
+  modelerList Modeler[] @relation("view_model")
+
+  id          String  @id @default(uuid()) @db.Uuid()
+  name        String  @unique
+  description String?
+
+  @@map("view")
+}
+
+/// 
