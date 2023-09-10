@@ -1,0 +1,152 @@
+<div class="relative flex flex-col min-w-0 break-words w-full mb-6 rounded-lg border-0">
+    <div class="flex-auto px-4 lg:px-10 py-4 pt-0">
+        <form [formGroup]="medicalForm">
+            <div class="flex flex-wrap">
+                <ng-container formArrayName="conditions">
+                    <ng-container *ngFor="let conditionsForm of conditions.controls; let i = index">
+                        <div class="w-[60%] pl-4 pr-2">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase text-xs font-bold mb-2" for="labels">
+                                    Medical Condition
+                                </label>
+                                <p-autoComplete [group]="true" [suggestions]="filteredMedicalConditions"
+                                    styleClass="rounded text-sm shadow-sm focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                    (completeMethod)="filterMedicalConditions($event)" field="label" [dropdown]="true">
+                                    <ng-template let-group pTemplate="group">
+                                        <div class="flex gap-2">
+                                            <span>{{group.value}} </span>
+                                            <span>{{group.label}}</span>
+                                        </div>
+                                    </ng-template>
+                                </p-autoComplete>
+                            </div>
+                        </div>
+                        <div class="w-[30%] px-2">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase text-xs font-bold mb-2" for="diagnosedOn">
+                                    Diagnosed On
+                                </label>
+                                <p-calendar id="diagnosedOn" dateFormat="dd-mm-yy"
+                                    styleClass="border-0 rounded text-sm shadow-sm focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                    [showIcon]="true" [showClear]="true">
+                                </p-calendar>
+                            </div>
+                        </div>
+                        <div class="w-[5%] pr-2">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase  text-xs font-bold mb-2 ml-2" for="notes">
+                                    Add
+                                </label>
+                                <button pButton pRipple type="button" title="Add"
+                                    class="p-button-raised bg-emerald-700 h-[46px]" (click)="addCondition()"><i
+                                        class="pi pi-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="w-[5%] pr-2" *ngIf="conditions.controls.length > 1">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase  text-xs font-bold mb-2" for="notes">
+                                    Remove
+                                </label>
+                                <button pButton pRipple type="button" title="Remove"
+                                    class="p-button-raised border-0 bg-rose-600 h-[46px]"
+                                    (click)="removeCondition(i)"><i class="pi pi-minus"></i></button>
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+                <ng-container formArrayName="medications">
+                    <ng-container *ngFor="let medicationsForm of medications.controls; let i = index">
+                        <div class="w-[30%] pl-4 pr-2">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="medicine">
+                                    Medicine
+                                </label>
+                                <input id="medicine" pInputText
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                    placeholder="e.g. Ketorol" />
+                            </div>
+                        </div>
+                        <div class="w-[30%] pl-4 pr-2">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="dosage">
+                                    Dosage
+                                </label>
+                                <input id="dosage" pInputText
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                    placeholder="e.g. BD" />
+                            </div>
+                        </div>
+                        <div class="w-[30%] px-2">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase text-xs font-bold mb-2" for="medicationStart">
+                                    Started Since
+                                </label>
+                                <p-calendar id="medicationStart" dateFormat="dd-mm-yy"
+                                    styleClass="border-0 rounded text-sm shadow-sm focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                    [showIcon]="true" [showClear]="true">
+                                </p-calendar>
+                            </div>
+                        </div>
+                        <div class="w-[5%] pr-2">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase  text-xs font-bold mb-2 ml-2" for="notes">
+                                    Add
+                                </label>
+                                <button pButton pRipple type="button" title="Add"
+                                    class="p-button-raised bg-emerald-700 h-[46px]" (click)="addMedication()"><i
+                                        class="pi pi-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="w-[5%] pr-2" *ngIf="medications.controls.length > 1">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase  text-xs font-bold mb-2" for="notes">
+                                    Remove
+                                </label>
+                                <button pButton pRipple type="button" title="Remove"
+                                    class="p-button-raised border-0 bg-rose-600 h-[46px]"
+                                    (click)="removeMedication(i)"><i class="pi pi-minus"></i></button>
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+                <div class="w-[95%] px-4">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase  text-xs font-bold mb-2" for="note">
+                            {{currentHistoryItem !== -1 ? 'Edit Note ' + (currentHistoryItem + 1) + ":" : "New Note"}}
+                        </label>
+                        <textarea id="note" pInputTextArea #patientNote rows="3" formControlName="historyItem"
+                            class="rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 h-[50px]"></textarea>
+                    </div>
+                </div>
+                <div class="w-[5%] pr-2">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase  text-xs font-bold mb-2 -ml-1" for="notes">
+                            {{currentHistoryItem !== -1 ? 'Save Note' : 'Add Note'}}
+                        </label>
+                        <button pButton pRipple type="button" title="Add" class="p-button-raised bg-emerald-700"
+                            (click)="addNote(patientNote.value);patientNote.value=''"><i
+                                class="pi pi-plus"></i></button>
+                    </div>
+                </div>
+                <div class="w-full px-4">
+                    <div class="relative w-full mb-3">
+                        <label class="uppercase flex justify-between text-xs  mb-2" for="notes">
+                            <span class="font-bold">Patient Notes</span>
+                            <span>Select to edit</span>
+                        </label>
+                        <p-listbox [options]="historyItems.get()" optionLabel="value" dataKey="key" styleClass="w-full"
+                            (onClick)="onNoteSelect($event)" emptyMessage="Added notes appear here." [multiple]="false">
+                            <ng-template let-note pTemplate="item">
+                                <div class="flex justify-between w-full">
+                                    <span>{{historyItems.indexOf(note.value) + 1}}: {{note.value}}</span>
+                                    <span><i class="pi pi-trash"
+                                            (click)="deleteNote(historyItems.indexOf(note.value))"></i></span>
+                                </div>
+                            </ng-template>
+                        </p-listbox>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

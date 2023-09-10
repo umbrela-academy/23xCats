@@ -9,28 +9,24 @@ import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { selectLayout } from '../store/layout.selectors';
 
 @Component({
-  standalone: true,
-  selector: 'gita-sidebar',
-  templateUrl: './sidebar.component.html',
+  selector: 'gapl-sidebar',
+  templateUrl: './sidebar.component.html'
 })
 export class SidebarComponent implements OnInit, OnDestroy {
+
   private onDestroy$ = new Subject<true>();
-  protected layout$: Observable<LayoutModel> = this.store
-    .select(selectLayout)
-    .pipe(takeUntil(this.onDestroy$));
+  protected layout$: Observable<LayoutModel> = this.store.select(selectLayout).pipe(takeUntil(this.onDestroy$));
 
   protected items!: MenuItem[];
   protected bottom!: MenuItem;
-  protected isSidebarExpanded$ = this.layout$.pipe(
-    map((l) => l.sidebar === 'shown')
-  );
+  protected isSidebarExpanded$ = this.layout$.pipe(map(l => l.sidebar === 'shown'));
 
-  logoPath = '/assets/img/logo-1024.png';
+  protected logoPath = '/assets/img/logo-1024.png'
 
   protected collapser: () => void = this.sidebarViz.collapser;
   protected expander: () => void = this.sidebarViz.expander;
 
-  constructor(private store: Store, private sidebarViz: SidebarVizService) {}
+  constructor(private store: Store, private sidebarViz: SidebarVizService) { }
 
   ngOnInit() {
     this.items = globalRouteItems;
@@ -42,4 +38,5 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.onDestroy$.next(true);
     this.onDestroy$.complete();
   }
+
 }

@@ -1,0 +1,80 @@
+<p-dialog [visible]="(displayEditor$ | async) ?? false" [style]="{'overflow': 'visible'}" [keepInViewport]="true"
+    [dismissableMask]="true" [maximizable]="true" [modal]="true" (visibleChange)="setDialogVisibility($event)">
+    <ng-template pTemplate="header">
+        <span class="tooltip tooltip-right" data-tip="Add New Patient"><i class="pi pi-user-plus"></i></span>
+        <span class="text-xl font-semibold">Treatment Details</span>
+    </ng-template>
+    <div class="relative flex flex-col min-w-0 w-full mb-2 rounded-lg border-0">
+        <div class="px-2 lg:px-10 py-4 pt-0">
+            <form [formGroup]="treatmentForm" (ngSubmit)="submitForm()" *ngIf="{
+                commonName: treatmentForm.get('commonName')?.invalid && (treatmentForm.get('commonName')?.dirty || treatmentForm.get('commonName')?.touched),
+                treatmentType: treatmentForm.get('treatmentType')?.invalid && (treatmentForm.get('treatmentType')?.dirty || treatmentForm.get('treatmentType')?.touched),
+                visits: treatmentForm.get('visits')?.invalid && (treatmentForm.get('visits')?.dirty || treatmentForm.get('visits')?.touched),
+                expense: treatmentForm.get('expense')?.invalid && (treatmentForm.get('expense')?.dirty || treatmentForm.get('expense')?.touched)
+            } as formError">
+                <div class="flex flex-wrap">
+                    <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                            <label class="flex justify-between" for="name">
+                                <span class="text-slate-600 uppercase text-xs font-bold mb-2">Name <span
+                                        class="text-rose-500 text-xs font-italic"
+                                        *ngIf="formError.commonName">*</span></span>
+                                <span class="text-rose-500 text-xs font-italic" *ngIf="formError.commonName">
+                                    Please provide treatment's name
+                                </span>
+                            </label>
+                            <input id="name" pInputText formControlName="commonName"
+                                class="border-0 px-3 py-3   bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                placeholder="Name" />
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                            <label class="block uppercase  text-xs font-bold mb-2" for="type">
+                                Type
+                            </label>
+                            <input id="type" pInputText formControlName="treatmentType"
+                                class="border-0 px-3 py-3   bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                placeholder="Code" />
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-wrap">
+                    <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                            <label class="flex justify-between" for="visits">
+                                <span class="text-slate-600 uppercase text-xs font-bold mb-2">Min Visits <span
+                                        class="text-rose-500 text-xs font-italic"
+                                        *ngIf="formError.visits">*</span></span>
+                                <span class="text-rose-500 text-xs font-italic" *ngIf="formError.visits">
+                                    Please provide min visits
+                                </span>
+                            </label>
+                            <input id="visits" pInputText type="number" min="0" formControlName="visits"
+                                class="border-0 px-3 py-3   bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                            <label class="flex justify-between" for="cost">
+                                <span class="text-slate-600 uppercase text-xs font-bold mb-2">Cost <span
+                                        class="text-rose-500 text-xs font-italic"
+                                        *ngIf="formError.expense">*</span></span>
+                                <span class="text-rose-500 text-xs font-italic" *ngIf="formError.expense">
+                                    Please provide cost baseline
+                                </span>
+                            </label>
+                            <input id="cost" type="number" min="0" pInputText formControlName="expense"
+                                class="border-0 px-3 py-3   bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                placeholder="NRs." />
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-end mt-4">
+                    <button pButton pRipple type="submit" label="Save" title="Save"
+                        class="p-button-raised bg-indigo-700"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</p-dialog>

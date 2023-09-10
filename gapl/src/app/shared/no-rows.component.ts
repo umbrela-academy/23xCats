@@ -3,7 +3,7 @@ import { INoRowsOverlayParams } from "ag-grid-community";
 import { Component } from "@angular/core";
 
 @Component({
-  selector: 'gita-no-rows-overlay',
+  selector: 'gapl-no-rows-overlay',
   template: `
      <div class="ag-overlay-loading-center bg-accent">
         {{ params.noRowsMessageFunc() }}

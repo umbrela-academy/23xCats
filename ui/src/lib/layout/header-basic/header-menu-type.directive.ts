@@ -7,6 +7,7 @@ interface HeaderTemplateContext<HMenuItem extends MenuItem> {
 
 // For a well-typed template context
 @Directive({
+    standalone: true,
     selector: 'ng-template[gitaHeaderMenu]',
 })
 export class HeaderMenuTypeDirective<HMenuItem extends MenuItem> {

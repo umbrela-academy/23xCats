@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { FormlyFieldConfig } from '@ngx-formly/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 
 @Component({
   standalone: true,
-  imports: [CommonModule],
-  selector: 'gita-formal',
+  imports: [CommonModule, FormlyModule, ReactiveFormsModule],
+  selector: 'gapl-formal',
   templateUrl: './formal.component.html',
   styleUrls: ['./formal.component.scss'],
 })

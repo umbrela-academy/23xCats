@@ -1,0 +1,29 @@
+<ul class="image-gallery" *ngIf="imagesWithDetails">
+    <li *ngFor="let image of imagesWithDetails; let index = index;" class="pb-6">
+        <img [src]="image.url" [alt]="image.name" [title]="image.name" [style.cursor]="'pointer'"
+            (click)="imageClick(image.url)" />
+        <div class="flex justify-between mt-2">
+            <h6 class="text-xs">{{image.name}}</h6>
+            <h6 class="text-xs">{{image.detail}} <span class="text-rose-400" (click)="removePic(image.url)"><i
+                        class="pi pi-trash"></i></span>
+            </h6>
+        </div>
+    </li>
+</ul>
+
+<p-galleria *ngIf="imagesWithDetails.length" [visible]="displaySlides" (visibleChange)="visibilitySync($event)"
+    [value]="imagesWithDetails" [activeIndex]="activeIndex" [responsiveOptions]="responsiveOptions" [numVisible]="5"
+    [circular]="true" [fullScreen]="true" [showItemNavigators]="true" [baseZIndex]="9000" [showThumbnails]="false"
+    [containerStyle]="{'max-width': '90vw'}">
+    <ng-template pTemplate="item" let-image>
+        <img [src]="image.url" [alt]="image.name" class="w-full block" [title]="image.name" />
+    </ng-template>
+</p-galleria>
+<form [formGroup]="photoForm" class="flex place-content-center" (ngSubmit)="onSubmit()">
+    <input title="imageUpload" class="hidden" type='file' multiple id="imageUpload" accept=".png, .jpg, .jpeg"
+        #fileInput (change)="uploadFiles($event)" />
+    <button pButton class="bg-indigo-700 rounded w-2/12 mt-6" type="submit" (click)="fileInput.click()">
+        <i class="pi pi-plus"></i><span class="pl-4">Add Clinical
+            Images</span>
+    </button>
+</form>

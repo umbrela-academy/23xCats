@@ -8,15 +8,24 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser-esbuild",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/gapl",
         "index": "gapl/src/index.html",
         "main": "gapl/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "gapl/tsconfig.app.json",
-        "assets": ["gapl/src/favicon.ico", "gapl/src/assets"],
-        "styles": ["gapl/src/styles.scss"],
+        "assets": [
+          "gapl/src/favicon.ico",
+          "gapl/src/assets"
+        ],
+        "styles": [
+          "gapl/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -27,7 +36,13 @@
           "buildOptimizer": false,
           "optimization": false,
           "extractLicenses": false,
-          "sourceMap": true
+          "sourceMap": true,
+          "fileReplacements": [
+            {
+              "replace": "gapl/src/environments/environment.ts",
+              "with": "gapl/src/environments/environment.development.ts"
+            }
+          ]
         }
       },
       "defaultConfiguration": "production"
@@ -55,14 +70,21 @@
     },
     "lint": {
       "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["gapl/**/*.ts", "gapl/**/*.html"]
+        "lintFilePatterns": [
+          "gapl/**/*.ts",
+          "gapl/**/*.html"
+        ]
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "gapl/jest.config.ts",
         "passWithNoTests": true

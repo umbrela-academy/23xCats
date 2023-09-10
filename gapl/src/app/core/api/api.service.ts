@@ -1,14 +1,17 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Inject, Injectable } from "@angular/core";
+import { Injectable, Injector } from "@angular/core";
 import { Observable, map } from 'rxjs';
-import { API_URL } from './api.config';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ApiService {
 
-    constructor(private http: HttpClient, @Inject(API_URL) private apiUrl: string) { }
+    apiUrl = '/api';
+    http;
+    constructor(private injector: Injector) {
+        this.http = this.injector.get(HttpClient);
+     }
 
     get<T>(url: string, params: HttpParams = new HttpParams()): Observable<T> {
         return this.http.get<T>(`${this.apiUrl}${url}`, { params });

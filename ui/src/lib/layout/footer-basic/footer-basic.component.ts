@@ -13,7 +13,7 @@ import { TooltipModule } from 'primeng/tooltip';
     RouterModule,
     TooltipModule
   ],
-  selector: 'gita-footer-basic',
+  selector: 'gapl-footer-basic',
   templateUrl: './footer-basic.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

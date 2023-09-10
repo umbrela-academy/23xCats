@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   standalone: true,
   imports: [CommonModule, RouterModule, RxLet],
-  selector: 'gita-sidebar-basic',
+  selector: 'gapl-sidebar-basic',
   templateUrl: './sidebar-basic.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

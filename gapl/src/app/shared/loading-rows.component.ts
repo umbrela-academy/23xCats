@@ -3,7 +3,7 @@ import { ILoadingOverlayAngularComp } from "ag-grid-angular";
 import { ILoadingOverlayParams } from "ag-grid-community";
 
 @Component({
-  selector: 'gita-loading-overlay',
+  selector: 'gapl-loading-overlay',
   template: `
     <div class="ag-overlay-loading-center bg-accent">
       <i class="fas fa-hourglass-half">{{ params.loadingMessage }} </i>

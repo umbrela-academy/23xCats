@@ -13,7 +13,7 @@ import { RxLet } from '@rx-angular/template/let';
     RouterModule,
     RxLet
   ],
-  selector: 'gita-header-basic',
+  selector: 'gapl-header-basic',
   templateUrl: './header-basic.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

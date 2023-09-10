@@ -1,24 +1,23 @@
-import { HeaderRoutesService } from './../../services/header-routes.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MenuItem } from 'primeng/api';
-import { map, Subject, takeUntil } from 'rxjs';
+import { Subject, map, takeUntil } from 'rxjs';
 import { selectLayout } from '../store/layout.selectors';
+import { HeaderRoutesService } from './../../services/header-routes.service';
 import { SidebarVizService } from './../../services/sidebar-viz.service';
 
 @Component({
-  standalone: true,
-  selector: 'gita-header',
+  selector: 'gapl-header',
   templateUrl: './header.component.html',
   styles: [
     `
       :host ::ng-deep {
-        .p-menubar {
-          @apply bg-white;
+        @extend .p-menubar !optional {
+          background-color: white;
           height: 62px;
         }
         .p-menuitem {
-          @apply text-emerald-600;
+          color: emerald;
         }
       }
     `,

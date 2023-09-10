@@ -4,7 +4,6 @@ import { MenuItem } from 'primeng/api';
 import { globalRouteItems } from '../../models/global-routes.data';
 
 @Component({
-  standalone: true,
   selector: 'gapl-footer',
   templateUrl: './footer.component.html'
 })

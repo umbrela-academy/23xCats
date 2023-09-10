@@ -1,0 +1,15 @@
+<ng-container *ngIf="{ 
+    active: ((edited$ | async) && ((idSelected$ | async) === rowData?.id)) || (isUnsaved$ | async),
+    isUnsaved: (isUnsaved$ | async),
+    selected: (idSelected$ | async) === rowData?.id
+} as inlineEdit">
+    <button [title]="inlineEdit.active ? 'Save Changes' : 'Edit' " pButton pRipple type="button"
+        (click)="inlineEdit.active ? saveEdit() : openEditModal()"
+        [icon]="inlineEdit.active ? 'pi pi-save' : 'pi pi-file-edit'"
+        class="p-button-rounded p-button-text bg-indigo-400 hover:bg-indigo-800" styleClass="p-button-sm"></button>
+
+    <button [title]="inlineEdit.active ? 'Cancel Changes' : 'Delete'" pButton pRipple type="button"
+        (click)="inlineEdit.active ? cancelEdit() : openDeleteModal()"
+        [icon]="inlineEdit.active ? 'pi pi-times' : 'pi pi-trash'" *ngIf="inlineEdit.selected || inlineEdit.isUnsaved"
+        class="p-button-rounded p-button-text bg-indigo-400 hover:bg-indigo-800" styleClass="p-button-sm"></button>
+</ng-container>
