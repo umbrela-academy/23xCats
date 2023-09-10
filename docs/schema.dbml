@@ -93,6 +93,8 @@ Table person {
   groups people_group [not null]
   leadingOrgList org [not null]
   participatingOrgList org [not null]
+  patient patient
+  teamMember team_member
 }
 
 Table people_group {
@@ -363,6 +365,124 @@ Table view {
   description String
 }
 
+Table patient {
+  id String [pk]
+  publicId String [unique]
+  personId String [unique, not null]
+  person person [not null]
+  treatmentList treatment [not null]
+}
+
+Table treatment {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  totalCost Decimal [not null]
+  patientId String [not null]
+  patient patient [not null]
+  paymentList payment [not null]
+  therapyList therapy [not null]
+  surgeryList surgery [not null]
+  medicationList medication [not null]
+  remedyList remedy [not null]
+  equipmentList equipment [not null]
+}
+
+Table therapy {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  treatmentList treatment [not null]
+}
+
+Table surgery {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  treatmentList treatment [not null]
+}
+
+Table medication {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  treatmentList treatment [not null]
+}
+
+Table remedy {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  treatmentList treatment [not null]
+}
+
+Table equipment {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  treatmentList treatment [not null]
+  inventoryId String [not null]
+  inventory inventory [not null]
+}
+
+Table inventory {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  equipmentList equipment [not null]
+}
+
+Table payment {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  treatmentId String [unique, not null]
+  treatment treatment [not null]
+  quoteList quote [not null]
+  invoiceList invoice [not null]
+  receiptList receipt [not null]
+}
+
+Table quote {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  paymentList payment [not null]
+}
+
+Table invoice {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  paymentList payment [not null]
+}
+
+Table receipt {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  paymentList payment [not null]
+}
+
+Table team_member {
+  id String [pk]
+  salary Decimal [not null]
+  ingressTime DateTime
+  egressTime DateTime
+  loan Decimal
+  personId String [unique, not null]
+  person person [not null]
+  payrollItemList payroll_item [not null]
+}
+
+Table payroll_item {
+  id String [pk]
+  deficit Decimal
+  paymentDate DateTime [not null]
+  teamMemberId String [not null]
+  teamMember team_member [not null]
+}
+
 Ref: project.initiatorOrgId > org.id
 
 Ref: io_fo.helloId - io_hello.id
@@ -386,3 +506,15 @@ Ref: meaning.contextId - meaning.id
 Ref: usage.wordId > word.id
 
 Ref: usage.encodingId - usage.id
+
+Ref: patient.personId - person.id
+
+Ref: treatment.patientId > patient.id
+
+Ref: equipment.inventoryId > inventory.id
+
+Ref: payment.treatmentId > treatment.id
+
+Ref: team_member.personId - person.id
+
+Ref: payroll_item.teamMemberId > team_member.id
