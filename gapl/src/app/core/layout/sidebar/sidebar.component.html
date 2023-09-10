@@ -1,0 +1,6 @@
+<ng-container *rxLet="layout$ as layout">
+    <gita-sidebar *ngIf="layout.sidebar !== 'hidden'" [sidebarItems]="items" [bottom]="bottom"
+        [logoPath]="logoPath" [isSidebarExpanded$]="isSidebarExpanded$" [collapser]="collapser" [expander]="expander"
+        class="shadow-2xl">
+    </gita-sidebar>
+</ng-container>

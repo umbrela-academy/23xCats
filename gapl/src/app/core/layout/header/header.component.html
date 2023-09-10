@@ -1,0 +1,19 @@
+<gita-header-basic [isSidebarShown$]="isSidebarShown$" [headerNavItems]="headerNavItems" [collapser]="collapser"
+    [expander]="expander" [authPref]="authPref" [prodPref]="prodPref">
+    <ng-template [gitaHeaderMenu]="headerNavItems">
+        <div class="flex pr-4 w-full z-20">
+            <p-menubar [model]="headerNavItems">
+                <ng-template pTemplate="start">
+                    <div class="flex gap-2">
+                        <span routerLink="/" class="tooltip tooltip-bottom tooltip-primary" data-tip="Home">
+                            <img src="assets/img/logo-1024.png" class="h-10" alt="logo">
+                        </span>
+                        <span routerLink="/statistics" class="tooltip tooltip-bottom tooltip-primary"
+                            data-tip="Statistics"><i class="pi text-indigo-800 mx-1 mt-3 pi-chart-line"></i>
+                        </span>
+                    </div>
+                </ng-template>
+            </p-menubar>
+        </div>
+    </ng-template>
+</gita-header-basic>
