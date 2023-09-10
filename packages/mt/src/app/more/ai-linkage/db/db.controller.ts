@@ -7,7 +7,7 @@ import { IUpdate, IUpdateMany } from '../model/cqrs/mutation/update.args';
 import { IUpsert } from '../model/cqrs/mutation/upsert.args';
 import { Query } from '../model/cqrs/query.delegate';
 import { IAggregate, IGroupBy } from '../model/cqrs/query/aggregate.args';
-import { OAggregate, OCount, OFindFirst, OFindMany, OFindUnique, OGroupBy } from '../model/cqrs/query/all.out';
+import { OAggregate, OCount, OFindFirst, OFindUnique, OGroupBy } from '../model/cqrs/query/all.out';
 import { ICount } from '../model/cqrs/query/count.args';
 import { IFieldRefs } from '../model/cqrs/query/fields.refs';
 import { IFindFirst, IFindMany, IFindUnique } from '../model/cqrs/query/find.args';
