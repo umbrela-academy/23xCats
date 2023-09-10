@@ -47,6 +47,21 @@ export interface AggregateArgs {
 
   CausalEvent: Prisma.CausalEventAggregateArgs;
   View: Prisma.ViewAggregateArgs;
+
+  Patient: Prisma.PatientAggregateArgs;
+  Treatment: Prisma.TreatmentAggregateArgs;
+  Therapy: Prisma.TherapyAggregateArgs;
+  Surgery: Prisma.SurgeryAggregateArgs;
+  Medication: Prisma.MedicationAggregateArgs;
+  Remedy: Prisma.RemedyAggregateArgs;
+  Equipment: Prisma.EquipmentAggregateArgs;
+  Inventory: Prisma.InventoryAggregateArgs;
+  Payment: Prisma.PaymentAggregateArgs;
+  Quote: Prisma.QuoteAggregateArgs;
+  Invoice: Prisma.InvoiceAggregateArgs;
+  Receipt: Prisma.ReceiptAggregateArgs;
+  TeamMember: Prisma.TeamMemberAggregateArgs;
+  PayrollItem: Prisma.PayrollItemAggregateArgs;
 }
 
 export type IAggregate<T extends NTTKey> = AggregateArgs[T];

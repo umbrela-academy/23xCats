@@ -36,7 +36,21 @@ import {
   State,
   CausalEvent,
   View,
-  Word
+  Word,
+  Patient,
+  Treatment,
+  Therapy,
+  Surgery,
+  Medication,
+  Remedy,
+  Equipment,
+  Inventory,
+  Payment,
+  Quote,
+  Invoice,
+  Receipt,
+  TeamMember,
+  PayrollItem,
 } from './entities';
 
 export const Entities = {
@@ -69,7 +83,7 @@ export const Entities = {
 
   Conflict,
   ConflictResolutionPath,
-  
+
   TurningPoint,
   Objective,
   Mission,
@@ -81,12 +95,27 @@ export const Entities = {
 
   CharacterArch,
   StoryLine,
-  
+
   Modeler,
   Action,
   State,
   CausalEvent,
   View,
+
+  Patient,
+  Treatment,
+  Therapy,
+  Surgery,
+  Medication,
+  Remedy,
+  Equipment,
+  Inventory,
+  Payment,
+  Quote,
+  Invoice,
+  Receipt,
+  TeamMember,
+  PayrollItem,
 } as const;
 
 export type EntitiesType = typeof Entities;

@@ -46,6 +46,21 @@ export interface CountArgs {
 
   CausalEvent: Prisma.CausalEventCountArgs;
   View: Prisma.ViewCountArgs;
+
+  Patient: Prisma.PatientCountArgs;
+  Treatment: Prisma.TreatmentCountArgs;
+  Therapy: Prisma.TherapyCountArgs;
+  Surgery: Prisma.SurgeryCountArgs;
+  Medication: Prisma.MedicationCountArgs;
+  Remedy: Prisma.RemedyCountArgs;
+  Equipment: Prisma.EquipmentCountArgs;
+  Inventory: Prisma.InventoryCountArgs;
+  Payment: Prisma.PaymentCountArgs;
+  Quote: Prisma.QuoteCountArgs;
+  Invoice: Prisma.InvoiceCountArgs;
+  Receipt: Prisma.ReceiptCountArgs;
+  TeamMember: Prisma.TeamMemberCountArgs;
+  PayrollItem: Prisma.PayrollItemCountArgs;
 }
 
 export type ICount<T extends NTTKey> = CountArgs[T];

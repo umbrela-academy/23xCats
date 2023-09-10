@@ -46,5 +46,20 @@ export interface Delegates {
 
   CausalEvent: Prisma.CausalEventDelegate;
   View: Prisma.ViewDelegate;
+
+  Patient: Prisma.PatientDelegate;
+  Treatment: Prisma.TreatmentDelegate;
+  Therapy: Prisma.TherapyDelegate;
+  Surgery: Prisma.SurgeryDelegate;
+  Medication: Prisma.MedicationDelegate;
+  Remedy: Prisma.RemedyDelegate;
+  Equipment: Prisma.EquipmentDelegate;
+  Inventory: Prisma.InventoryDelegate;
+  Payment: Prisma.PaymentDelegate;
+  Quote: Prisma.QuoteDelegate;
+  Invoice: Prisma.InvoiceDelegate;
+  Receipt: Prisma.ReceiptDelegate;
+  TeamMember: Prisma.TeamMemberDelegate;
+  PayrollItem: Prisma.PayrollItemDelegate;
 }
 export type Delegate<T extends NTTKey> = Delegates[T];

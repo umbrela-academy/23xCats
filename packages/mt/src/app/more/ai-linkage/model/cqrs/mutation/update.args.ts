@@ -46,6 +46,21 @@ export interface UpdateArgs {
 
   CausalEvent: Prisma.CausalEventUpdateArgs;
   View: Prisma.ViewUpdateArgs;
+
+  Patient: Prisma.PatientUpdateArgs;
+  Treatment: Prisma.TreatmentUpdateArgs;
+  Therapy: Prisma.TherapyUpdateArgs;
+  Surgery: Prisma.SurgeryUpdateArgs;
+  Medication: Prisma.MedicationUpdateArgs;
+  Remedy: Prisma.RemedyUpdateArgs;
+  Equipment: Prisma.EquipmentUpdateArgs;
+  Inventory: Prisma.InventoryUpdateArgs;
+  Payment: Prisma.PaymentUpdateArgs;
+  Quote: Prisma.QuoteUpdateArgs;
+  Invoice: Prisma.InvoiceUpdateArgs;
+  Receipt: Prisma.ReceiptUpdateArgs;
+  TeamMember: Prisma.TeamMemberUpdateArgs;
+  PayrollItem: Prisma.PayrollItemUpdateArgs;
 }
 export type IUpdate<NTT extends NTTKey> = UpdateArgs[NTT];
 
@@ -94,5 +109,20 @@ export interface UpdateManyArgs {
 
   CausalEvent: Prisma.CausalEventUpdateManyArgs;
   View: Prisma.ViewUpdateManyArgs;
+
+  Patient: Prisma.PatientUpdateManyArgs;
+  Treatment: Prisma.TreatmentUpdateManyArgs;
+  Therapy: Prisma.TherapyUpdateManyArgs;
+  Surgery: Prisma.SurgeryUpdateManyArgs;
+  Medication: Prisma.MedicationUpdateManyArgs;
+  Remedy: Prisma.RemedyUpdateManyArgs;
+  Equipment: Prisma.EquipmentUpdateManyArgs;
+  Inventory: Prisma.InventoryUpdateManyArgs;
+  Payment: Prisma.PaymentUpdateManyArgs;
+  Quote: Prisma.QuoteUpdateManyArgs;
+  Invoice: Prisma.InvoiceUpdateManyArgs;
+  Receipt: Prisma.ReceiptUpdateManyArgs;
+  TeamMember: Prisma.TeamMemberUpdateManyArgs;
+  PayrollItem: Prisma.PayrollItemUpdateManyArgs;
 }
 export type IUpdateMany<NTT extends NTTKey> = UpdateManyArgs[NTT];

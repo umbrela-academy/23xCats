@@ -45,4 +45,19 @@ export interface Selections {
 
   CausalEvent: Prisma.CausalEventSelect;
   View: Prisma.ViewSelect;
+
+  Patient: Prisma.PatientSelect;
+  Treatment: Prisma.TreatmentSelect;
+  Therapy: Prisma.TherapySelect;
+  Surgery: Prisma.SurgerySelect;
+  Medication: Prisma.MedicationSelect;
+  Remedy: Prisma.RemedySelect;
+  Equipment: Prisma.EquipmentSelect;
+  Inventory: Prisma.InventorySelect;
+  Payment: Prisma.PaymentSelect;
+  Quote: Prisma.QuoteSelect;
+  Invoice: Prisma.InvoiceSelect;
+  Receipt: Prisma.ReceiptSelect;
+  TeamMember: Prisma.TeamMemberSelect;
+  PayrollItem: Prisma.PayrollItemSelect;
 }

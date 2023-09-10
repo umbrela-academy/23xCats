@@ -43,6 +43,21 @@ export const State = 'State' as const;
 export const CausalEvent = 'CausalEvent' as const;
 export const View = 'View' as const;
 
+export const Patient = "Patient" as const;
+export const Treatment = "Treatment" as const;
+export const Therapy = "Therapy" as const;
+export const Surgery = "Surgery" as const;
+export const Medication = "Medication" as const;
+export const Remedy = "Remedy" as const;
+export const Equipment = "Equipment" as const;
+export const Inventory = "Inventory" as const;
+export const Payment = "Payment" as const;
+export const Quote = "Quote" as const;
+export const Invoice = "Invoice" as const;
+export const Receipt = "Receipt" as const;
+export const TeamMember = "TeamMember" as const;
+export const PayrollItem = "PayrollItem" as const;
+
 export const project = 'project' as const;
 export const org = 'org' as const;
 export const person = 'person' as const;
@@ -87,3 +102,18 @@ export const state = 'state' as const;
 
 export const causalEvent = 'causalEvent' as const;
 export const view = 'view' as const;
+
+export const patient = "patient" as const;
+export const treatment = "treatment" as const;
+export const therapy = "therapy" as const;
+export const surgery = "surgery" as const;
+export const medication = "medication" as const;
+export const remedy = "remedy" as const;
+export const equipment = "equipment" as const;
+export const inventory = "inventory" as const;
+export const payment = "payment" as const;
+export const quote = "quote" as const;
+export const invoice = "invoice" as const;
+export const receipt = "receipt" as const;
+export const teamMember = "teamMember" as const;
+export const payrollItem = "payrollItem" as const;

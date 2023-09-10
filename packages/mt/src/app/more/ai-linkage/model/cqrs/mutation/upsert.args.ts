@@ -46,5 +46,20 @@ export interface UpsertArgs {
 
   CausalEvent: Prisma.CausalEventUpsertArgs;
   View: Prisma.ViewUpsertArgs;
+
+  Patient: Prisma.PatientUpsertArgs;
+  Treatment: Prisma.TreatmentUpsertArgs;
+  Therapy: Prisma.TherapyUpsertArgs;
+  Surgery: Prisma.SurgeryUpsertArgs;
+  Medication: Prisma.MedicationUpsertArgs;
+  Remedy: Prisma.RemedyUpsertArgs;
+  Equipment: Prisma.EquipmentUpsertArgs;
+  Inventory: Prisma.InventoryUpsertArgs;
+  Payment: Prisma.PaymentUpsertArgs;
+  Quote: Prisma.QuoteUpsertArgs;
+  Invoice: Prisma.InvoiceUpsertArgs;
+  Receipt: Prisma.ReceiptUpsertArgs;
+  TeamMember: Prisma.TeamMemberUpsertArgs;
+  PayrollItem: Prisma.PayrollItemUpsertArgs;
 }
 export type IUpsert<NTT extends NTTKey> = UpsertArgs[NTT];

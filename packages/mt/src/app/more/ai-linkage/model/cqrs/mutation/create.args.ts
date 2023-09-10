@@ -1,5 +1,5 @@
-import { Prisma } from "@prisma/client";
-import { NTTKey } from "../../omega";
+import { Prisma } from '@prisma/client';
+import { NTTKey } from '../../omega';
 
 export interface CreateArgs {
   Project: Prisma.ProjectCreateArgs;
@@ -46,9 +46,23 @@ export interface CreateArgs {
 
   CausalEvent: Prisma.CausalEventCreateArgs;
   View: Prisma.ViewCreateArgs;
+
+  Patient: Prisma.PatientCreateArgs;
+  Treatment: Prisma.TreatmentCreateArgs;
+  Therapy: Prisma.TherapyCreateArgs;
+  Surgery: Prisma.SurgeryCreateArgs;
+  Medication: Prisma.MedicationCreateArgs;
+  Remedy: Prisma.RemedyCreateArgs;
+  Equipment: Prisma.EquipmentCreateArgs;
+  Inventory: Prisma.InventoryCreateArgs;
+  Payment: Prisma.PaymentCreateArgs;
+  Quote: Prisma.QuoteCreateArgs;
+  Invoice: Prisma.InvoiceCreateArgs;
+  Receipt: Prisma.ReceiptCreateArgs;
+  TeamMember: Prisma.TeamMemberCreateArgs;
+  PayrollItem: Prisma.PayrollItemCreateArgs;
 }
 export type ICreate<NTT extends NTTKey> = CreateArgs[NTT];
-
 
 export interface CreateManyArgs {
   Project: Prisma.ProjectCreateManyArgs;
@@ -95,5 +109,20 @@ export interface CreateManyArgs {
 
   CausalEvent: Prisma.CausalEventCreateManyArgs;
   View: Prisma.ViewCreateManyArgs;
+
+  Patient: Prisma.PatientCreateManyArgs;
+  Treatment: Prisma.TreatmentCreateManyArgs;
+  Therapy: Prisma.TherapyCreateManyArgs;
+  Surgery: Prisma.SurgeryCreateManyArgs;
+  Medication: Prisma.MedicationCreateManyArgs;
+  Remedy: Prisma.RemedyCreateManyArgs;
+  Equipment: Prisma.EquipmentCreateManyArgs;
+  Inventory: Prisma.InventoryCreateManyArgs;
+  Payment: Prisma.PaymentCreateManyArgs;
+  Quote: Prisma.QuoteCreateManyArgs;
+  Invoice: Prisma.InvoiceCreateManyArgs;
+  Receipt: Prisma.ReceiptCreateManyArgs;
+  TeamMember: Prisma.TeamMemberCreateManyArgs;
+  PayrollItem: Prisma.PayrollItemCreateManyArgs;
 }
 export type ICreateMany<NTT extends NTTKey> = CreateManyArgs[NTT];

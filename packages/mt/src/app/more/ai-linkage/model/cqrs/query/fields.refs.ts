@@ -46,6 +46,21 @@ export interface FieldRefs {
 
   CausalEvent: Prisma.CausalEventFieldRefs;
   View: Prisma.ViewFieldRefs;
+
+  Patient: Prisma.PatientFieldRefs;
+  Treatment: Prisma.TreatmentFieldRefs;
+  Therapy: Prisma.TherapyFieldRefs;
+  Surgery: Prisma.SurgeryFieldRefs;
+  Medication: Prisma.MedicationFieldRefs;
+  Remedy: Prisma.RemedyFieldRefs;
+  Equipment: Prisma.EquipmentFieldRefs;
+  Inventory: Prisma.InventoryFieldRefs;
+  Payment: Prisma.PaymentFieldRefs;
+  Quote: Prisma.QuoteFieldRefs;
+  Invoice: Prisma.InvoiceFieldRefs;
+  Receipt: Prisma.ReceiptFieldRefs;
+  TeamMember: Prisma.TeamMemberFieldRefs;
+  PayrollItem: Prisma.PayrollItemFieldRefs;
 }
 
 export type IFieldRefs<T extends NTTKey> = FieldRefs[T];

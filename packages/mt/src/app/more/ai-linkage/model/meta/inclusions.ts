@@ -45,4 +45,19 @@ export interface Inclusions {
 
   CausalEvent: Prisma.CausalEventInclude;
   View: Prisma.ViewInclude;
+
+  Patient: Prisma.PatientInclude;
+  Treatment: Prisma.TreatmentInclude;
+  Therapy: Prisma.TherapyInclude;
+  Surgery: Prisma.SurgeryInclude;
+  Medication: Prisma.MedicationInclude;
+  Remedy: Prisma.RemedyInclude;
+  Equipment: Prisma.EquipmentInclude;
+  Inventory: Prisma.InventoryInclude;
+  Payment: Prisma.PaymentInclude;
+  Quote: Prisma.QuoteInclude;
+  Invoice: Prisma.InvoiceInclude;
+  Receipt: Prisma.ReceiptInclude;
+  TeamMember: Prisma.TeamMemberInclude;
+  PayrollItem: Prisma.PayrollItemInclude;
 }

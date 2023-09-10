@@ -46,6 +46,21 @@ export interface FindUniqueArgs {
 
   CausalEvent: Prisma.CausalEventFindUniqueArgs;
   View: Prisma.ViewFindUniqueArgs;
+
+  Patient: Prisma.PatientFindUniqueArgs;
+  Treatment: Prisma.TreatmentFindUniqueArgs;
+  Therapy: Prisma.TherapyFindUniqueArgs;
+  Surgery: Prisma.SurgeryFindUniqueArgs;
+  Medication: Prisma.MedicationFindUniqueArgs;
+  Remedy: Prisma.RemedyFindUniqueArgs;
+  Equipment: Prisma.EquipmentFindUniqueArgs;
+  Inventory: Prisma.InventoryFindUniqueArgs;
+  Payment: Prisma.PaymentFindUniqueArgs;
+  Quote: Prisma.QuoteFindUniqueArgs;
+  Invoice: Prisma.InvoiceFindUniqueArgs;
+  Receipt: Prisma.ReceiptFindUniqueArgs;
+  TeamMember: Prisma.TeamMemberFindUniqueArgs;
+  PayrollItem: Prisma.PayrollItemFindUniqueArgs;
 }
 export type IFindUnique<T extends NTTKey> = FindUniqueArgs[T];
 
@@ -94,6 +109,21 @@ export interface FindFirstArgs {
 
   CausalEvent: Prisma.CausalEventFindFirstArgs;
   View: Prisma.ViewFindFirstArgs;
+
+  Patient: Prisma.PatientFindFirstArgs;
+  Treatment: Prisma.TreatmentFindFirstArgs;
+  Therapy: Prisma.TherapyFindFirstArgs;
+  Surgery: Prisma.SurgeryFindFirstArgs;
+  Medication: Prisma.MedicationFindFirstArgs;
+  Remedy: Prisma.RemedyFindFirstArgs;
+  Equipment: Prisma.EquipmentFindFirstArgs;
+  Inventory: Prisma.InventoryFindFirstArgs;
+  Payment: Prisma.PaymentFindFirstArgs;
+  Quote: Prisma.QuoteFindFirstArgs;
+  Invoice: Prisma.InvoiceFindFirstArgs;
+  Receipt: Prisma.ReceiptFindFirstArgs;
+  TeamMember: Prisma.TeamMemberFindFirstArgs;
+  PayrollItem: Prisma.PayrollItemFindFirstArgs;
 }
 export type IFindFirst<T extends NTTKey> = FindFirstArgs[T];
 
@@ -138,5 +168,20 @@ export interface FindManyArgs {
   State: Prisma.StateFindManyArgs;
   CausalEvent: Prisma.CausalEventFindManyArgs;
   View: Prisma.ViewFindManyArgs;
+
+  Patient: Prisma.PatientFindManyArgs;
+  Treatment: Prisma.TreatmentFindManyArgs;
+  Therapy: Prisma.TherapyFindManyArgs;
+  Surgery: Prisma.SurgeryFindManyArgs;
+  Medication: Prisma.MedicationFindManyArgs;
+  Remedy: Prisma.RemedyFindManyArgs;
+  Equipment: Prisma.EquipmentFindManyArgs;
+  Inventory: Prisma.InventoryFindManyArgs;
+  Payment: Prisma.PaymentFindManyArgs;
+  Quote: Prisma.QuoteFindManyArgs;
+  Invoice: Prisma.InvoiceFindManyArgs;
+  Receipt: Prisma.ReceiptFindManyArgs;
+  TeamMember: Prisma.TeamMemberFindManyArgs;
+  PayrollItem: Prisma.PayrollItemFindManyArgs;
 }
 export type IFindMany<T extends NTTKey> = FindManyArgs[T];

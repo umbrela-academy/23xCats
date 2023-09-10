@@ -9,6 +9,9 @@ import {
   ConfigTemplate,
   Conflict,
   ConflictResolutionPath,
+  Equipment,
+  Inventory,
+  Invoice,
   IoDevice,
   IoFo,
   IoGroup,
@@ -17,27 +20,39 @@ import {
   LegendMap,
   Level,
   Meaning,
+  Medication,
   Mission,
   Modeler,
   Objective,
   Org,
   Para,
+  Patient,
+  Payment,
+  PayrollItem,
   PeopleGroup,
   Person,
   Phrase,
   Power,
   Project,
+  Quote,
+  Receipt,
+  Remedy,
   Sentence,
   Spelling,
   State,
   StoryLine,
+  Surgery,
   Syllable,
+  TeamMember,
+  Therapy,
   Tool,
+  Treatment,
   TurningPoint,
   Usage,
   Vehicle,
   View,
-  Word
+  Word,
+  
 } from '../../entities';
 import { IAggregate } from "./aggregate.args";
 
@@ -88,4 +103,19 @@ export interface AggregateType {
 
   CausalEvent: Prisma.GetCausalEventAggregateType<IAggregate<typeof CausalEvent>>;
   View: Prisma.GetViewAggregateType<IAggregate<typeof View>>;
+
+  Patient: Prisma.GetPatientAggregateType<IAggregate<typeof Patient>>;
+  Treatment: Prisma.GetTreatmentAggregateType<IAggregate<typeof Treatment>>;
+  Therapy: Prisma.GetTherapyAggregateType<IAggregate<typeof Therapy>>;
+  Surgery: Prisma.GetSurgeryAggregateType<IAggregate<typeof Surgery>>;
+  Medication: Prisma.GetMedicationAggregateType<IAggregate<typeof Medication>>;
+  Remedy: Prisma.GetRemedyAggregateType<IAggregate<typeof Remedy>>;
+  Equipment: Prisma.GetEquipmentAggregateType<IAggregate<typeof Equipment>>;
+  Inventory: Prisma.GetInventoryAggregateType<IAggregate<typeof Inventory>>;
+  Payment: Prisma.GetPaymentAggregateType<IAggregate<typeof Payment>>;
+  Quote: Prisma.GetQuoteAggregateType<IAggregate<typeof Quote>>;
+  Invoice: Prisma.GetInvoiceAggregateType<IAggregate<typeof Invoice>>;
+  Receipt: Prisma.GetReceiptAggregateType<IAggregate<typeof Receipt>>;
+  TeamMember: Prisma.GetTeamMemberAggregateType<IAggregate<typeof TeamMember>>;
+  PayrollItem: Prisma.GetPayrollItemAggregateType<IAggregate<typeof PayrollItem>>;
 }

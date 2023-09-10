@@ -46,6 +46,21 @@ export interface DeleteArgs {
 
   CausalEvent: Prisma.CausalEventDeleteArgs;
   View: Prisma.ViewDeleteArgs;
+
+  Patient: Prisma.PatientDeleteArgs;
+  Treatment: Prisma.TreatmentDeleteArgs;
+  Therapy: Prisma.TherapyDeleteArgs;
+  Surgery: Prisma.SurgeryDeleteArgs;
+  Medication: Prisma.MedicationDeleteArgs;
+  Remedy: Prisma.RemedyDeleteArgs;
+  Equipment: Prisma.EquipmentDeleteArgs;
+  Inventory: Prisma.InventoryDeleteArgs;
+  Payment: Prisma.PaymentDeleteArgs;
+  Quote: Prisma.QuoteDeleteArgs;
+  Invoice: Prisma.InvoiceDeleteArgs;
+  Receipt: Prisma.ReceiptDeleteArgs;
+  TeamMember: Prisma.TeamMemberDeleteArgs;
+  PayrollItem: Prisma.PayrollItemDeleteArgs;
 }
 export type IDelete<NTT extends NTTKey> = DeleteArgs[NTT];
 
@@ -94,5 +109,20 @@ export interface DeleteManyArgs {
 
   CausalEvent: Prisma.CausalEventDeleteManyArgs;
   View: Prisma.ViewDeleteManyArgs;
+
+  Patient: Prisma.PatientDeleteManyArgs;
+  Treatment: Prisma.TreatmentDeleteManyArgs;
+  Therapy: Prisma.TherapyDeleteManyArgs;
+  Surgery: Prisma.SurgeryDeleteManyArgs;
+  Medication: Prisma.MedicationDeleteManyArgs;
+  Remedy: Prisma.RemedyDeleteManyArgs;
+  Equipment: Prisma.EquipmentDeleteManyArgs;
+  Inventory: Prisma.InventoryDeleteManyArgs;
+  Payment: Prisma.PaymentDeleteManyArgs;
+  Quote: Prisma.QuoteDeleteManyArgs;
+  Invoice: Prisma.InvoiceDeleteManyArgs;
+  Receipt: Prisma.ReceiptDeleteManyArgs;
+  TeamMember: Prisma.TeamMemberDeleteManyArgs;
+  PayrollItem: Prisma.PayrollItemDeleteManyArgs;
 }
 export type IDeleteMany<NTT extends NTTKey> = DeleteManyArgs[NTT];
