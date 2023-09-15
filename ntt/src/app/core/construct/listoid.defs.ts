@@ -1,7 +1,6 @@
-import { Monoid } from "../algebra/monoid/monoid.defs";
-import { Maybe } from "../maybe.monad";
+import { MaybeMonoidal } from "../algebra/monoid/monoid.defs";
 
-export interface MonoidalListoid<T> extends Monoid<T> {
+export interface MonoidalListoid<T> extends MaybeMonoidal<T> {
     cons: (t: T) => MonoidalListoid<T>;
 }
 
@@ -14,8 +13,8 @@ export interface SnocListoid<T> extends ProtoListoid<T> {
 }
 
 export interface Listoid<T> extends SnocListoid<T> {
-    head: () => Maybe<T>;
-    tail: () => Maybe<T>;
+    head: () => MaybeMonoidal<T>;
+    tail: () => MaybeMonoidal<T>;
 }
 
 export interface NonEmptyListoid<T> extends Listoid<T> {

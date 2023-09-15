@@ -1,41 +1,25 @@
+import { IApplicative } from './algebra/applicative/applicative.defs';
 import { UnaryFunc } from './algebra/function/function.defs';
-import { Mon } from './algebra/monad/monad.defs';
+import { IFunctor } from './algebra/functor/functor.defs';
+import { IMonad } from './algebra/monad/monad.defs';
 
 export type Just<T> = T & { __type: 'Just' };
-export const mkJust = <T>(t: T) => t as Just<T>;
+const mkJust = <T>(t: T) => t as Just<T>;
 
 export type Nothing = null & { __type: 'Nothing' };
-export const mkNothing = () => null as Nothing;
+const mkNothing = () => null as Nothing;
 
-export class Maybe<T> implements Mon<T> {
+// export class Maybe<T> implements IMonad<T> {
     
-  readonly opt?: Just<T> | Nothing;
+//   readonly opt?: Just<T> | Nothing;
 
-  private constructor(t?: T) {
-    this.opt = t ? mkJust(t) : mkNothing();
-  }
+//   private constructor(t?: T) {
+//     this.opt = t ? mkJust(t) : mkNothing();
+//   }
+//     bind: <S, US extends IMonad<S>>(mts: (t: T) => US) => US;
+//     flat: <UT extends IMonad<T>, UTI extends IMonad<UT>>(mmt: UTI) => UT;
+//     pure: <U extends IApplicative<T>>(t: T) => U;
+//     appl: <S, UF extends IApplicative<(t: T) => S>, US extends IApplicative<S>>(fts: UF) => US;
+//     fmap: <S, U extends IFunctor<T>>(f: UnaryFunc<T, S>) => U;
 
-  static from<T>(arg?: T): Maybe<T> {
-    return arg ? new Maybe(arg) : new Maybe();
-  }
-
-  static pure<T>(t?: T): Maybe<T> {
-    return new Maybe(t);
-  }
-
-  static flat<T>(mmt: Maybe<Maybe<T>>): Maybe<T> {
-    return mmt.opt ? mkJust(mmt.opt) : Maybe.pure();
-  }
-
-  static bind: <T, S>(mt: Maybe<T>) => (mts: (t: T) => Maybe<S>) => Maybe<S> =
-    (mt) => (mts) =>
-      mt.opt ? mts(mkJust(mt.opt)) : Maybe.pure();
-
-  static appl: <T, S>(fts: Maybe<(t: T) => S>) => (ft: Maybe<T>) => Maybe<S> =
-    (fts) => (ft) =>
-      ft.opt ? Maybe.fmap(mkJust(fts.opt))(ft) : Maybe.pure();
-
-  static fmap: <T, S>(f: UnaryFunc<T, S>) => (ft: Maybe<T>) => Maybe<S> =
-    (f) => (ft) =>
-      ft.opt ? Maybe.pure(f(mkJust(ft.opt))) : Maybe.pure();
-}
+// }

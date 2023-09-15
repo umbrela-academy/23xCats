@@ -15,5 +15,6 @@ interface Eq ty where
  *
 */
 export abstract class Eq<T> {
+    protected abstract mt: T
   static eq: <T>(t1: T) => (t2: T) => boolean;
 }

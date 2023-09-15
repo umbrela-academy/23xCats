@@ -1,4 +1,4 @@
-import { Appl, IApplicative } from '../applicative/applicative.defs';
+import { IApplicative } from '../applicative/applicative.defs';
 
 /**
  * interface Applicative m => Monad (m : Type -> Type) where
@@ -13,12 +13,13 @@ import { Appl, IApplicative } from '../applicative/applicative.defs';
     join x = x >>= id
  *
 */
-export abstract class Mon<T> extends Appl<T> {
-  static bind: <T, S>(mt: Mon<T>) => (mts: (t: T) => Mon<S>) => Mon<S>;
-  static flat: <T>(mmt: Mon<Mon<T>>) => Mon<T>;
-}
-
 export interface IMonad<T> extends IApplicative<T> {
-  bind: <S>(mts: (t: T) => IMonad<S>) => IMonad<S>;
-  flat: (mmt: IMonad<IMonad<T>>) => IMonad<T>;
+  bind: <
+    S, 
+    US extends IMonad<S>
+  >(mts: (t: T) => US) => US;
+  flat: <
+    UT extends IMonad<T>, 
+    UTI extends IMonad<UT>
+    >(mmt: UTI) => UT;
 }

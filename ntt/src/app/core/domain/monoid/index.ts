@@ -2,7 +2,7 @@ import { IApplicative } from '../../algebra/applicative/applicative.defs';
 import { IFunctor } from '../../algebra/functor/functor.defs';
 import { IMonad } from '../../algebra/monad/monad.defs';
 import { Trpl } from '../model';
-import { Val, ValObjT, ValPrim, ValT } from '../model/val';
+import { Val, ValT } from '../model/val';
 import { StateMonoRec } from './state.monoid';
 
 export type Monoidal<T> = {
@@ -25,55 +25,55 @@ export type MkMonoidalVal = <T extends Val>(
 export const mkMonoidal: MkMonoidal 
   = <T> (mEmpty: T) => (mAppend: (t: T) => (u: T) => T) => ({ mEmpty, mAppend}) as Monoidal<T>;
 
-export const mkMonoidalVal: MkMonoidalVal = <T extends Val>(
-  val: T,
-  mT?: T,
-  mApp?: (t: T) => (u: T) => T
-) => {
-  const mt = ['string', 'number', 'bigint', 'boolean'].includes(typeof val)
-    ? emptyVal(val as ValPrim)
-    : emptyObj(val as ValObjT);
-  const mEmpty = mT ?? mt;
-  const mApply = mApp ?? emptyAppl(val);
-  return {
-    val,
-    mEmpty,
-    mAppend: mApply,
-  } as MonoidalVal<Val>;
-};
+// export const mkMonoidalVal: MkMonoidalVal = <T extends Val>(
+//   val: T,
+//   mT?: T,
+//   mApp?: (t: T) => (u: T) => T
+// ) => {
+//   const mt = ['string', 'number', 'bigint', 'boolean'].includes(typeof val)
+//     ? emptyVal(val as ValPrim)
+//     : emptyObj(val as ValObjT);
+//   const mEmpty = mT ?? mt;
+//   const mApply = mApp ?? emptyAppl(val);
+//   return {
+//     val,
+//     mEmpty,
+//     mAppend: mApply,
+//   } as MonoidalVal<Val>;
+// };
 
-export const emptyObj: <T extends ValObjT = ValObjT>(v: T) => T = <
-  T extends ValObjT = ValObjT
->(
-  v: T
-) => {
-  const allKeys = Object.keys(v);
-  const newVal: object = {};
-  allKeys.forEach((k) => ((newVal as any)[k] = emptyVal((newVal as any)[k])));
-  return newVal as T;
-};
+// export const emptyObj: <T extends ValObjT = ValObjT>(v: T) => T = <
+//   T extends ValObjT = ValObjT
+// >(
+//   v: T
+// ) => {
+//   const allKeys = Object.keys(v);
+//   const newVal: object = {};
+//   allKeys.forEach((k) => ((newVal as any)[k] = emptyVal((newVal as any)[k])));
+//   return newVal as T;
+// };
 
-export const emptyVal: (v: ValPrim | ValObjT) => ValPrim | ValObjT = <
-  T extends ValPrim = ValPrim
->(
-  v: T
-) => {
-  if (!v) return 0;
-  switch (typeof v) {
-    case 'string':
-      return '';
-    case 'number':
-      return 0;
-    case 'bigint':
-      return BigInt(0);
-    case 'boolean':
-      return false;
-    case 'object':
-      return emptyObj(v);
-    default:
-      return 0;
-  }
-};
+// export const emptyVal: (v: ValPrim | ValObjT) => ValPrim | ValObjT = <
+//   T extends ValPrim = ValPrim
+// >(
+//   v: T
+// ) => {
+//   if (!v) return 0;
+//   switch (typeof v) {
+//     case 'string':
+//       return '';
+//     case 'number':
+//       return 0;
+//     case 'bigint':
+//       return BigInt(0);
+//     case 'boolean':
+//       return false;
+//     case 'object':
+//       return emptyObj(v);
+//     default:
+//       return 0;
+//   }
+// };
 
 export type MonoidalFunctor<T extends Val = Val> 
     = MonoidalVal<StateMonoRec<T>> & IFunctor<StateMonoRec<T>>;
@@ -85,25 +85,25 @@ export type MonoidalMonad<T extends Val = Val>
     = MonoidalVal<StateMonoRec<T>> & IMonad<StateMonoRec<T>>;
 
 export type BinaryOp<T extends Val> = (x: Val) => (y: Val) => ValT<T>;
-export const emptyAppl: <T extends Val>(v: ValT<T>) => BinaryOp<T> = <
-  T extends Val
->(
-  v: ValT<T>
-) => {
-  switch (typeof v) {
-    case 'string':
-      return (x: Val) => (y: Val) => ((x as string) + (y as string)) as ValT<T>;
-    case 'number':
-      return (x: Val) => (y: Val) => ((x as number) + (y as number)) as ValT<T>;
-    case 'bigint':
-      return (x: Val) => (y: Val) =>
-        (BigInt(x as bigint) + BigInt(y as bigint)) as ValT<T>;
-    case 'boolean':
-      return (x: boolean) => (y: boolean) => (x || y) as ValT<T>;
-    default:
-      return (x) => (y) => (x && y) as ValT<T>;
-  }
-};
+// export const emptyAppl: <T extends Val>(v: ValT<T>) => BinaryOp<T> = <
+//   T extends Val
+// >(
+//   v: ValT<T>
+// ) => {
+//   switch (typeof v) {
+//     case 'string':
+//       return (x: Val) => (y: Val) => ((x as string) + (y as string)) as ValT<T>;
+//     case 'number':
+//       return (x: Val) => (y: Val) => ((x as number) + (y as number)) as ValT<T>;
+//     case 'bigint':
+//       return (x: Val) => (y: Val) =>
+//         (BigInt(x as bigint) + BigInt(y as bigint)) as ValT<T>;
+//     case 'boolean':
+//       return (x: boolean) => (y: boolean) => (x || y) as ValT<T>;
+//     default:
+//       return (x) => (y) => (x && y) as ValT<T>;
+//   }
+// };
 
 export type MonoValTrpl<T extends Val> = Trpl<MonoidalVal<T>, MonoidalVal<T>, MonoidalVal<T>>;
 

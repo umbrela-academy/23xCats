@@ -1,3 +1,4 @@
+
 import { Semigroup } from '../group/semigroup.defs';
 
 /**
@@ -17,5 +18,9 @@ interface Semigroup ty => Monoid ty where
  *
 */
 export abstract class Monoid<T> extends Semigroup<T> {
-    protected abstract mempty: T;
+    protected abstract mEmpty: T;
+}
+
+export abstract class MaybeMonoidal<T> extends Semigroup<T> {
+    protected abstract mEmpty: MaybeMonoidal<T>;
 }

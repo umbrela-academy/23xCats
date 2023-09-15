@@ -1,67 +1,44 @@
-import { UnaryFunc } from './algebra/function/function.defs';
-import { Mon } from './algebra/monad/monad.defs';
-import { ListStruct } from './construct/list.struct';
-import { zip } from './utils/funcs/zip-with.func';
 
-export class ListPrime<T> implements Mon<T> {
-  readonly arr: T[];
-  readonly listStruct?: ListStruct<T>;
+// export class ListPrime<T> implements IMonad<T> {
+//   readonly arr: T[];
+//   readonly listStruct?: ListStruct<T>;
 
-  private constructor(ta: T | T[]) {
-      this.listStruct = ListStruct.from(ta);
-      this.arr = this.listStruct.arr;
-  }
+//   private constructor(ta?: T | T[]) {
+//       this.listStruct = ListStruct.from(ta);
+//       this.arr = this.listStruct.arr;
+//   }
+//     bind: <S, US extends IMonad<S>>(mts: (t: T) => US) => US;
+//     flat: <UT extends IMonad<T>, UTI extends IMonad<UT>>(mmt: UTI) => UT;
+//     pure: <U extends IApplicative<T>>(t: T) => U;
+//     appl: <S, UF extends IApplicative<(t: T) => S>, US extends IApplicative<S>>(fts: UF) => US;
+//     fmap: <S, U extends IFunctor<T>>(f: UnaryFunc<T, S>) => U;
 
-  static from<T >(ta: T | T[]): ListPrime<T> {
-      return new ListPrime(ta);
-  }
+//     from<T >(ta?: T | T[]): ListPrime<T> {
+//       return new ListPrime(ta);
+//     }
 
-  static empty<T>(): ListPrime<T> {
-    return ListPrime.from([]);
-  }
+//     empty<T>(): ListPrime<T> {
+//         return this.from();
+//     }
 
-  cons: <T>(t: T) => (ts: ListPrime<T>) => ListPrime<T>
-    = (t) => (ts) => ListPrime.from(ts.arr.concat([t]));
+//     cons: <T>(t: T) => (ts: ListPrime<T>) => ListPrime<T>
+//         = (t) => (ts) => this.from(ts.arr.concat([t]));
 
-  static pure<T>(t: T): ListPrime<T> {
-    return ListPrime.from(t);
-  }
 
-  static flat<T>(mmt: ListPrime<ListPrime<T>>): ListPrime<T> {
-    return [...mmt.arr.flat()].reduce((a, b) => ListPrime.from(a.arr.concat(b.arr)));
-  }
+//   /**
+//    * This implementation zips the functions with the values.
+//    * [f1, f2, f3] applZip [v1, v2, v3] = [f1(v1), f2(v2), f3(v3)]
+//    */
+//    applZip: <T, S>(fts: ListPrime<(t: T) => S>) => (ft: ListPrime<T>) => ListPrime<S>
+//     = <T, S>(fts: ListPrime<(t: T) => S>) => (ft: ListPrime<T>) =>
+//     {
+//       const zipped: [UnaryFunc<T, S>, T][] = zip<UnaryFunc<T, S>, T>(fts.arr)(
+//         ft.arr
+//       );
+//       return this.from(zipped.flatMap(([unFunc, unVal]) => unFunc(unVal)));
+//     };
 
-  static bind: <T, S>(mt: ListPrime<T>) => (mts: (t: T) => ListPrime<S>) => ListPrime<S>
-    = (mt) => (mts) => ListPrime.from(mt.arr.flatMap(mts).flatMap((a) => a.arr));
-
-  /**
-   * This implementation takes a cartesian product of the functions with the values.
-   * [f1, f2, f3] applCart [v1, v2, v3] = [
-   *      f1(v1), f1(v2), f1(v3),
-   *      f2(v1), f2(v2), f2(v3),
-   *      f3(v1), f3(v2), f3(v3),
-   * ]
-   */
-  static appl: <T, S>(fts: ListPrime<(t: T) => S>) => (ft: ListPrime<T>) => ListPrime<S> =
-    (fts) => (ft) =>
-      ListPrime.from(fts.arr.flatMap((unFunc) => ft.arr.map(unFunc)));
-
-  /**
-   * This implementation zips the functions with the values.
-   * [f1, f2, f3] applZip [v1, v2, v3] = [f1(v1), f2(v2), f3(v3)]
-   */
-  static applZip: <T, S>(fts: ListPrime<(t: T) => S>) => (ft: ListPrime<T>) => ListPrime<S>
-    = <T, S>(fts: ListPrime<(t: T) => S>) => (ft: ListPrime<T>) =>
-    {
-      const zipped: [UnaryFunc<T, S>, T][] = zip<UnaryFunc<T, S>, T>(fts.arr)(
-        ft.arr
-      );
-      return ListPrime.from(zipped.flatMap(([unFunc, unVal]) => unFunc(unVal)));
-    };
-
-  static fmap: <T, S>(f: UnaryFunc<T, S>) => (ft: ListPrime<T>) => ListPrime<S>
-    = (f) => (ft) => ListPrime.from(ft.arr.map(f));  
-}
+// }
 
 
 

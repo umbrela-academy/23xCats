@@ -74,7 +74,7 @@ export function isState<X, Y, Z>(s: any): s is State<X, Y, Z> {
     hasRecordAttributes && recordAttributes.every(isRecOfLen3);
 
   const isMatOfLen3 = (i: MatrixKey) => isOfLengthThree(s[i]);
-  const hasMatrixTriples = matrixKeys.every(isMatOfLen3);
+  const hasMatrixTriples = matrixKeys.every(i => isMatOfLen3(s[i]));
 
   return hasMatrixTriples || hasRecordTriples;
 }

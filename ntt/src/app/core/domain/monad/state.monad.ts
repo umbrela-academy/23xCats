@@ -1,46 +1,39 @@
-import { IApplicative } from "../../algebra/applicative/applicative.defs";
-import { UnaryFunc } from "../../algebra/function/function.defs";
-import { IFunctor } from "../../algebra/functor/functor.defs";
-import { ListM } from "../../algebra/monad/list/list.m";
-import { IMonad } from "../../algebra/monad/monad.defs";
-import { Val } from "../model";
 import { Trpl } from "../model/tuple";
-import { MonoidalMonad, MonoidalVal, StateMonoRec, mkMAppend } from "../monoid";
 
-export class StateM<T extends Val> implements MonoidalMonad<T> {
-    mEmpty: StateMonoRec<T>;
-    mAppend: (t: StateMonoRec<T>) => (u: StateMonoRec<T>) => StateMonoRec<T>;
-    val: StateMonoRec<T>;
-
+// export class StateM<T extends Val> implements MonoidalMonad<T> {
+//     mEmpty: StateMonoRec<T>;
+//     mAppend: (t: StateMonoRec<T>) => (u: StateMonoRec<T>) => StateMonoRec<T>;
+//     val: StateMonoRec<T>;
 
 
-    constructor(
-        protected readonly state: MonoidalVal<StateMonoRec<T>>
-    ) {
-        this.val = state.val;
-        this.mEmpty = state.mEmpty;
-        this.mAppend = mkMAppend();
-    }
-    bind: <S>(mts: (t: StateMonoRec<T>) => IMonad<S>) => IMonad<S>;
 
-    fmap<S>(f: UnaryFunc<StateMonoRec<T>, S>): IFunctor<S> {
-        return ListM.from((f(this.val)));
-    }
+//     constructor(
+//         protected readonly state: MonoidalVal<StateMonoRec<T>>
+//     ) {
+//         this.val = state.val;
+//         this.mEmpty = state.mEmpty;
+//         this.mAppend = mkMAppend();
+//     }
+//     bind: <S>(mts: (t: StateMonoRec<T>) => IMonad<S>) => IMonad<S>;
 
-    pure(t: StateMonoRec<T>): IApplicative<StateMonoRec<T>> {
-        return ListM.from(t);
-    }
+//     fmap<S>(f: UnaryFunc<StateMonoRec<T>, S>): IFunctor<S> {
+//         return ListM.from((f(this.val)));
+//     }
 
-    appl<S>(fts: ListM<(t: StateMonoRec<T>) => S>): IApplicative<S> {
-        const valAsApplicative = ListM.from(this.val);
-        return valAsApplicative.appl(fts);
-    }
+//     pure(t: StateMonoRec<T>): IApplicative<StateMonoRec<T>> {
+//         return ListM.from(t);
+//     }
 
-    flat(mmt: ListM<ListM<StateMonoRec<T>>>): ListM<StateMonoRec<T>> {
-        //TODO find better if this does not make sense in this context
-        return mmt.mt.arr.flat().reduce((acc, curr) => ListM.from(acc.mt.arr.concat(curr.mt.arr)));
-    }
-}
+//     appl<S>(fts: ListM<(t: StateMonoRec<T>) => S>): IApplicative<S> {
+//         const valAsApplicative = ListM.from(this.val);
+//         return valAsApplicative.appl(fts);
+//     }
+
+//     flat(mmt: ListM<ListM<StateMonoRec<T>>>): ListM<StateMonoRec<T>> {
+//         //TODO find better if this does not make sense in this context
+//         return mmt.mt.arr.flat().reduce((acc, curr) => ListM.from(acc.mt.arr.concat(curr.mt.arr)));
+//     }
+// }
 
 
 
