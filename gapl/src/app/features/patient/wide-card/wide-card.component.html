@@ -1,0 +1,81 @@
+<div
+  class="grid grid-cols-3 gap-6 stats shadow border-indigo-700 rounded-xl py-4 w-full border-b-2"
+  [ngClass]="{ 'bg-slate-300': selected }"
+  (click)="toggleSelection()"
+>
+  <div class="stat max-w-1/3 min-w-1/3 px-4">
+
+
+      <div class="stat-title flex gap-2 font-semibold place-items-center">
+        <i class="pi pi-phone"></i> {{ phoneNumber }}
+      </div>
+      <div class="text-2xl text-slate-600">{{ fullName }}</div>
+      <div class="stat-desc text-indigo-900">
+        <i class="pi pi-info-circle"></i> {{ age }} yrs old -
+        {{ gender }}    
+    </div>
+  
+      <div class="stat-figure -mt-20">      
+        <div
+          class="stat-title flex gap-2 font-semibold place-items-center justify-end"
+        >
+          Next <i class="pi pi-step-forward"></i>
+        </div>
+        <div class="text-2xl flex text-indigo-900 justify-end">
+          {{ nextAppointment }}
+        </div>
+  
+        <div class="stat-desc text-indigo-800 flex justify-end">
+          {{ nextDate }}
+        </div>
+      </div>
+  </div>
+
+  <div class="stat max-w-1/3 min-w-1/3">
+    <div class="stat-title flex gap-2 font-semibold place-items-center">
+      <i class="pi pi-step-backward"></i> Previous
+    </div>
+    <div class="text-2xl text-slate-600">{{ prevAppointment }}</div>
+    <div class="stat-desc text-indigo-900">{{ prevDate }}</div>
+
+    <div class="stat-figure -mt-20">
+      <div
+        class="stat-title flex gap-2 font-semibold place-items-center justify-end"
+      >
+        Next <i class="pi pi-step-forward"></i>
+      </div>
+      <div class="text-2xl flex text-indigo-900 justify-end">
+        {{ nextAppointment }}
+      </div>
+
+      <div class="stat-desc text-indigo-800 flex justify-end">
+        {{ nextDate }}
+      </div>
+    </div>
+  </div>
+
+  <div class="stat max-w-1/3 min-w-1/3 px-4">
+    <div class="stat-title flex gap-2 font-semibold place-items-center">
+      <i class="pi pi-wallet"></i> Unpaid
+    </div>
+    <div class="text-2xl text-pink-600">NRs. {{ outstandingAmount }}</div>
+    <div class="stat-desc text-indigo-800">
+      For: {{ outstandingAppointments }}
+    </div>
+
+    <div class="stat-figure -mt-20">
+      <div
+        class="stat-title flex gap-2 font-semibold place-items-center justify-end"
+      >
+        Paid
+        <i class="pi pi-money-bill"></i>
+      </div>
+      <div class="text-2xl flex text-emerald-600 justify-end">
+        NRs. {{ paidAmount }}
+      </div>
+      <div class="stat-desc text-indigo-800 flex justify-end">
+        Last: {{ since }}
+      </div>
+    </div>
+  </div>
+</div>

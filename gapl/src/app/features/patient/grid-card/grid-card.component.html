@@ -1,0 +1,21 @@
+<div #container class="stats stats-vertical lg:stats-horizontal shadow border-indigo-700 border-2">
+
+    <div class="stat max-w-1/3 min-w-1/3">
+        <div class="stat-title"><i class="pi pi-phone"></i> {{phoneNumber}}</div>
+        <div class="text-lg text-indigo-800">{{fullName}}</div>
+        <div class="stat-desc text-indigo-900">{{age}} yrs old - {{gender}}</div>
+    </div>
+
+    <div class="stat max-w-1/3 min-w-1/3">
+        <div class="stat-title flex gap-2 place-items-center"><i class="pi pi-step-forward"></i> Upcoming</div>
+        <div class="text-lg text-indigo-900">{{nextAppointment}}</div>
+        <div class="stat-desc text-indigo-800">Fri Sep 16 2022</div>
+    </div>
+
+    <div class="stat max-w-1/3 min-w-1/3">
+        <div class="stat-title flex gap-2 place-items-center"><i class="pi pi-wallet"></i> Unpaid</div>
+        <div class="text-lg text-pink-600">NRs. {{outstandingAmount}}</div>
+        <div class="stat-desc text-emerald-600">Paid: NRs. {{paidAmount}}</div>
+    </div>
+
+</div>

@@ -1,0 +1,16 @@
+<footer class="py-2 fixed sm:sticky sm:py-5 mt-6 md:mt-8 footer bg-black text-base-content footer-center">
+
+    <div class="grid grid-flow-col text-xl gap-2 ">
+        <a *ngFor="let item of icons" [routerLink]="item.routerLink" routerLinkActive="bg-indigo-700"
+            [routerLinkActiveOptions]="{'exact': true}"
+            class="flex items-center flex-row place-items-center pt-7 pb-6 h-10 px-3 text-white hover:bg-indigo-700 rounded-lg 
+                                                    transition-colors duration-150 ease-in-out focus:outline-none focus:shadow-outline">
+            <i class="h-6 w-6 flex-shrink-0 pi" [ngClass]="item.icon!" [pTooltip]="item.label!"
+                tooltipPosition="top"></i><span class="hidden sm:block text-sm px-4 mb-2">{{ item.label }}</span>
+        </a>
+    </div>
+
+    <div class="hidden sm:flex mt-4">
+        <p class="text-white mx-auto">Copyleft 🄯 {{year}} - No rights reserved</p>
+    </div>
+</footer>

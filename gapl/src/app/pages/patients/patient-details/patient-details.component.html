@@ -1,0 +1,47 @@
+<div class="flex">
+    <span class="tooltip tooltip-up tooltip-primary" data-tip="All Patients" routerLink="/patients">
+        <i class="pi pi-arrow-left text-indigo-800 hover:text-indigo-600 cursor-pointer"></i>
+    </span>
+    <ul class="steps w-full mb-4 -mt-4">
+        <li *ngFor="let item of steps" [attr.data-content]="item.icon" class="step"
+            [ngClass]="item.expanded ? 'step-primary' : 'step-neutral'">{{item.label}}</li>
+    </ul>
+</div>
+<p-accordion [multiple]="true" (onOpen)="onTabOpen($event)" (onClose)="onTabClose($event)" styleClass="mb-48">
+    <p-accordionTab [selected]="true">
+        <ng-template pTemplate="header">Patient ID</ng-template>
+        <ng-template pTemplate="content">
+            <gapl-patient-id></gapl-patient-id>
+        </ng-template>
+    </p-accordionTab>
+    <p-accordionTab>
+        <ng-template pTemplate="header">Quick Notes</ng-template>
+        <ng-template pTemplate="content">
+            <gapl-patient-notes></gapl-patient-notes>
+        </ng-template>
+    </p-accordionTab>
+    <p-accordionTab>
+        <ng-template pTemplate="header">Dental Records</ng-template>
+        <ng-template pTemplate="content">
+            <gapl-patient-dental-history></gapl-patient-dental-history>
+        </ng-template>
+    </p-accordionTab>
+    <p-accordionTab>
+        <ng-template pTemplate="header">Medical Records</ng-template>
+        <ng-template pTemplate="content">
+            <gapl-patient-medical-history></gapl-patient-medical-history>
+        </ng-template>
+    </p-accordionTab>
+    <p-accordionTab>
+        <ng-template pTemplate="header">ID Photo</ng-template>
+        <ng-template pTemplate="content">
+            <gapl-patient-id-photo></gapl-patient-id-photo>
+        </ng-template>
+    </p-accordionTab>
+    <p-accordionTab>
+        <ng-template pTemplate="header">Clinical Photos</ng-template>
+        <ng-template pTemplate="content">
+            <gapl-patient-clinical-photos></gapl-patient-clinical-photos>
+        </ng-template>
+    </p-accordionTab>
+</p-accordion>

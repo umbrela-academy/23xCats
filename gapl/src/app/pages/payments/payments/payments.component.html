@@ -1,0 +1,43 @@
+<div class="flex flex-wrap">
+    <div class="w-full mb-12 px-4 bg-white ">
+
+        <!-- Form -->
+
+        <form class="md:flex hidden flex-row flex-wrap justify-between items-center lg:ml-auto mr-3 sub-header">
+            <div class="relative flex w-1/3 flex-wrap items-stretch mt-1">
+                <span
+                    class="z-10 h-full leading-snug font-normal absolute text-center text-slate-300 bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
+                    <fa-icon [icon]="faSearch"></fa-icon>
+                </span>
+                <input type="text" placeholder="Search here..." #filter
+                    class="border-0 px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10 mb-2" />
+            </div>
+            <div>
+                <button type="button"
+                    class="relative items-center px-5 mr-4 text-gray-50 transition-colors duration-150 bg-fuchsia-500 h-10 text-sm font-semibold rounded-lg shadow-md focus:shadow-outline hover:bg-indigo-800"
+                    *ngIf="selectedOrRowId" (click)="deleteRowSelected()">
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                    <span> Delete Invoice</span>
+                </button>
+                <button type="button"
+                    class="relative items-center px-5 text-gray-50 transition-colors duration-150 bg-indigo-700 h-10 text-sm font-semibold rounded-lg shadow-md focus:shadow-outline hover:bg-indigo-800"
+                    [routerLink]="['/crm/leads/new']">
+                    <fa-icon [icon]="faPlus"></fa-icon>
+                    <span> New Invoice</span>
+                </button>
+            </div>
+        </form>
+
+
+        <ag-grid-angular class="ag-theme-material w-full h-[75vh]" [defaultColDef]="defaultColDef" [pagination]="true"
+            [paginationAutoPageSize]="true" [rowData]="rowData" [columnDefs]="columnDefs"
+            (gridReady)="onGridReady($event)" rowSelection="single" (rowSelected)="onRowSelected($event)"
+            [animateRows]="true" (selectionChanged)="onSelectionChanged($event)">
+        </ag-grid-angular>
+
+    </div>
+</div>
+<p-speedDial [radius]="120" direction="up-left" type="quarter-circle"
+    class="fixed bottom-40 right-20 sm:bottom-24 sm:right-24 z-50 drop-shadow-2xl"
+    buttonClassName="bg-indigo-700 hover:bg-black" showIcon="pi pi-user-plus" hideIcon="pi pi-times">
+</p-speedDial>

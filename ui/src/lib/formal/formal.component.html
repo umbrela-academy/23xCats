@@ -1,0 +1,10 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <formly-form [form]="form" [model]="model" [fields]="fields">
+  </formly-form>
+
+  <div>
+    <button class="mr-2" pButton type="submit" title="Submit" label="Submit"></button>
+    <button pButton type="reset" title="Reset" label="Reset" class="ui-button-danger"></button>
+  </div>
+</form>
+<p>test</p>

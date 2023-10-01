@@ -1,0 +1,63 @@
+<form [formGroup]="toothForm" class="flex flex-col">
+    <div class="flex flex-wrap">
+        <div class="w-full px-2">
+            <div class="relative w-full mb-3">
+                <label class="block text-xs font-bold mb-2" for="firstName">
+                    <span class="uppercase">Condition </span><span class="font-bold"
+                        *ngIf="currentToothIndex() as toothIndex">({{toothIndex}}: {{currentTooth() |
+                        titlecase}})</span>
+                </label>
+                <p-dropdown [options]="toothConditions" [editable]="true"
+                    styleClass="rounded text-sm shadow-sm focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                </p-dropdown>
+            </div>
+        </div>
+        <div class="w-full px-2">
+            <div class="relative w-full mb-3">
+                <label class="block uppercase text-xs font-bold mb-2" for="birthDate">
+                    Diagnosed On
+                </label>
+                <p-calendar id="birthDate" dateFormat="dd-mm-yy"
+                    styleClass="border-0 rounded text-sm shadow-sm focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    [showIcon]="true" [showClear]="true">
+                </p-calendar>
+            </div>
+        </div>
+        <div class="w-10/12 px-2">
+            <div class="relative w-full mb-3">
+                <label class="block uppercase  text-xs font-bold mb-2" for="note">
+                    {{currentHistoryItem !== -1 ? 'Edit Item ' + (currentHistoryItem + 1) + ":" : "Observations"}}
+                </label>
+                <textarea id="note" pInputTextarea #patientNote formControlName="historyItem" rows="2"
+                    class="rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 h-[50px]"></textarea>
+            </div>
+        </div>
+        <div class="w-2/12 pr-2">
+            <div class="relative w-full mb-3">
+                <label class="block uppercase  text-xs font-bold mb-2 ml-2" for="notes">
+                    {{currentHistoryItem !== -1 ? 'Save' : 'Add'}}
+                </label>
+                <button pButton pRipple type="button" title="Add" class="p-button-raised bg-emerald-700"
+                    (click)="addNote(patientNote.value);patientNote.value=''"><i class="pi pi-plus"></i></button>
+            </div>
+        </div>
+        <div class="w-full lg:w-12/12 px-2" *ngIf="historyItems.length">
+            <div class="relative w-full mb-3">
+                <label class="uppercase flex justify-between text-xs  mb-2" for="notes">
+                    <span class="font-bold">Tooth Details</span>
+                    <span>Select to edit</span>
+                </label>
+                <p-listbox [options]="historyItems.get()" optionLabel="value" dataKey="key" styleClass="w-full"
+                    (onClick)="onNoteSelect($event)" emptyMessage="Added notes appear here." [multiple]="false">
+                    <ng-template let-note pTemplate="item">
+                        <div class="flex justify-between w-full">
+                            <span>{{historyItems.indexOf(note.value) + 1}}: {{note.value}}</span>
+                            <span><i class="pi pi-trash"
+                                    (click)="deleteNote(historyItems.indexOf(note.value))"></i></span>
+                        </div>
+                    </ng-template>
+                </p-listbox>
+            </div>
+        </div>
+    </div>
+</form>

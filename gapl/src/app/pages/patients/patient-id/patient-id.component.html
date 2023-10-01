@@ -1,0 +1,149 @@
+<div class="relative flex flex-col min-w-0 break-words w-full mb-6 rounded-lg bg-blueGray-100 border-0">
+    <div class="flex-auto px-4 lg:px-10 py-4 pt-0">
+        <form>
+            <h6 class="text-blueGray-400 text-sm mb-6 font-bold uppercase">
+                Personal Information
+            </h6>
+            <div class="flex flex-wrap">
+                <div class="w-full lg:w-6/12 px-4">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="firstName">
+                            First Name
+                        </label>
+                        <input id="firstName" pInputText
+                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                            placeholder="First Name" />
+                    </div>
+                </div>
+                <div class="w-full lg:w-6/12 px-4">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="lastName">
+                            Last Name
+                        </label>
+                        <input id="lastName" pInputText
+                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                            placeholder="Surname" />
+                    </div>
+                </div>
+                <div class="w-full lg:w-6/12 px-4 mt-2">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="birthDate">
+                            Date of Birth
+                        </label>
+                        <p-calendar id="birthDate" dateFormat="dd-mm-yy"
+                            styleClass="border-0 rounded text-sm shadow-sm focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                            [showIcon]="true">
+                        </p-calendar>
+                    </div>
+                </div>
+                <div class="w-full lg:w-6/12 px-4 mt-2">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="gender">
+                            Gender
+                        </label>
+                        <div class="flex justify-between">
+                            <label class="label cursor-pointer">
+                                <input type="radio" name="radio-1" class="radio checked:bg-indigo-700" checked />
+                                <span class="label-text ml-2">Male</span>
+                            </label>
+                            <label class="label cursor-pointer">
+                                <input type="radio" name="radio-1" class="radio checked:bg-indigo-700" />
+                                <span class="label-text ml-2">Female</span>
+                            </label>
+                            <label class="label cursor-pointer">
+                                <input type="radio" name="radio-1" class="radio checked:bg-indigo-700" />
+                                <span class="label-text ml-2">Other</span>
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            <hr class="my-3 border-b-1 border-blueGray-300" />
+
+            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                Contact Information
+            </h6>
+            <div class="flex flex-wrap">
+                <div class="w-full lg:w-6/12 px-4">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="phone">
+                            Phone
+                        </label>
+                        <input id="phone" pInputText
+                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                            placeholder="9801236834" />
+                    </div>
+                </div>
+                <div class="w-full lg:w-6/12 px-4">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="email">
+                            Email address
+                        </label>
+                        <input id="email" type="email" pInputText
+                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                            placeholder="email@example.com" />
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-3 border-b-1 border-blueGray-300" />
+
+            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                Address of Residence
+            </h6>
+
+            <div class="flex flex-wrap">
+                <div class="w-full lg:w-12/12 px-4">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="address">
+                            Address
+                        </label>
+                        <input id="address" type="text" pInputText
+                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                            placeholder="e.g. Saraswoti Tole" />
+                    </div>
+                </div>
+                <div class="w-full lg:w-4/12 px-4">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="city">
+                            City
+                        </label>
+                        <input type="text" id="city" pInputText
+                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                            value="Janakpurdham" />
+                    </div>
+                </div>
+                <div class="w-full lg:w-4/12 px-4">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="province">
+                            Province
+                        </label>
+                        <input type="text" id="province" pInputText
+                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                            value="Madhesh Pradesh" />
+                    </div>
+                </div>
+                <div class="w-full lg:w-4/12 px-4">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="country">
+                            Country
+                        </label>
+                        <input type="text" id="country" pInputText
+                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                            value="Nepal" />
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-between mt-4">
+                <button pButton pRipple type="button" label="Save & Complete" title="Save & Complete"
+                    class="p-button-raised bg-indigo-700"></button>
+                <button pButton pRipple type="button" label="Save & Continue" title="Save & Continue"
+                    class="p-button-raised bg-emerald-700"></button>
+            </div>
+        </form>
+    </div>
+</div>

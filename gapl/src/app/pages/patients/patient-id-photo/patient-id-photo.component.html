@@ -1,0 +1,28 @@
+<form [formGroup]="idPhotoForm" class="flex flex-col" (ngSubmit)="onSubmit()">
+    <input title="imageUpload" class="hidden" type='file' id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput
+        (change)="uploadFile($event)" />
+    <div class="flex flex-row justify-between">
+        <div class="avatar ml-16 flex flex-col place-items-center">
+            <div class="w-48 h-48 rounded">
+                <img [src]="imageUrl" alt="uploaded profile picture" />
+            </div>
+            <span class="mt-2 text-xs">On Official Forms</span>
+        </div>
+        <div class="avatar flex flex-col place-items-center">
+            <div class="w-48 h-48 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                <img [src]="imageUrl" alt="uploaded profile picture" />
+            </div>
+            <span class="mt-2 text-xs">With Appointment</span>
+        </div>
+        <div class="avatar mr-16 flex flex-col place-items-center">
+            <div class="w-48 h-48 mask mask-squircle">
+                <img [src]="imageUrl" alt="uploaded profile picture" />
+            </div>
+            <span class="mt-2 text-xs">Without Appointment</span>
+        </div>
+    </div>
+    <div class="flex flex-row justify-center gap-6 mt-4">
+        <button pButton class="bg-indigo-700" type="submit" (click)="fileInput.click()">Upload Image</button>
+        <button pButton class="bg-rose-500 border-0" type="button" (click)="removeUploadedFile()">Remove Image</button>
+    </div>
+</form>

@@ -1,0 +1,71 @@
+<div class="relative flex flex-col min-w-0 break-words w-full mb-6 rounded-lg border-0">
+    <div class="flex-auto px-4 lg:px-10 py-4 pt-0">
+        <form [formGroup]="notesForm">
+            <h6 class="text-sm mb-6 font-bold uppercase">
+                Additional Information For Internal Use
+            </h6>
+            <div class="flex flex-wrap">
+                <div class="w-full lg:w-12/12 px-4">
+                    <label class="block uppercase text-xs mb-2" for="labels">
+                        Click Labels or Type Below
+                    </label>
+                    <div class="flex flex-row gap-2 mb-4">
+                        <p-chip *ngFor="let label of chips" [removable]="true" removeIcon="pi pi-check" [label]="label"
+                            styleClass="hover:text-white hover:bg-emerald-600" (onRemove)="onChipSelect(label)"
+                            (click)="onChipSelect(label)">
+                        </p-chip>
+                    </div>
+                </div>
+                <div class="w-full lg:w-12/12 px-4">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase text-xs font-bold mb-2" for="labels">
+                            Patient Labels
+                        </label>
+                        <p-chips separator="," id="labels" formControlName="labels" (onRemove)="itemRemoved($event)"
+                            [addOnTab]="true" (onAdd)="onValueAdd($event)"
+                            styleClass="border-0 rounded text-sm focus:outline-none focus:ring ease-linear transition-all duration-150"
+                            placeholder="Select from above or Type and hit enter or ,">
+                        </p-chips>
+                    </div>
+                </div>
+                <div class="w-[95%] px-4">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase  text-xs font-bold mb-2" for="note">
+                            {{currentNoteKey !== -1 ? 'Edit Note ' + (currentNoteKey + 1) + ":" : "New Note"}}
+                        </label>
+                        <textarea id="note" pInputTextArea #patientNote rows="3" formControlName="note"
+                            class="rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 h-[50px]"></textarea>
+                    </div>
+                </div>
+                <div class="w-[5%] pr-2">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase  text-xs font-bold mb-2 -ml-1" for="notes">
+                            {{currentNoteKey !== -1 ? 'Save Note' : 'Add Note'}}
+                        </label>
+                        <button pButton pRipple type="button" title="Add" class="p-button-raised bg-emerald-700"
+                            (click)="addNote(patientNote.value);patientNote.value=''"><i
+                                class="pi pi-plus"></i></button>
+                    </div>
+                </div>
+                <div class="w-full lg:w-12/12 px-4">
+                    <div class="relative w-full mb-3">
+                        <label class="uppercase flex justify-between text-xs  mb-2" for="notes">
+                            <span class="font-bold">Patient Notes</span>
+                            <span>Select to edit</span>
+                        </label>
+                        <p-listbox [options]="notes.get()" optionLabel="value" dataKey="key" styleClass="w-full"
+                            (onClick)="onNoteSelect($event)" emptyMessage="Added notes appear here." [multiple]="false">
+                            <ng-template let-note pTemplate="item">
+                                <div class="flex justify-between w-full">
+                                    <span>{{notes.indexOf(note.value) + 1}}: {{note.value}}</span>
+                                    <span><i class="pi pi-trash"
+                                            (click)="deleteNote(notes.indexOf(note.value))"></i></span>
+                                </div>
+                            </ng-template>
+                        </p-listbox>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

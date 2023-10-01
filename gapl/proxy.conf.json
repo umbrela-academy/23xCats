@@ -1,0 +1,10 @@
+{
+  "/mt": {
+    "target": "http://localhost:3333",
+    "secure": false
+  },
+  "/ntt-api": {
+    "target": "http://localhost:3000",
+    "secure": false
+  }
+}

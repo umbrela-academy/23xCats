@@ -1,0 +1,38 @@
+<header id="head" class="h-16 mt-2 sm:mt-4 mb-2 flex items-center z-30 w-full">
+    <div class="container mx-auto px-6 flex items-center justify-between">
+        <span class="uppercase text-gray-800 dark:text-white font-black text-3xl flex flex-row">
+            <ng-container *rxLet="isSidebarShown$ as isSidebarShown">
+                <a (click)="toggleSidebar()">
+                    <i class="pi mt-[5px] mr-2 text-indigo-800 cursor-pointer"
+                        [ngClass]="!isSidebarShown ? 'pi-angle-double-right' : 'pi-angle-double-left'"
+                        style="font-size: 1.75rem"></i>
+                </a>
+            </ng-container>
+            <span
+                class="text-indigo-800 hover:underline hover:underline-offset-4 hover:decoration-4 hover:decoration-indigo-800 text-3xl"><a>{{prodPref}}O.Q</a></span>
+        </span>
+        <div class="hidden sm:flex">
+            <ng-container *ngTemplateOutlet="headers || defaultHeaderTemplate; context: { $implicit: headerNavItems }">
+            </ng-container>
+        </div>
+
+        <div class="flex">
+            <nav class="font-sen text-black dark:text-white uppercase text-lg items-center">
+                <div class='avatar online placeholder drop-shadow-lg'>
+                    <div class='bg-neutral-focus text-neutral-content rounded-full w-12 h-12'>
+                        <span class='text-xl'>{{authPref}}</span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<ng-template #defaultHeaderTemplate let-headerNavItems>
+    <a *ngFor="let navItem of headerNavItems; let last = last" [routerLink]="navItem.routerLink"
+        class="py-2 px-6 text-xl flex" [ngClass]="{'pr-12': last}">
+        <div class="flex flex-row"><i class="pi mt-[6px] mr-2" [ngClass]="navItem.icon"></i><span
+                class="hover:underline hover:underline-offset-4 hover:decoration-4 hover:decoration-indigo-800">{{navItem.label}}</span>
+        </div>
+    </a>
+</ng-template>

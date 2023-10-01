@@ -1,0 +1,8 @@
+<p-dialog [visible]="(displayEditor$ | async) ?? false" [style]="{'overflow': 'visible'}" [keepInViewport]="true"
+    [dismissableMask]="true" [maximizable]="true" [modal]="true" (visibleChange)="setDialogVisibility($event)">
+    <ng-template pTemplate="header">
+        <span class="tooltip tooltip-right" data-tip="Add New Patient"><i class="pi pi-user-plus"></i></span>
+        <span class="text-xl font-semibold">Patient Details</span>
+    </ng-template>
+    <gapl-patient-id></gapl-patient-id>
+</p-dialog>

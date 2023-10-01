@@ -1,0 +1,45 @@
+<p-dataView #dv [value]="products" [paginator]="true" [rows]="18" (onChangeLayout)="onLayoutToggle($event)">
+    <ng-template pTemplate="header">
+        <div class="flex flex-row justify-between align-bottom place-items-end">
+            <div class="flex gap-3">
+                <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                <p-dropdown [options]="sortOptions" placeholder="Sort By Date" (onChange)="onSortChange($event)"
+                    styleClass="h-[42px] shadow border-none outline-none focus:outline-none focus:ring font-normal leading-snug text-base"
+                    class="text-fuchsia-500 h-10">
+                </p-dropdown>
+            </div>
+
+            <div class="relative flex w-1/2 flex-wrap items-stretch">
+                <span
+                    class="z-10 h-full leading-snug font-normal absolute text-center text-gray-500 bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3">
+                    <i class="pi pi-search"></i></span>
+                <input #searchInput pInputText type="search" placeholder="Search Patients..."
+                    (input)="dv.filter(searchInput.value)"
+                    class="border-0 px-3 py-3 placeholder-gray-300 text-gray-700 placeholder:text-gray-400 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10" />
+            </div>
+
+            <button type="button"
+                class="relative items-center px-5 text-gray-50 transition-colors duration-150 bg-indigo-700 h-[43px] text-sm font-semibold rounded-md shadow-md focus:shadow-outline hover:bg-indigo-800"
+                [routerLink]="['/patients/new']">
+                <fa-icon [icon]="faPlus"></fa-icon>
+                <span> New Patient</span>
+            </button>
+
+
+        </div>
+    </ng-template>
+    <ng-template let-prod pTemplate="listItem">
+        <gapl-wide-card [patient]="prod.id"></gapl-wide-card>
+    </ng-template>
+    <ng-template let-prod pTemplate="gridItem">
+        <div #griddy>
+            <gapl-grid-card [patient]="prod.id"></gapl-grid-card>
+        </div>
+    </ng-template>
+</p-dataView>
+
+<p-speedDial [radius]="120" direction="up-left" type="quarter-circle" (onClick)="showEditor(true)"
+    class="fixed bottom-40 right-20 sm:bottom-24 sm:right-24 z-50 drop-shadow-2xl"
+    buttonClassName="bg-indigo-700 hover:bg-black" showIcon="pi pi-user-plus" hideIcon="pi pi-times">
+</p-speedDial>
+<gapl-patient-new-quick [displayEditor$]="this.patientEditorService.displayEditor$"></gapl-patient-new-quick>

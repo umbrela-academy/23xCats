@@ -1,0 +1,22 @@
+{
+  "name": "gapl-e2e",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "gapl-e2e/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/playwright:playwright",
+      "outputs": ["{workspaceRoot}/dist/.playwright/gapl-e2e"],
+      "options": {
+        "config": "gapl-e2e/playwright.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["gapl-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "implicitDependencies": ["gapl"]
+}

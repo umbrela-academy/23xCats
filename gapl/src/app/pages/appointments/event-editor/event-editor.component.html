@@ -1,0 +1,48 @@
+<p-dialog [header]="(eventObj.title$ | async) || 'Edit Event:'" [visible]="(displayEditor$ | async) ?? false"
+    (visibleChange)="setBottomBar($event)" [style]="{'overflow': 'visible'}" [keepInViewport]="true"
+    [dismissableMask]="true" [maximizable]="true" [modal]="true" (onHide)="selectionClosed()">
+    <div class="container mx-auto">
+        <form [formGroup]="eventForm">
+            <div class="flex flex-row gap-8 align-baseline">
+                <div class="flex flex-col">
+                    <label for="title" class="font-medium">Title</label>
+                    <input id="title" type="text" formControlName="title" aria-describedby="title" pInputText #title
+                        autofocus (focus)="title.value.startsWith('New Event') ? title.select() : null" />
+                </div>
+                <div class="flex flex-row justify-between w-full gap-14">
+                    <div class="flex flex-col">
+                        <label for="allDay" class="font-medium">All Day?</label>
+                        <p-toggleButton formControlName="allDay" onLabel="Yes" offLabel="No" [onIcon]="'pi pi-check'"
+                            offIcon="pi pi-times" #allDay></p-toggleButton>
+
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="color" class="font-medium">Tag</label>
+                        <p-colorPicker id="color" formControlName="backgroundColor" class="mt-2" format="rgb"
+                            appendTo="body">
+                        </p-colorPicker>
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="deleter" class="font-medium">Delete</label>
+                        <button title="delete" id="deleter" pButton type="button" icon="pi pi-trash"
+                            class="p-button bg-white text-indigo-800"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-row gap-8 mt-4">
+                <div class="flex flex-col">
+                    <label for="startDateTime" class="font-medium">Start</label>
+                    <p-calendar id="startTime" formControlName="start" dateFormat="dd.mm.yy" [showTime]="true"
+                        class="start" appendTo="body">
+                    </p-calendar>
+                </div>
+                <div class="flex flex-col" *ngIf="!allDay.checked">
+                    <label for="endTime" class="font-medium">End</label>
+                    <p-calendar id="endTime" formControlName="end" dateFormat="dd.mm.yy" [showTime]="true" class="end"
+                        appendTo="body">
+                    </p-calendar>
+                </div>
+            </div>
+        </form>
+    </div>
+</p-dialog>

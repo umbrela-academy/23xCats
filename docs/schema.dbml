@@ -1,0 +1,520 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Project "UAA Core" {
+  database_type: 'PostgreSQL'
+  Note: 'UAA Core after 10 Years'
+}
+
+Table project {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  initiatorOrgId String [not null]
+  initiatorOrg org [not null]
+  collaboratorList org [not null]
+  iDeviceList io_device [not null]
+  oDeviceList io_device [not null]
+  iSensorList io_sensor [not null]
+  oSensorList io_sensor [not null]
+  ioGroups io_group [not null]
+}
+
+Table io_hello {
+  id String [pk]
+  hw io_device [not null]
+  type String [not null]
+  version String [not null]
+  model String [not null]
+  protocols String[] [not null]
+  credentialsUrl String [not null]
+  fOff io_fo
+}
+
+Table io_fo {
+  id String [pk]
+  helloId String [unique, not null]
+  hello io_hello [not null]
+  hwList io_device [not null]
+}
+
+Table io_device {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  type String
+  version String
+  model String
+  helloList io_hello [not null]
+  foList io_fo [not null]
+  iProjectList project [not null]
+  oProjectList project [not null]
+  ioGroupId String [unique, not null]
+  ioGroup io_group
+}
+
+Table io_sensor {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  type String
+  version String
+  model String
+  iProjectList project [not null]
+  oProjectList project [not null]
+  ioGroupId String [unique, not null]
+  ioGroup io_group
+}
+
+Table io_group {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  deviceList io_device [not null]
+  sensorList io_sensor [not null]
+  projectList project [not null]
+}
+
+Table org {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  initiationList project [not null]
+  collaborationList project [not null]
+  leaders person [not null]
+  members person [not null]
+}
+
+Table person {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  groups people_group [not null]
+  leadingOrgList org [not null]
+  participatingOrgList org [not null]
+  patient patient
+  teamMember team_member
+}
+
+Table people_group {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  personList person [not null]
+}
+
+Table word {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  syllableList syllable [not null]
+  spellingList spelling [not null]
+  meaningList meaning [not null]
+  usageList usage [not null]
+  phraseList phrase [not null]
+  sentenceList sentence [not null]
+}
+
+Table syllable {
+  id String [pk]
+  wordId String [not null]
+  word word [not null]
+  name String [unique, not null]
+  description String
+  stress String
+  phonemeMap Json [not null]
+  metric String
+  compositionId String
+  composition syllable
+  compositionList syllable [not null]
+}
+
+Table spelling {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  wordId String [not null]
+  word word [not null]
+  tense String
+  voiceMap Json [not null]
+  case String
+  variantId String
+  variant spelling
+  variantList spelling [not null]
+}
+
+Table meaning {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  wordId String [not null]
+  word word [not null]
+  etymology String
+  domainMap Json [not null]
+  usual String
+  contextId String
+  context meaning
+  contextList meaning [not null]
+}
+
+Table usage {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  wordId String [not null]
+  word word [not null]
+  literary String
+  socialMap Json [not null]
+  journalistic String
+  encodingId String
+  encoding usage
+  encodingList usage [not null]
+}
+
+Table phrase {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  wordList word [not null]
+}
+
+Table sentence {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  wordList word [not null]
+  paraList para [not null]
+}
+
+Table para {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  sentenceList sentence [not null]
+}
+
+Table character {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  conflictList conflict [not null]
+  turningPointList turning_point [not null]
+  objectiveList objective [not null]
+  characterArchList character_arch [not null]
+  storyLineList story_line [not null]
+  characterBuilderList character_builder [not null]
+}
+
+Table character_builder {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  characterList character [not null]
+}
+
+Table config {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  configTemplateList config_template [not null]
+}
+
+Table config_template {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  configList config [not null]
+  missionList mission [not null]
+  legendMapList legend_map [not null]
+  levelList level [not null]
+  powerList power [not null]
+  toolList tool [not null]
+  vehicleList vehicle [not null]
+}
+
+Table conflict {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  characterList character [not null]
+  conflictResolutionPathList conflict_resolution_path [not null]
+}
+
+Table conflict_resolution_path {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  conflictList conflict [not null]
+}
+
+Table turning_point {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  characterList character [not null]
+}
+
+Table objective {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  characterList character [not null]
+}
+
+Table mission {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  configTemplateList config_template [not null]
+}
+
+Table level {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  configTemplateList config_template [not null]
+}
+
+Table legend_map {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  configTemplateList config_template [not null]
+}
+
+Table power {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  configTemplateList config_template [not null]
+}
+
+Table tool {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  configTemplateList config_template [not null]
+}
+
+Table vehicle {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  configTemplateList config_template [not null]
+}
+
+Table character_arch {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  characterList character [not null]
+}
+
+Table story_line {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  characterList character [not null]
+}
+
+Table modeler {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  stateList state [not null]
+  eventList causal_event [not null]
+  viewList view [not null]
+}
+
+Table action {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  initialStateList state [not null]
+  finalStateList state [not null]
+}
+
+Table state {
+  modelerList modeler [not null]
+  id String [pk]
+  name String [unique, not null]
+  description String
+  position Decimal[] [not null]
+  orientation Decimal[] [not null]
+  configuration Decimal[] [not null]
+  actionInitList action [not null]
+  actionTermList action [not null]
+  eventInitList causal_event [not null]
+  eventTermList causal_event [not null]
+}
+
+Table causal_event {
+  modelerList modeler [not null]
+  id String [pk]
+  name String [unique, not null]
+  description String
+  stateInitList state [not null]
+  stateTermList state [not null]
+}
+
+Table view {
+  modelerList modeler [not null]
+  id String [pk]
+  name String [unique, not null]
+  description String
+}
+
+Table patient {
+  id String [pk]
+  publicId String [unique]
+  personId String [unique, not null]
+  person person [not null]
+  treatmentList treatment [not null]
+}
+
+Table treatment {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  totalCost Decimal [not null]
+  patientId String [not null]
+  patient patient [not null]
+  paymentList payment [not null]
+  therapyList therapy [not null]
+  surgeryList surgery [not null]
+  medicationList medication [not null]
+  remedyList remedy [not null]
+  equipmentList equipment [not null]
+}
+
+Table therapy {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  treatmentList treatment [not null]
+}
+
+Table surgery {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  treatmentList treatment [not null]
+}
+
+Table medication {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  treatmentList treatment [not null]
+}
+
+Table remedy {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  treatmentList treatment [not null]
+}
+
+Table equipment {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  treatmentList treatment [not null]
+  inventoryId String [not null]
+  inventory inventory [not null]
+}
+
+Table inventory {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  equipmentList equipment [not null]
+}
+
+Table payment {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  treatmentId String [unique, not null]
+  treatment treatment [not null]
+  quoteList quote [not null]
+  invoiceList invoice [not null]
+  receiptList receipt [not null]
+}
+
+Table quote {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  paymentList payment [not null]
+}
+
+Table invoice {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  paymentList payment [not null]
+}
+
+Table receipt {
+  id String [pk]
+  name String [unique, not null]
+  description String
+  paymentList payment [not null]
+}
+
+Table team_member {
+  id String [pk]
+  salary Decimal [not null]
+  ingressTime DateTime
+  egressTime DateTime
+  loan Decimal
+  personId String [unique, not null]
+  person person [not null]
+  payrollItemList payroll_item [not null]
+}
+
+Table payroll_item {
+  id String [pk]
+  deficit Decimal
+  paymentDate DateTime [not null]
+  teamMemberId String [not null]
+  teamMember team_member [not null]
+}
+
+Ref: project.initiatorOrgId > org.id
+
+Ref: io_fo.helloId - io_hello.id
+
+Ref: io_device.ioGroupId > io_group.id
+
+Ref: io_sensor.ioGroupId > io_group.id
+
+Ref: syllable.wordId > word.id
+
+Ref: syllable.compositionId - syllable.id
+
+Ref: spelling.wordId > word.id
+
+Ref: spelling.variantId - spelling.id
+
+Ref: meaning.wordId > word.id
+
+Ref: meaning.contextId - meaning.id
+
+Ref: usage.wordId > word.id
+
+Ref: usage.encodingId - usage.id
+
+Ref: patient.personId - person.id
+
+Ref: treatment.patientId > patient.id
+
+Ref: equipment.inventoryId > inventory.id
+
+Ref: payment.treatmentId > treatment.id
+
+Ref: team_member.personId - person.id
+
+Ref: payroll_item.teamMemberId > team_member.id

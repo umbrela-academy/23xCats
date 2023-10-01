@@ -1,0 +1,95 @@
+<p-dialog [visible]="(displayEditor$ | async) ?? false" [style]="{'overflow': 'visible'}" [keepInViewport]="true"
+    [dismissableMask]="true" [maximizable]="true" [modal]="true" (visibleChange)="setDialogVisibility($event)">
+    <ng-template pTemplate="header">
+        <span class="tooltip tooltip-right" data-tip="Add New Patient"><i class="pi pi-user-plus"></i></span>
+        <span class="text-xl font-semibold">Equipment Details</span>
+    </ng-template>
+    <div class="relative flex flex-col min-w-0 w-full mb-2 rounded-lg border-0">
+        <div class="px-2 lg:px-10 py-4 pt-0">
+            <form [formGroup]="inventoryForm" (ngSubmit)="submitForm()" *ngIf="{
+                name: inventoryForm.get('name')?.invalid && (inventoryForm.get('name')?.dirty || inventoryForm.get('name')?.touched),
+                amount: inventoryForm.get('amount')?.invalid && (inventoryForm.get('amount')?.dirty || inventoryForm.get('amount')?.touched)
+            } as formError">
+                <div class="flex flex-wrap">
+                    <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                            <label class="flex justify-between" for="name">
+                                <span class="text-slate-600 uppercase text-xs font-bold mb-2">Name <span
+                                        class="text-rose-500 text-xs font-italic" *ngIf="formError.name">*</span></span>
+                                <span class="text-rose-500 text-xs font-italic" *ngIf="formError.name">
+                                    Please provide equiment's name
+                                </span>
+                            </label>
+                            <input id="name" pInputText formControlName="name"
+                                class="border-0 px-3 py-3   bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                placeholder="Name" />
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                            <label class="block uppercase  text-xs font-bold mb-2" for="code">
+                                Code
+                            </label>
+                            <input id="code" pInputText formControlName="code"
+                                class="border-0 px-3 py-3   bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                placeholder="Code" />
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-wrap">
+                    <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                            <label class="flex justify-between" for="amount">
+                                <span class="text-slate-600 uppercase text-xs font-bold mb-2">Amount In Stock <span
+                                        class="text-rose-500 text-xs font-italic"
+                                        *ngIf="formError.amount">*</span></span>
+                                <span class="text-rose-500 text-xs font-italic" *ngIf="formError.amount">
+                                    Please provide item count
+                                </span>
+                            </label>
+                            <input id="amount" pInputText type="number" min="0" formControlName="currentAmount"
+                                class="border-0 px-3 py-3   bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                            <label class="block uppercase  text-xs font-bold mb-2" for="needed">
+                                Recommended Amount
+                            </label>
+                            <input id="needed" type="number" min="0" pInputText formControlName="neededAmount"
+                                class="border-0 px-3 py-3   bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-wrap">
+                    <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                            <label class="block uppercase  text-xs font-bold mb-2" for="cost">
+                                Cost
+                            </label>
+                            <input id="cost" type="number" min="0" pInputText formControlName="cost"
+                                class="border-0 px-3 py-3   bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                placeholder="NRs." />
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                            <label class="block uppercase  text-xs font-bold mb-2" for="lastPurchase">
+                                Last Purchase
+                            </label>
+                            <p-calendar id="lastPurchase" dateFormat="dd-mm-yy" appendTo="body"
+                                formControlName="lastPurchase"
+                                styleClass="border-0 rounded text-sm shadow-sm focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                [showIcon]="true">
+                            </p-calendar>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-end mt-4">
+                    <button pButton pRipple type="submit" label="Save" title="Save"
+                        class="p-button-raised bg-indigo-700"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</p-dialog>

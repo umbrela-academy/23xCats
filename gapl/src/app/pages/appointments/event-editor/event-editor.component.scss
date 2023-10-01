@@ -1,0 +1,6 @@
+:host ::ng-deep {
+    .p-component-overlay-enter {
+        overflow-y: scroll;
+    }
+}
+
