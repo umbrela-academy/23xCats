@@ -3,9 +3,9 @@ export type Range<N extends number, Acc extends number[] = []> = Acc['length'] e
   : Range<N, [...Acc, Acc['length']]>
 
 export type IntRange<F extends number, T extends number> = Exclude<Range<T>, Range<F>>;
-
 export type AnyUpto<U extends number> = IntRange<0, U>;
 
+// TODO create CharRange
 
 /** Fixed length array of length N and Type T
  * 

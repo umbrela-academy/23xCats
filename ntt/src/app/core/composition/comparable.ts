@@ -7,6 +7,7 @@ export type AComparable<T = unknown> = {
 }
 
 export type PossiblyComparable<T = unknown> = Partial<AComparable<T>>;
+export type Comparable<T> = T extends AComparable ? T : never;
 
 export type BComparable<T = unknown>
   = AComparable<T> & BId<"Comparable">;
@@ -17,4 +18,3 @@ export class CComparable<T = unknown> implements AComparable<T> {
 
 export type ComparableArray = AComparable[];
 export type ComparableArr<T> = AComparable<T>[];
-
