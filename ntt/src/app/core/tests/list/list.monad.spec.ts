@@ -1,4 +1,4 @@
-import { repeater } from './../../utils/funcs/repeat.func';
+import { repeater } from '../../utils/func/repeat.func';
 import { UnaryFunc } from '../../algebra/function/function.defs';
 import { List } from './../../list.monad';
 describe('List Monad', () => {
