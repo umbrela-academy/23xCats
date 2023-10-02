@@ -6,6 +6,8 @@ export type AComparable<T = unknown> = {
   compareFn: (a: T) => (b: T) => Comparision;
 }
 
+export type PossiblyComparable<T = unknown> = Partial<AComparable<T>>;
+
 export type BComparable<T = unknown>
   = AComparable<T> & BId<"Comparable">;
 
