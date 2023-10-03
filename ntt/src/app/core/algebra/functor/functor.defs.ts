@@ -1,3 +1,4 @@
+import { Extends } from './../../utils/proof/extended';
 import { UnaryFunc } from '../function/function.defs';
 
 /**
@@ -15,6 +16,7 @@ import { UnaryFunc } from '../function/function.defs';
  * T -> S jaane baato bhayo
  * Functor bhanne bhado ma bhako sabai T haru lai, S samma lagne
  */
-export interface IFunctor<T> {
-  fmap: <S, U extends IFunctor<T>>(f: UnaryFunc<T, S>) => U;
+export interface IFunctor<A> {
+  fa: <T>() => Extends<T, IFunctor<A>>;
+  fmap: <B, T>(f: UnaryFunc<A, B>) => Extends<T, IFunctor<B>>;
 }
